@@ -6,4 +6,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="user_ico_width">58dip</dimen>
+    <dimen name="user_ico_height">58dip</dimen>              <!-- 用户icon尺寸-->
+    <dimen name="view_margin_top">5dip</dimen>                              <!-- 组件里上面的间隔n尺寸-->
 </resources>

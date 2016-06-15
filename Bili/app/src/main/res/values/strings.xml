@@ -5,4 +5,13 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="home_page">首 页</string>
+    <string name="download">离线缓存</string>
+    <string name="star">我的收藏</string>
+    <string name="history">历史记录</string>
+    <string name="people">关注的人</string>
+    <string name="wallet">我的钱包</string>
+    <string name="subject">主题选择</string>
+    <string name="app">应用推荐</string>
+    <string name="setting">设置与帮助</string>
 </resources>

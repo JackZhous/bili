@@ -3,33 +3,52 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
+            android:id="@+id/home_page"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="@string/home_page" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:id="@+id/downloads"
+            android:icon="@drawable/ic_file_download_black_24dp"
+            android:title="@string/download" />
+
     </group>
 
-    <item android:title="Communicate">
+    <item>
+        <menu>
+        <item
+            android:id="@+id/stars"
+            android:icon="@drawable/ic_star_black_24dp"
+            android:title="@string/star" />
+        <item
+            android:id="@+id/history"
+            android:icon="@drawable/ic_history_black_24dp"
+            android:title="@string/history" />
+        <item
+            android:id="@+id/people"
+            android:icon="@drawable/ic_people_black_24dp"
+            android:title="@string/people" />
+        <item
+            android:id="@+id/wallet"
+            android:icon="@drawable/ic_account_balance_wallet_black_24dp"
+            android:title="@string/wallet" />
+
+         </menu>
+    </item>
+
+    <item>
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:id="@+id/subject"
+                android:icon="@drawable/ic_color_lens_black_24dp"
+                android:title="@string/subject" />
             <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:id="@+id/app"
+                android:icon="@drawable/ic_shop_black_24dp"
+                android:title="@string/app" />
+            <item
+                android:id="@+id/setting"
+                android:icon="@drawable/ic_settings_black_24dp"
+                android:title="@string/setting" />
         </menu>
     </item>
 

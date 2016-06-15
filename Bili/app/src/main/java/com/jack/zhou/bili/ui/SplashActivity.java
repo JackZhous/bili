@@ -1,14 +1,18 @@
 package com.jack.zhou.bili.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -29,6 +33,8 @@ public class SplashActivity extends Activity {
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
 
+    private RelativeLayout layout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,10 +46,28 @@ public class SplashActivity extends Activity {
         wparams.systemUiVisibility = View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
         window.setAttributes(wparams);
 
+        initView();
+    }
+
+
+    /**
+     * 开启主类
+     */
+    private  void startMainActivity(){
+        Intent intent = new Intent(this,com.jack.zhou.bili.MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    /**
+     * 从assets拿到闪屏资源， 组合在一个RelativeLayout里面
+     * 实现动画闪屏
+     */
+    private void initView(){
         AssetManager asset = getResources().getAssets();
         Bitmap splash = null;
 
-        RelativeLayout layout = new RelativeLayout(this);
+        layout = new RelativeLayout(this);
         ImageView image1 = new ImageView(this);
         ImageView image2 = new ImageView(this);
         RelativeLayout.LayoutParams params = null;
@@ -77,10 +101,34 @@ public class SplashActivity extends Activity {
         }
 
         layout.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        setContentView(layout);
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
 
+        AlphaAnimation animation = new AlphaAnimation(1, 0);
+        animation.setRepeatCount(0);
+        animation.setDuration(2000);
+        animation.setFillAfter(true);
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                JLog.default_print("onAnimationStart");
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                JLog.default_print("onAnimationEnd");
+                //Snackbar.make(layout, "动画结束", Snackbar.LENGTH_SHORT).show();
+                startMainActivity();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+                JLog.default_print("onAnimationRepeat");
+            }
+        });
+
+        setContentView(layout);
+
+        layout.setAnimation(animation);
+        animation.startNow();
     }
 
 }
