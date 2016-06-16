@@ -1,9 +1,9 @@
-package com.jack.zhou.bili;
+package com.jack.zhou.bili.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.view.Gravity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,13 +13,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import com.jack.zhou.bili.R;
+import com.jack.zhou.bili.util.AppUtil;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        AppUtil.integrationNotifcationBar(this);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -41,7 +48,24 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        drawer.openDrawer(Gravity.START);
+
+    }
+
+    /**
+     * activity_main里面的组件点击事件
+     * @param 被点击的view
+     */
+    public void onViewClick(View v) {
+
+        switch(v.getId()){
+            case R.id.user_icon:
+                Toast.makeText(MainActivity.this,"你点击了usericon", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+                break;
+            default:
+                break;
+        }
     }
 
     @Override

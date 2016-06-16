@@ -12,7 +12,9 @@
         android:layout_height="@dimen/user_ico_height"
         android:layout_marginTop="30dp"
         android:layout_marginLeft="20dp"
-        android:src="@drawable/bili_default_avatar" />
+        android:src="@drawable/bili_default_avatar"
+        android:clickable="true"
+        android:onClick="onViewClick"/>
 
     <ImageView
         android:id="@+id/night"

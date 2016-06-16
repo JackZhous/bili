@@ -2,10 +2,12 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <!-- app使用这里的主题可以在这里设置app浮标颜色   字体和icon点击后的颜色 -->
+        <item name="colorPrimary">@color/colorPrimary</item>                        <!--toolbar颜色,并且左侧侧滑菜单选中后的颜色 -->
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>                <!-- 浮标上面通知栏的颜色-->
+        <item name="colorAccent">@color/colorAccent</item>                          <!-- 悬浮窗颜色-->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>                                      <!--由于Activity里面默认存在actionbar  使用新的toolbar则需要将actionbat去除掉，此两句就是讲actionbar消失掉 -->
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -17,4 +19,7 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="myAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:src">@drawable/forget_passwd</item>
+    </style>
 </resources>

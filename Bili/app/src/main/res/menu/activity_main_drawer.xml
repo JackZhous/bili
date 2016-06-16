@@ -11,10 +11,6 @@
             android:icon="@drawable/ic_file_download_black_24dp"
             android:title="@string/download" />
 
-    </group>
-
-    <item>
-        <menu>
         <item
             android:id="@+id/stars"
             android:icon="@drawable/ic_star_black_24dp"
@@ -32,24 +28,18 @@
             android:icon="@drawable/ic_account_balance_wallet_black_24dp"
             android:title="@string/wallet" />
 
-         </menu>
-    </item>
-
-    <item>
-        <menu>
-            <item
-                android:id="@+id/subject"
-                android:icon="@drawable/ic_color_lens_black_24dp"
-                android:title="@string/subject" />
-            <item
-                android:id="@+id/app"
-                android:icon="@drawable/ic_shop_black_24dp"
-                android:title="@string/app" />
-            <item
-                android:id="@+id/setting"
-                android:icon="@drawable/ic_settings_black_24dp"
-                android:title="@string/setting" />
-        </menu>
-    </item>
+        <item
+            android:id="@+id/subject"
+            android:icon="@drawable/ic_color_lens_black_24dp"
+            android:title="@string/subject" />
+        <item
+            android:id="@+id/app"
+            android:icon="@drawable/ic_shop_black_24dp"
+            android:title="@string/app" />
+        <item
+            android:id="@+id/setting"
+            android:icon="@drawable/ic_settings_black_24dp"
+            android:title="@string/setting" />
+    </group>
 
 </menu>

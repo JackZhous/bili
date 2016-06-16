@@ -6,7 +6,6 @@ import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -14,10 +13,9 @@ import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import com.google.android.gms.common.api.GoogleApiClient;
+import com.jack.zhou.bili.util.AppUtil;
 import com.jack.zhou.bili.util.JLog;
 
 import java.io.IOException;
@@ -42,6 +40,7 @@ public class SplashActivity extends Activity {
 //        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 //        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         Window window = getWindow();
+        AppUtil.integrationNotifcationBar(this);
         WindowManager.LayoutParams wparams = window.getAttributes();
         wparams.systemUiVisibility = View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
         window.setAttributes(wparams);
@@ -54,7 +53,7 @@ public class SplashActivity extends Activity {
      * 开启主类
      */
     private  void startMainActivity(){
-        Intent intent = new Intent(this,com.jack.zhou.bili.MainActivity.class);
+        Intent intent = new Intent(this,MainActivity.class);
         startActivity(intent);
         finish();
     }

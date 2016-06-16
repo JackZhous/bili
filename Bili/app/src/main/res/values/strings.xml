@@ -14,4 +14,5 @@
     <string name="subject">主题选择</string>
     <string name="app">应用推荐</string>
     <string name="setting">设置与帮助</string>
+    <string name="forget_passwd">忘记密码？</string>
 </resources>

@@ -1,0 +1,5 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+    <item android:state_pressed="false" android:text="@string/forget_passwd"></item>
+    <item android:state_pressed="true" android:text="@string/forget_passwd"></item>
+</selector>
