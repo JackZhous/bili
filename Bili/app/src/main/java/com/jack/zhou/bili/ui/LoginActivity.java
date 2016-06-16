@@ -13,6 +13,7 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.jack.zhou.bili.R;
+import com.jack.zhou.bili.network.IOManager;
 import com.jack.zhou.bili.util.AppUtil;
 
 /**
@@ -32,7 +33,12 @@ public class LoginActivity extends AppCompatActivity {
         initView();
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
-
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                IOManager.getInstance().httpGet();
+            }
+        }).start();
     }
 
 
