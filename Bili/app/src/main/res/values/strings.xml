@@ -15,4 +15,6 @@
     <string name="app">应用推荐</string>
     <string name="setting">设置与帮助</string>
     <string name="forget_passwd">忘记密码？</string>
+    <string name="username_hint">你的手机号/邮箱</string>
+    <string name="passwd_hint">请输入密码</string>
 </resources>

@@ -33,12 +33,7 @@ public class LoginActivity extends AppCompatActivity {
         initView();
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                IOManager.getInstance().httpGet();
-            }
-        }).start();
+
     }
 
 

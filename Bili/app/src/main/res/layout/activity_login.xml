@@ -7,34 +7,102 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:clipToPadding="false"
-    android:orientation="vertical">
+    android:clipToPadding="false">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/login_bar"
-            android:background="?attr/colorPrimary">                        <!-- ?attr表示使用该app主题所对应的属性-->
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <android.support.v7.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/login_bar"
+                android:background="?attr/colorPrimary">                        <!-- ?attr表示使用该app主题所对应的属性-->
 
 
-        </android.support.v7.widget.Toolbar>
-        <TextView
-            android:layout_alignParentRight="true"
-            android:layout_alignBottom="@id/login_bar"
-            android:layout_marginBottom="20dp"
-            android:textSize="15sp"
-            android:textColor="#FCFCFC"
-            android:layout_width="wrap_content"
+            </android.support.v7.widget.Toolbar>
+            <TextView
+                android:layout_alignParentRight="true"
+                android:layout_alignBottom="@id/login_bar"
+                android:layout_marginBottom="20dp"
+                android:textSize="15sp"
+                android:textColor="#FCFCFC"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/forget_passwd"
+                android:onClick="onViewClick"
+                android:clickable="true"/>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/forget_passwd"
-            android:onClick="onViewClick"
-            android:clickable="true"/>
-    </RelativeLayout>
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="110dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:id="@+id/login_left"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentBottom="true"
+                    android:src="@drawable/ic_22"
+                    />
+                <ImageView
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:src="@drawable/ic_bili_logo"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    />
+                <ImageView
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:id="@+id/login_right"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:src="@drawable/ic_33"
+                    />
+            </RelativeLayout>
 
 
+
+               <!-- <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/image1"
+                    android:src="@drawable/ic_login_username_default"/>-->
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/username_hint"
+                    android:textSize="18sp"
+                    android:layout_marginLeft="10dp"
+                    android:drawableLeft="@drawable/ic_login_username_default"
+                    android:drawablePadding="10dp"
+                    android:singleLine="true"/>                                                             <!--显示左边图片icon  并设置文字和icon的距离 -->
+
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/passwd_hint"
+                    android:textSize="18sp"
+                    android:layout_marginLeft="10dp"
+                    android:drawableLeft="@drawable/ic_login_password_default"
+                    android:drawablePadding="10dp"
+                    android:singleLine="true"/>
+        </LinearLayout>
+
+
+
+    </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>
