@@ -4,4 +4,7 @@
     <color name="colorPrimaryDark">#FF6EB4</color>
     <color name="colorAccent">#FF4081</color>
     <color name="pink">#FFB5C5</color>
+    <color name="zise">#ff00ff</color>
+    <color name="dark_zhi">#CD2990</color>
+    <color name="white">#F7F7F7</color>
 </resources>
