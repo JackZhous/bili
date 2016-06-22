@@ -26,4 +26,5 @@ dependencies {
     compile 'com.android.support:design:23.3.0'
     compile 'com.google.android.gms:play-services-appindexing:8.1.0'
     compile files('src/main/libs/Volley.jar')
+    compile files('src/main/libs/gson-2.2.4.jar')
 }

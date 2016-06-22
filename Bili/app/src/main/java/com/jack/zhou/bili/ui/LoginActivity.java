@@ -19,13 +19,16 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.jack.zhou.bili.R;
+import com.jack.zhou.bili.inter.BiliCallback;
 import com.jack.zhou.bili.network.IOManager;
 import com.jack.zhou.bili.util.AppUtil;
+
+import java.util.HashMap;
 
 /**
  * Created by "jackzhous" on 2016/6/16.
  */
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener, BiliCallback{
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -43,7 +46,10 @@ public class LoginActivity extends AppCompatActivity {
         initView();
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
-
+        HashMap<String, String> map = new HashMap<>();
+        map.put("username","jackzhous");
+        map.put("password","wsdyi100");
+        IOManager.getInstance(this).httpPost(map, AppUtil.LOGIN_VERIFY, this);
     }
 
 
@@ -133,6 +139,16 @@ public class LoginActivity extends AppCompatActivity {
     public void onStop() {
         super.onStop();
 
+
+    }
+
+
+    @Override
+    public void onClick(View view) {
+    }
+
+    @Override
+    public void onResponse(int code, String msg) {
 
     }
 }

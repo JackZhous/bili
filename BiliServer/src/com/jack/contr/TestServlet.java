@@ -28,7 +28,7 @@ public class TestServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("++++++++++++++++===");
+		    System.out.println("++++++++++++++++===");
 			System.out.println(request.getParameter("params"));
 			System.out.println("---------------------");
 	
@@ -41,7 +41,8 @@ public class TestServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		System.out.println("postpost");
 		System.out.println("++++++++++++++++===");
-		System.out.println(request.getParameter("params"));
+		System.out.println(request.getParameter("username") + request.toString());
+		System.out.println(request.getParameter("password"));
 		System.out.println("---------------------");
 		
 	}
