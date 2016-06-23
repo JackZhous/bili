@@ -4,11 +4,13 @@ package com.jack.zhou.bili.network;
 import android.app.Activity;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.jack.zhou.bili.inter.BiliCallback;
@@ -17,10 +19,7 @@ import com.jack.zhou.bili.util.JLog;
 
 import org.json.JSONObject;
 
-import java.io.DataOutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
+import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 /**
@@ -78,12 +77,12 @@ public class IOManager {
      * @param listener
      */
     public void httpPost(final Map<String, String> map, String url, final BiliCallback listener){
-
+        JSONObject json = new JSONObject();
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
                 JLog.default_print("收到服务端消息了，真高兴");
-                JLog.default_print("s");
+                JLog.default_print("s" + s);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -94,6 +93,23 @@ public class IOManager {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 return map;
+            }
+
+            @Override
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                try {
+                    response.headers.put("HTTP.CONTENT_TYPE", "utf-8");
+//                String jsonString = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
+                    String jsonString = new String(response.data,"utf-8");
+
+                    return Response.success(new JSONObject(jsonString).toString(), HttpHeaderParser.parseCacheHeaders(response));
+                }
+                catch (UnsupportedEncodingException e) {
+                    return Response.error(new ParseError(e));
+                }
+                catch (org.json.JSONException je) {
+                    return Response.error(new ParseError(je));
+                }
             }
         };
 

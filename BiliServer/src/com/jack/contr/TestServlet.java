@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.JsonObject;
+import org.json.JSONObject;
 
 /**
  * Servlet implementation class TestServlet
@@ -50,16 +50,17 @@ public class TestServlet extends HttpServlet {
 		System.out.println(request.getParameter("username") + request.toString());
 		System.out.println(request.getParameter("password"));
 		System.out.println("---------------------");
+		
+		response.setCharacterEncoding("UTF-8");
 		PrintWriter out = response.getWriter();
 		
 		Map<String ,String> map =new HashMap<String ,String>();
 		map.put("result", "ok");
-		map.put("结果", "正确");
+		map.put("reult", "娆у厠");
 		
-		JsonObject sJson = new JsonObject();
-		sJson.addProperty("result", "ok");
-		sJson.addProperty("结果", "正确");
-		out.write(sJson.toString());
+		JSONObject sjon = new JSONObject(map);
+		System.out.println("sjon " + sjon.toString());
+		out.write(sjon.toString());
 		out.flush();
 		out.close();
 		

@@ -8,7 +8,15 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="libs/servlet-api.jar"/>
-	<classpathentry kind="lib" path="libs/gson-2.2.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/servlet-api.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/gson-2.2.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/beanutils.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/commons-collections-3.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/commons-lang3-3.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/commons-logging.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/ezmorph-1.0.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/json-lib-2.2.2-jdk15.jar"/>
+	<classpathentry kind="lib" path="libs/json-20151123.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/json-20151123.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
