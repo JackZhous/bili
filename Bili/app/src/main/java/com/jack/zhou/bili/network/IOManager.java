@@ -3,6 +3,7 @@ package com.jack.zhou.bili.network;
 
 import android.app.Activity;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -76,26 +77,25 @@ public class IOManager {
      * @param url
      * @param listener
      */
-    public void httpPost(Map<String, String> map, String url, final BiliCallback listener){
-        JSONObject jsonObject = new JSONObject(map);
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, jsonObject, new Response.Listener<JSONObject>() {
+    public void httpPost(final Map<String, String> map, String url, final BiliCallback listener){
+
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
-            public void onResponse(JSONObject jsonObject) {
-                String ret = "";
-                if(jsonObject == null){
-                    ret = "null";
-                }else{
-                    ret = jsonObject.toString();
-                }
-                listener.onResponse(AppUtil.REQUEST_SUCCESS, ret);
+            public void onResponse(String s) {
+                JLog.default_print("收到服务端消息了，真高兴");
+                JLog.default_print("s");
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                listener.onResponse(AppUtil.REQUEST_FAILED, volleyError.getMessage());
-                volleyError.printStackTrace();
+
             }
-        });
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                return map;
+            }
+        };
 
         queue.add(request);
     }
