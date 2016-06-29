@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
+import com.jack.data.MysqlUtil;
+
 /**
  * Servlet implementation class TestServlet
  */
@@ -63,7 +65,7 @@ public class TestServlet extends HttpServlet {
 		out.write(sjon.toString());
 		out.flush();
 		out.close();
-		
+		MysqlUtil.getInstance().init();
 	}
 
 }

@@ -2,7 +2,9 @@ package com.jack.data;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 
 
@@ -33,10 +35,6 @@ public class MysqlUtil {
 		return instance;
 	}
 	
-	public void msql_init(){
-		
-	}
-	
 	
 	public void init(){
 		try {
@@ -47,6 +45,12 @@ public class MysqlUtil {
 			if(null == conn || conn.isClosed()){
 				System.out.println("open mysql database error");
 				return;
+			}
+			Statement stmt = conn.createStatement();
+			String sql = "select * from bili_user";
+			ResultSet res = stmt.executeQuery(sql);
+			while(res.next()){
+				System.out.println(res.getString(1));
 			}
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block

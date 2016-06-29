@@ -1,0 +1,14 @@
+ create table bili_user(
+	uid int not null primary key auto_increment,
+	account varchar(20) not null,
+	password varchar(150) not null,
+	nickname varchar(20) not null,
+	icon_url varchar(250),
+	sex enum('B','G','S') default 'S',
+	birthday date default '1980-1-1',
+	register_time date not null,
+	phone varchar(13),
+	email varchar(13),
+	showself varchar(100),
+	extra varchar(200)
+	);
