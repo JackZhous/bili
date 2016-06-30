@@ -18,8 +18,8 @@ public class MysqlUtil {
 	
 	private static MysqlUtil instance = null;
 
-	private static String driver = "com.mysql.jdbc.driver";
-	private static String url = "jdbc:mysql://127.0.0.1:3306/test";
+	private static String driver = "com.mysql.jdbc.Driver";
+	private static String url = "jdbc:mysql://127.0.0.1:3306/bilidata?user=root&password=wsdyi100";
 	private static String username = "jackzhous";
 	private static String password = "wsdyi100";
 	
@@ -50,7 +50,7 @@ public class MysqlUtil {
 			String sql = "select * from bili_user";
 			ResultSet res = stmt.executeQuery(sql);
 			while(res.next()){
-				System.out.println(res.getString(1));
+				System.out.println("data " + res.getString(1) + "  " + res.getString(2) + " " + res.getString(3) +" " + res.getString(4));
 			}
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block

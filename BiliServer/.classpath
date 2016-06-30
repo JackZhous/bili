@@ -12,5 +12,6 @@
 	<classpathentry kind="lib" path="libs/json-20151123.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/json-20151123.jar"/>
 	<classpathentry kind="lib" path="libs/mysql-connector-java-5.1.39-bin.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/mysql-connector-java-5.1.39-bin.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
