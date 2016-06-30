@@ -1,5 +1,6 @@
 package com.jack.zhou.bili.network;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
 import com.android.volley.Response;
@@ -14,17 +15,18 @@ import com.jack.zhou.bili.util.JLog;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Map;
 
 /**
  * Created by "jackzhous" on 2016/6/30.
  */
 public class Task extends StringRequest{
 
-    private Object mData;                            //传递的数据
+    private Map<String,String> mData;                            //传递的数据
     private HttpListener mCallback;                  //回调接口
     private String url;
 
-    public Task(String url, byte[] mData, HttpListener listener){
+    public Task(String url, Map<String,String> mData, HttpListener listener){
 
         this(Method.POST, url, listener, listener);
         this.mData = mData;
@@ -45,6 +47,12 @@ public class Task extends StringRequest{
         super.deliverResponse(response);
     }
 
+    @Override
+    protected Map<String, String> getParams() throws AuthFailureError {
+
+
+        return mData;
+    }
 
     /**
      * 对服务器传回的数据进行解码或者编码

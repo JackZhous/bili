@@ -9,6 +9,7 @@ import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
@@ -20,7 +21,9 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.jack.zhou.bili.R;
 import com.jack.zhou.bili.inter.BiliCallback;
+import com.jack.zhou.bili.inter.HttpListener;
 import com.jack.zhou.bili.network.IOManager;
+import com.jack.zhou.bili.network.Task;
 import com.jack.zhou.bili.util.AppUtil;
 
 import java.util.HashMap;
@@ -49,7 +52,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         HashMap<String, String> map = new HashMap<>();
         map.put("username","jackzhous");
         map.put("password","wsdyi100");
-        IOManager.getInstance(this).httpPost(map, AppUtil.LOGIN_VERIFY, this);
+        //IOManager.getInstance(this).httpPost(map, AppUtil.LOGIN_VERIFY, this);
     }
 
 
@@ -145,10 +148,40 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.login:
+                userLogin();
+                break;
+
+            case R.id.regist:
+                break;
+        }
+    }
+
+    private void userLogin(){
+        String user = username.getText().toString();
+        String password = passwd.getText().toString();
+
+        if(TextUtils.isEmpty(user) || TextUtils.isEmpty(password)){
+            Toast.makeText(this, "请确认输入信息", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        HashMap<String, String> map = new HashMap<String, String>();
+        map.put("user", user);
+        map.put("password",password);
+
+        Task task = new Task(AppUtil.LOGIN_VERIFY, map, new HttpListener(this));
+        IOManager.getInstance(this).add_task_start(task);
     }
 
     @Override
-    public void onResponse(int code, String msg) {
+    public void onResponse(int code, Object msg) {
+
+    }
+
+    @Override
+    public void onError(int code, String msg) {
 
     }
 }

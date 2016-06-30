@@ -30,7 +30,7 @@ public class IOManager {
     private static IOManager instance = null;
 
     private Activity activity;
-    private RequestQueue queue;
+    private RequestQueue queue;                 //网络请求
 
     public  static final String url = "http://192.168.0.110:8080/BiliServer/servlet/testservlet";
     private IOManager(Activity activity){
@@ -116,5 +116,14 @@ public class IOManager {
         queue.add(request);
     }
 
+
+
+    public void add_task_start(Task task){
+        if(null == queue){
+            queue = Volley.newRequestQueue(activity.getApplicationContext());
+        }
+
+        queue.add(task);
+    }
 
 }

@@ -65,7 +65,7 @@ public class TestServlet extends HttpServlet {
 		out.write(sjon.toString());
 		out.flush();
 		out.close();
-		MysqlUtil.getInstance().init();
+	//	MysqlUtil.getInstance().init();
 	}
 
 }

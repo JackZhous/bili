@@ -27,7 +27,7 @@ public class AppUtil {
     public static final int REQUEST_FERROR = 2;
 
     //company ip -- 10.8.230.117   home ip -- 192.168.0.110
-    private static final String BASE_URL = "http://10.8.230.117:8080/BiliServer/";
+    private static final String BASE_URL = "http://192.168.0.110:8080/BiliServer/";
 
     public static final String LOGIN_VERIFY = BASE_URL + "login/";
 
