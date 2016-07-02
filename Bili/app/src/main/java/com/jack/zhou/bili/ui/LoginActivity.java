@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -25,6 +26,9 @@ import com.jack.zhou.bili.inter.HttpListener;
 import com.jack.zhou.bili.network.IOManager;
 import com.jack.zhou.bili.network.Task;
 import com.jack.zhou.bili.util.AppUtil;
+import com.jack.zhou.bili.util.JNIClass;
+
+import org.json.JSONObject;
 
 import java.util.HashMap;
 
@@ -41,6 +45,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText passwd;
     private ImageView login_left_image;
     private ImageView login_right_image;
+
+    private Button login;
+    private Button regisrer;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +90,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         login_right_image = (ImageView)this.findViewById(R.id.login_right);
         username = (EditText)this.findViewById(R.id.username);
         passwd = (EditText)this.findViewById(R.id.passwd);
+        login = (Button)this.findViewById(R.id.login);
+        regisrer = (Button)this.findViewById(R.id.regist);
+        login.setOnClickListener(this);
+        regisrer.setOnClickListener(this);
 
         final Drawable drawable_username_default = ContextCompat.getDrawable(this, R.drawable.ic_login_username_default);
         Drawable.ConstantState state_user = drawable_username_default.getConstantState();
@@ -168,11 +181,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
 
         HashMap<String, String> map = new HashMap<String, String>();
-        map.put("user", user);
-        map.put("password",password);
+        map.put("username", user);
+        map.put("password", password);
+        JSONObject jsonObject = new JSONObject(map);
 
-        Task task = new Task(AppUtil.LOGIN_VERIFY, map, new HttpListener(this));
-        IOManager.getInstance(this).add_task_start(task);
+        JNIClass.encoding(jsonObject.toString());
+        //Task task = new Task(AppUtil.LOGIN_VERIFY, map, new HttpListener(this));
+        //IOManager.getInstance(this).add_task_start(task);
     }
 
     @Override

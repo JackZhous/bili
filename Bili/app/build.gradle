@@ -10,6 +10,12 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+
+        ndk{
+            moduleName "myjni"          //so文件名
+            ldLibs "log"                //android 输出日志库
+            abiFilters "armeabi" , "armeabi-v7a", "x86"     //cpu框架
+        }
     }
     buildTypes {
         release {

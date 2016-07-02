@@ -122,7 +122,7 @@ public class IOManager {
         if(null == queue){
             queue = Volley.newRequestQueue(activity.getApplicationContext());
         }
-
+        JLog.default_print("start task");
         queue.add(task);
     }
 
