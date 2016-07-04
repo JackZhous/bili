@@ -97,7 +97,7 @@ static unsigned char invsBox[256] =
  * Method:    encoding
  * Signature: (Ljava/lang/String;)Ljava/lang/String;
  */
-JNIEXPORT jstring JNICALL Java_com_jack_zhou_bili_util_JNIClass_encoding
+JNIEXPORT jbyteArray JNICALL Java_com_jack_zhou_bili_util_JNIClass_encoding
   (JNIEnv *, jclass, jstring);
 
 /*
@@ -106,7 +106,9 @@ JNIEXPORT jstring JNICALL Java_com_jack_zhou_bili_util_JNIClass_encoding
  * Signature: (Ljava/lang/String;)Ljava/lang/String;
  */
 JNIEXPORT jstring JNICALL Java_com_jack_zhou_bili_util_JNIClass_decoding
-  (JNIEnv *, jclass, jstring);
+  (JNIEnv *, jclass, jbyteArray);
+
+
 
 #ifdef __cplusplus
 }

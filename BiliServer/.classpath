@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="src">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="/home/jackzhous/document/project/git/bili1/bili/BiliServer/libs"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7">
 		<attributes>
 			<attribute name="owner.project.facets" value="java"/>
@@ -13,5 +17,7 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/json-20151123.jar"/>
 	<classpathentry kind="lib" path="libs/mysql-connector-java-5.1.39-bin.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/mysql-connector-java-5.1.39-bin.jar"/>
+	<classpathentry kind="lib" path="libs/libmyjni.so"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/libmyjni.so"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

@@ -1,4 +1,4 @@
-package com.jack.zhou.bili.util;
+package com.jack.zhou.bili;
 
 /**
  * Created by jackzhous on 16-7-2.

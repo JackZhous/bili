@@ -185,9 +185,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         map.put("password", password);
         JSONObject jsonObject = new JSONObject(map);
 
-        JNIClass.encoding(jsonObject.toString());
-        //Task task = new Task(AppUtil.LOGIN_VERIFY, map, new HttpListener(this));
-        //IOManager.getInstance(this).add_task_start(task);
+        byte[] b = JNIClass.encoding(jsonObject.toString());
+
+        HashMap<String, String> login_info = new HashMap<String, String>();
+        login_info.put("login", new String(b));
+        Task task = new Task(AppUtil.LOGIN_VERIFY, login_info, new HttpListener(this));
+        IOManager.getInstance(this).add_task_start(task);
     }
 
     @Override

@@ -329,7 +329,7 @@ unsigned char * decodeData(unsigned char* input){
 	return input;
 }
 
-JNIEXPORT jstring JNICALL Java_com_jack_zhou_bili_util_JNIClass_encoding(JNIEnv *env, jclass jobj, jstring jstr){
+JNIEXPORT jbyteArray JNICALL Java_com_jack_zhou_bili_util_JNIClass_encoding(JNIEnv *env, jclass jobj, jstring jstr){
 	const unsigned char *data = (*env)->GetStringUTFChars(env, jstr, NULL);
 	if(NULL == data){
 		LOGI("user info----name:%s, age:%d, sex:%s.", "null", 18, "男");
@@ -339,20 +339,25 @@ JNIEXPORT jstring JNICALL Java_com_jack_zhou_bili_util_JNIClass_encoding(JNIEnv 
 	LOGI("primary data --- : %s", data);
 	unsigned char *input = encodeData(data);
 
-	LOGI("------------------- ---- : %s", "---");
-
-	//encodeData(input);
 	LOGI("enoding data ---- : %s", input);
 
-
-	LOGI("decoding data ---- : %s", decodeData(input));
-	jstring  ret = (*env)->NewStringUTF(env, input);
+	jbyteArray array = (*env)->NewByteArray(env, strlen(input));
+	(*env)->SetByteArrayRegion(env, array, 0, strlen(input), input);
 	free(input);
-	return ret;
+	return array;
 }
 
 
 
-JNIEXPORT jstring JNICALL Java_com_jack_zhou_bili_util_JNIClass_decoding(JNIEnv *env, jclass jobj, jstring jstr){
+JNIEXPORT jstring JNICALL Java_com_jack_zhou_bili_util_JNIClass_decoding(JNIEnv *env, jclass jobj, jbyteArray jbyte){
+	const char *data = (*env)->GetByteArrayElements(env, jbyte, NULL);
+	if(data == NULL){
+		LOGI("decoding error %s", "null");
+		return (*env)->NewStringUTF(env,"null");
+	}
 
+	LOGI("decoding data ---- : %s", decodeData(data));
+
+	return (*env)->NewStringUTF(env, "asda");
 }
+

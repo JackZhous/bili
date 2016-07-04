@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONObject;
 
 import com.jack.data.MysqlUtil;
+import com.jack.zhou.bili.util.JNIClass;
 
 /**
  * Servlet implementation class TestServlet
@@ -50,7 +51,7 @@ public class TestServlet extends HttpServlet {
 		System.out.println("++++++++++++++++===");
 		System.out.println(request.getParameter("JSON"));
 		System.out.println(request.getParameter("username") + request.toString());
-		System.out.println(request.getParameter("password"));
+		System.out.println(request.getParameter("login") + "  this is login");
 		System.out.println("---------------------");
 		
 		response.setCharacterEncoding("UTF-8");
@@ -60,12 +61,22 @@ public class TestServlet extends HttpServlet {
 		map.put("result", "ok");
 		map.put("reult", "欧克");
 		
+		System.out.println("sadfjkl" + System.getProperty("java.library.path"));
 		JSONObject sjon = new JSONObject(map);
 		System.out.println("sjon " + sjon.toString());
 		out.write(sjon.toString());
 		out.flush();
 		out.close();
+		
+		
+		String tt = request.getParameter("login");
+		System.out.println("primary data is " + tt);
+		byte[] b = tt.getBytes();
+		System.out.println("primary byte data is " + b);
+		String str = JNIClass.decoding(b);
+		System.out.println("string is "+ str);
 	//	MysqlUtil.getInstance().init();
 	}
 
 }
+
