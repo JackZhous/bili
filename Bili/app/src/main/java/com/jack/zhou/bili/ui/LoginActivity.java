@@ -1,6 +1,7 @@
 package com.jack.zhou.bili.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -167,10 +168,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
 
             case R.id.regist:
+                registerUser();
                 break;
         }
     }
 
+
+    private void registerUser(){
+        Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+        this.startActivity(intent);
+    }
+
+
+    /**
+     * 进入登录  向服务器发送登录信息
+     */
     private void userLogin(){
         String user = username.getText().toString();
         String password = passwd.getText().toString();

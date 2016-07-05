@@ -3,7 +3,7 @@ package com.jack.zhou.bili.util;
 import android.util.Log;
 
 /**
- * Created by "sinlov" on 2016/6/14.
+ * Created by "jackzhosu" on 2016/6/14.
  */
 public class JLog {
 
@@ -17,9 +17,16 @@ public class JLog {
         }
     }
 
-    public static void print(String TAG, String msg){
+    public static void print_info(String TAG, String msg){
         if(DEBUG_MODE){
             Log.i(TAG, "--- " + msg + " ---");
+        }
+    }
+
+
+    public static void print_error(String tag, String msg, Throwable ex){
+        if(DEBUG_MODE){
+            Log.e(tag, msg, ex);
         }
     }
 
