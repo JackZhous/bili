@@ -16,7 +16,9 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.jack.zhou.bili.R;
+import com.jack.zhou.bili.exception.CrashHandler;
 import com.jack.zhou.bili.util.AppUtil;
+import com.jack.zhou.bili.util.FileUtil;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -49,6 +51,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        CrashHandler.getInstance(this);
     }
 
     /**

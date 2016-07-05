@@ -47,5 +47,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler{
     @Override
     public void uncaughtException(Thread thread, Throwable ex) {
         JLog.print_error(TAG, ex.getMessage(), ex);
+
+
     }
 }

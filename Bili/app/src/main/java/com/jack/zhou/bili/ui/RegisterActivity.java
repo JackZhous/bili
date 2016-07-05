@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.jack.zhou.bili.R;
+import com.jack.zhou.bili.util.AppUtil;
 
 /**
  * 用户注册界面
@@ -17,13 +18,14 @@ public class RegisterActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        AppUtil.integrationNotifcationBar(this);
         initLayoutResouce();
     }
 
 
     private void initLayoutResouce(){
 
+        this.setContentView(R.layout.activity_register);
         Toolbar login_bar = (Toolbar) this.findViewById(R.id.login_bar);
         setSupportActionBar(login_bar);
         login_bar.setTitle("注册账号");
@@ -31,6 +33,7 @@ public class RegisterActivity extends AppCompatActivity{
         ActionBar supportActionBar = getSupportActionBar();
         if (null != supportActionBar) {
             supportActionBar.setDisplayHomeAsUpEnabled(true);       //使用toolbar左上角图标可点击可显示
+            supportActionBar.setTitle("注册账号");
         }
         //点击返回  回到主页
         login_bar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -40,7 +43,7 @@ public class RegisterActivity extends AppCompatActivity{
             }
         });
 
-        this.setContentView(R.layout.activity_register);
+
     }
 
 
