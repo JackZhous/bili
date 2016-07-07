@@ -33,10 +33,12 @@ import android.widget.TextView;
 import com.jack.zhou.bili.R;
 import com.jack.zhou.bili.util.AppUtil;
 import com.jack.zhou.bili.util.JLog;
+import com.jack.zhou.bili.util.XMLUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
@@ -64,9 +66,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         AppUtil.integrationNotifcationBar(this);
-        initLayoutResouce();
+
+        XMLUtil.getInstance(this).init();               //初始化数据模块
 
         initSMSSDK();
+
+        initLayoutResouce();
     }
 
     /**
@@ -93,6 +98,28 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     JLog.default_print("获取短信验证码成功");
                 }else if(event == SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES){
                     JLog.default_print("获取短信支持的国家列表");
+                    System.out.println("国家数据："+SMSSDK.getGroupedCountryList());
+                    String ct = data.toString();
+
+                    String countyList = "";
+                    HashMap<Character, ArrayList<String[]>> first = SMSSDK.getGroupedCountryList();
+                    System.out.println("第一层数组："+first);
+                    Set set=first.keySet();
+                    for(Object obj : set){
+//                      System.out.println("键:"+obj+"  值:"+first.get(obj));
+                        ArrayList<String[]> second=first.get(obj);
+                        System.out.println("第二层数组："+second);
+                        for(int i = 0;i<second.toArray().length;i++){
+                            String[] thirst =second.get(i);
+                            System.out.println("第三层数组："+thirst);
+                            System.out.println("单个国家字符："+thirst[0]+"和"+thirst[1]);
+                            String str=thirst[0]+"----------"+thirst[1]+"；\n";
+                            countyList = countyList+str;
+                        }
+
+                    }
+                    JLog.default_print(countyList);
+
                 }
             }else{
                 JLog.default_print("短信sdk程序异常");
