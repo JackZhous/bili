@@ -15,6 +15,7 @@ import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.jack.zhou.bili.exception.CrashHandler;
 import com.jack.zhou.bili.util.AppUtil;
 import com.jack.zhou.bili.util.JLog;
 
@@ -46,6 +47,7 @@ public class SplashActivity extends Activity {
         window.setAttributes(wparams);
 
         initView();
+        CrashHandler.getInstance(this);
     }
 
 
@@ -53,7 +55,8 @@ public class SplashActivity extends Activity {
      * 开启主类
      */
     private  void startMainActivity(){
-        Intent intent = new Intent(this,MainActivity.class);
+        //RegisterActivity.class
+        Intent intent = new Intent(this,RegisterActivity.class);
         startActivity(intent);
         finish();
     }

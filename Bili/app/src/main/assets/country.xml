@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<countrys>
+    <country>
+        <name>中国</name>
+        <phone>86</phone>
+    </country>
+
+    <country>
+        <name>美图</name>
+        <phone>1</phone>
+    </country>
+
+    <country>
+        <name>韩国</name>
+        <phone>82</phone>
+    </country>
+
+    <country>
+        <name>中国台湾</name>
+        <phone>886</phone>
+    </country>
+
+    <country>
+        <name>中国香港</name>
+        <phone>852</phone>
+    </country>
+
+    <country>
+        <name>日本</name>
+        <phone>81</phone>
+    </country>
+
+    <country>
+        <name>新加坡</name>
+        <phone>65</phone>
+    </country>
+
+    <country>
+        <name>泰国</name>
+        <phone>66</phone>
+    </country>
+
+    <country>
+        <name>土库曼斯坦</name>
+        <phone>993</phone>
+    </country>
+
+    <country>
+        <name>乌克兰</name>
+        <phone>380</phone>
+    </country>
+
+
+    <country>
+        <name>阿塞拜疆</name>
+        <phone>994</phone>
+    </country>
+
+    <country>
+        <name>比利时</name>
+        <phone>32</phone>
+    </country>
+
+    <country>
+        <name>中非共和国</name>
+        <phone>236</phone>
+    </country>
+
+    <country>
+        <name>加拿大</name>
+        <phone>237</phone>
+    </country>
+
+    <country>
+        <name>缅甸</name>
+        <phone>95</phone>
+    </country>
+</countrys>

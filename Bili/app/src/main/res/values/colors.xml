@@ -7,4 +7,7 @@
     <color name="zise">#ff00ff</color>
     <color name="dark_zhi">#CD2990</color>
     <color name="white">#F7F7F7</color>
+    <color name="black">#0A0A0A</color>
+    <color name="gray">#ADADAD</color>
+    <color name="dark_red">#EEA9B8</color>
 </resources>

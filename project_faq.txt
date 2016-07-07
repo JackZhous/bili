@@ -1,0 +1,8 @@
+1. AlertDialog使用setView时，第二次new AlertDialog报错，The specified child already has a parent. You must call removeView() on the child's parent first.
+	错误原因：
+		多次调用AlertDialog的setView是同一个view对象； 而AlertDialog在show的时候会将这个view对象绑定一个builder，当下次在使用这个view去显示绑定新的builder时，就会说有多个parents，提示你必须在其父组件上remove这个子view
+		
+	解决办法：
+		第一种： 把view设置为局部变量，每次使用的都不是同一个view
+		第二种： 就是使用完dialog后，都移除掉这个view，解绑定；
+		第三种： 就是把你的AlertDialog设置全局变量，每次更新你view里面的内容就行了

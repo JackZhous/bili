@@ -2,8 +2,12 @@ package com.jack.zhou.bili.exception;
 
 import android.app.Activity;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.jack.zhou.bili.util.FileUtil;
 import com.jack.zhou.bili.util.JLog;
+
+import java.io.File;
 
 /**
  * 异常捕获类
@@ -48,6 +52,33 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler{
     public void uncaughtException(Thread thread, Throwable ex) {
         JLog.print_error(TAG, ex.getMessage(), ex);
 
+        //开发者没处理，就交给系统默认的捕获器执行处理
+        if((!handlerException(ex)) && mDefaultExcHandler != null){
+            mDefaultExcHandler.uncaughtException(thread, ex);
 
+            Toast.makeText(mActivity, "程序异常，即将自动关闭", Toast.LENGTH_SHORT).show();
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            /*System.exit(0);
+            android.os.Process.killProcess(android.os.Process.myPid());*/
+        }
+    }
+
+    /**
+     * 开发者异常执行处理
+     * @param ex
+     * @return
+     */
+    private boolean handlerException(Throwable ex){
+        if(null == ex){
+
+            return false;
+        }
+        //保存文件或者上传服务器后台分析
+        FileUtil.getInstance(mActivity).saveFile("crash.txt",ex.getLocalizedMessage());
+        return false;
     }
 }

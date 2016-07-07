@@ -10,6 +10,8 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 /**
@@ -71,7 +73,7 @@ public class FileUtil {
         String file = fPath.getPath() + File.separator + filename;
         try {
             writer = new FileWriter(file, true);
-
+            writer.write(new SimpleDateFormat("yyyy-MM-dd \n").format(new Date()));
             writer.write(content);
             writer.close();
         } catch (FileNotFoundException e) {

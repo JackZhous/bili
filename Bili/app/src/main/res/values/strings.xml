@@ -21,6 +21,8 @@
     <string name="login">登陆</string>
     <string name="registerinfo">请确认你的国家和地区并输入手机号</string>
     <string name="china">中国大陆</string>
-    <string name="quhao">86</string>
-    <string name="phone">请输入手机号</string>
+    <string name="quhao">+86</string>
+    <string name="phone">请输入常用手机号</string>
+    <string name="btn_verify">获取验证码</string>
+    <string name="tv_verify_des">点击"获取验证码"按钮，即表示同意注册协议</string>
 </resources>
