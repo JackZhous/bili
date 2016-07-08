@@ -34,6 +34,7 @@ public class XMLUtil extends DefaultHandler{
     public XMLUtil(Context context){
         super();
         this.context = context;
+        Country.initSelectedIcon(context);
     }
 
 
@@ -121,4 +122,9 @@ public class XMLUtil extends DefaultHandler{
             country.setCountry_phone(value);
         }
     }
+
+    public ArrayList<Country> getCountryData(){
+        return array;
+    }
+
 }

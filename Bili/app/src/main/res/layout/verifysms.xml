@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="false">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+            android:theme="@style/AppTheme.AppBarOverlay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/verify_bar"
+            android:background="?attr/colorPrimary">                       <!-- &lt;!&ndash; ?attr表示使用该app主题所对应的属性&ndash;&gt;-->
+
+        </android.support.v7.widget.Toolbar>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:id="@+id/tv_info"
+            android:text="@string/tv_info"
+            android:layout_marginTop="@dimen/view_margin_top"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/view_margin_top"
+            android:text="+8618588431884"
+            android:id="@+id/tv_phone"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/ed_verify"
+            android:id="@+id/ed_verify"
+            android:layout_gravity="center"
+            style="?android:attr/textViewStyle"
+            android:background="@drawable/ed_verify"
+            android:layout_marginTop="@dimen/view_margin_top"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/remain_sec"
+            android:text="@string/tv_remain_sec"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/view_margin_top"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_next"
+            android:text="@string/btn_next"
+            android:gravity="center"
+            android:background="@drawable/btn"
+            android:layout_marginTop="@dimen/view_margin_top"
+            android:layout_marginRight="@dimen/view_margin_top"
+            android:layout_marginLeft="@dimen/view_margin_top"/>
+
+
+    </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

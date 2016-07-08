@@ -78,13 +78,6 @@
                     />
             </RelativeLayout>
 
-
-
-               <!-- <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/image1"
-                    android:src="@drawable/ic_login_username_default"/>-->
                 <EditText
                     android:id="@+id/username"
                     android:layout_width="match_parent"
