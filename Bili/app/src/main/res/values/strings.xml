@@ -27,6 +27,6 @@
     <string name="tv_verify_des">点击"获取验证码"按钮，即表示同意注册协议</string>
     <string name="tv_info">验证码已发送到一下手机，请在5分钟内完成注册</string>
     <string name="ed_verify">请输入验证码</string>
-    <string name="tv_remain_sec">59秒后重发</string>
+    <string name="tv_remain_sec">秒后重发</string>
     <string name="btn_next">下一步</string>
 </resources>

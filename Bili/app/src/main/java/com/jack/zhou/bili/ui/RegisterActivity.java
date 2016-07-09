@@ -1,9 +1,13 @@
 package com.jack.zhou.bili.ui;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.app.AlertDialog;
 
 import android.content.DialogInterface;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -55,6 +59,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private EditText ed_phone;      //电话
     private TextView phone_zhui;    //电话号码前缀
     private TextView country;       //国家
+    private TextView tv_phone_show; //提示语句
     private String appkey = "14ad7047d60ee";
     private String appsecrect = "4f8a62e8e4d3595b27a1ddc31ea3be47";
 
@@ -135,6 +140,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         ed_phone = (EditText)this.findViewById(R.id.ed_phone);
         phone_zhui = (TextView)this.findViewById(R.id.phone_zhui);
         country = (TextView)this.findViewById(R.id.country);
+        tv_phone_show = (TextView)findViewById(R.id.phone_show);
         btn_verify.setOnClickListener(this);
 
 
@@ -316,6 +322,45 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     public void getPhoneVerify(){
         String phone_no = ed_phone.getText().toString().trim();
         JLog.default_print("phone -- " + phone_no);
-        SMSSDK.getVerificationCode(countryList.get(selectedListId).getCountry_phone(), phone_no);
+        if(TextUtils.isEmpty(phone_no) || phone_no.length() != 11){
+            error_phone_animation();
+            return;
+        }
+        phone_no = phone_zhui.getText() + phone_no;
+        Intent intent = new Intent(RegisterActivity.this, VerifySMS.class);
+        intent.putExtra("phone_no", phone_no);
+        startActivityForResult(intent, AppUtil.FLAG_ACTIVITY);
+        //SMSSDK.getVerificationCode(countryList.get(selectedListId).getCountry_phone(), phone_no);
     }
+
+    /**
+     * 错误电话提示，一个横向动画
+     */
+    private void error_phone_animation(){
+        AnimatorSet set = new AnimatorSet();
+
+        ObjectAnimator objectAnimator1 = ObjectAnimator.ofFloat(ed_phone,"translationX", 0F, -10F,20F,-20F,10F).setDuration(300);
+        set.play(objectAnimator1);
+        set.start();
+
+        tv_phone_show.setText("请输入正确的手机号");
+        tv_phone_show.setTextColor(Color.RED);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode){
+            case AppUtil.FLAG_ACTIVITY:    //  是否关闭这个页面
+                boolean closed = data.getBooleanExtra(AppUtil.CLOSED_ACTIVTY, false);
+
+                if(closed){
+                    this.finish();
+                }
+        }
+    }
+
+
+
+
 }

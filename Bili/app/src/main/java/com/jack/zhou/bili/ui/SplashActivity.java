@@ -38,8 +38,6 @@ public class SplashActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         Window window = getWindow();
         AppUtil.integrationNotifcationBar(this);
         WindowManager.LayoutParams wparams = window.getAttributes();
@@ -56,7 +54,7 @@ public class SplashActivity extends Activity {
      */
     private  void startMainActivity(){
         //RegisterActivity.class
-        Intent intent = new Intent(this,VerifySMS.class);
+        Intent intent = new Intent(this,RegisterActivity.class);
         startActivity(intent);
         finish();
     }

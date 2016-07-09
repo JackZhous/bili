@@ -26,6 +26,9 @@ public class AppUtil {
     public static final int REQUEST_FAILED = 1;
     public static final int REQUEST_FERROR = 2;
 
+    public static final int FLAG_ACTIVITY = 3;              //activity启动之间的标识
+    public static final String CLOSED_ACTIVTY = "close_activity";
+
     //company ip -- 10.8.230.117   home ip -- 192.168.0.110
     private static final String BASE_URL = "http://192.168.189.129:8080/BiliServer/";
 
