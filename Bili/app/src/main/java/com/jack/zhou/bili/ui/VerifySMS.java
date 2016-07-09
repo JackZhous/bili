@@ -132,8 +132,9 @@ public class VerifySMS extends AppCompatActivity{
 
         //verify_error_animation();
         Intent intent = new Intent();
-        intent.putExtra(AppUtil.CLOSED_ACTIVTY, true);
-
+        intent.putExtra(AppUtil.CLOSED_ACTIVTY, false);
+        setResult(AppUtil.FLAG_ACTIVITY, intent);
+        finish();
     }
 
 

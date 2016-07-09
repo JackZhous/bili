@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.view.KeyEvent;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -23,6 +24,7 @@ import com.jack.zhou.bili.util.FileUtil;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private long exit_time;                                 //退出时间
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +58,7 @@ public class MainActivity extends AppCompatActivity
 
     /**
      * activity_main里面的组件点击事件
-     * @param 被点击的view
+     * @param
      */
     public void onViewClick(View v) {
 
@@ -116,5 +118,28 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    /**
+     * 点击两次退出应用
+     * @param keyCode
+     * @param event
+     * @return
+     */
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK){
+            if(System.currentTimeMillis() - exit_time > 2000){
+                Toast.makeText(MainActivity.this, "再按一次退出应用", Toast.LENGTH_SHORT).show();
+            }else{
+                MainActivity.this.finish();
+                System.exit(0);
+                android.os.Process.killProcess(android.os.Process.myPid());
+            }
+            exit_time = System.currentTimeMillis();
+            return false;
+        }
+
+        return super.onKeyUp(keyCode, event);
     }
 }

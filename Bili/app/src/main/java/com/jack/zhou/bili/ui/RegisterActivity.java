@@ -75,6 +75,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         AppUtil.integrationNotifcationBar(this);
 
         XMLUtil.getInstance(this).init();               //初始化数据模块
+        countryList = XMLUtil.getInstance(this).getCountryData();                   //显示数据
 
         initSMSSDK();
 
@@ -100,7 +101,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             if(SMSSDK.RESULT_COMPLETE == result){
                 JLog.default_print("短信回调完成");
                 if(event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE){
-                    JLog.default_print("提交短信验证码成功");
+                    JLog.default_print("submit message code ");
+                    JLog.default_print("data " + data);
                 }else if(event == SMSSDK.EVENT_GET_VERIFICATION_CODE){
                     JLog.default_print("获取短信验证码成功");
                 }else if(event == SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES){
@@ -207,7 +209,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
      */
     private ListView initListCountryView(){
 
-        countryList = XMLUtil.getInstance(this).getCountryData();                   //显示数据
         countryList.get(0).setisSelectId(true);                                     //默认显示第一个
         listCountry = new ListView(this);                                           //listview
         lisAdapter = new MyListAdapter(countryList);
@@ -326,11 +327,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             error_phone_animation();
             return;
         }
-        phone_no = phone_zhui.getText() + phone_no;
+        /*phone_no = phone_zhui.getText() + phone_no;
         Intent intent = new Intent(RegisterActivity.this, VerifySMS.class);
         intent.putExtra("phone_no", phone_no);
-        startActivityForResult(intent, AppUtil.FLAG_ACTIVITY);
-        //SMSSDK.getVerificationCode(countryList.get(selectedListId).getCountry_phone(), phone_no);
+        startActivityForResult(intent, AppUtil.FLAG_ACTIVITY);*/
+
+        SMSSDK.getVerificationCode(countryList.get(selectedListId).getCountry_phone(), phone_no);
     }
 
     /**
@@ -350,8 +352,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        JLog.default_print("requestCode = " + requestCode);
         switch (requestCode){
-            case AppUtil.FLAG_ACTIVITY:    //  是否关闭这个页面
+            case AppUtil.FLAG_ACTIVITY:    //  Activity之间传递的信息量
+                if(null == data){
+                    return;
+                }
                 boolean closed = data.getBooleanExtra(AppUtil.CLOSED_ACTIVTY, false);
 
                 if(closed){
