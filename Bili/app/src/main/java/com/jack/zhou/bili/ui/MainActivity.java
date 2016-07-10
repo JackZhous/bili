@@ -20,6 +20,7 @@ import com.jack.zhou.bili.R;
 import com.jack.zhou.bili.exception.CrashHandler;
 import com.jack.zhou.bili.util.AppUtil;
 import com.jack.zhou.bili.util.FileUtil;
+import com.jack.zhou.bili.util.JLog;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -79,7 +80,14 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            if(System.currentTimeMillis() - exit_time > 2000){
+                Toast.makeText(MainActivity.this, "再按一次退出应用", Toast.LENGTH_SHORT).show();
+            }else{
+                MainActivity.this.finish();
+                System.exit(0);
+                android.os.Process.killProcess(android.os.Process.myPid());
+            }
+            exit_time = System.currentTimeMillis();
         }
     }
 
@@ -120,26 +128,34 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    /**
-     * 点击两次退出应用
-     * @param keyCode
-     * @param event
-     * @return
-     */
-    @Override
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if(keyCode == KeyEvent.KEYCODE_BACK){
-            if(System.currentTimeMillis() - exit_time > 2000){
-                Toast.makeText(MainActivity.this, "再按一次退出应用", Toast.LENGTH_SHORT).show();
-            }else{
-                MainActivity.this.finish();
-                System.exit(0);
-                android.os.Process.killProcess(android.os.Process.myPid());
-            }
-            exit_time = System.currentTimeMillis();
-            return false;
-        }
 
-        return super.onKeyUp(keyCode, event);
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JLog.default_print("onPause");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        JLog.default_print("onRestart");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        JLog.default_print("onStop");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        JLog.default_print("onDestroy");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JLog.default_print("onResume");
     }
 }

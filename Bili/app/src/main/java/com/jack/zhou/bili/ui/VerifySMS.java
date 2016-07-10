@@ -21,11 +21,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.jack.zhou.bili.R;
+import com.jack.zhou.bili.inter.SMSModule;
 import com.jack.zhou.bili.util.AppUtil;
+import com.jack.zhou.bili.util.JLog;
 
 import org.w3c.dom.Text;
 
 import java.sql.Time;
+
+import cn.smssdk.SMSSDK;
 
 
 /**
@@ -43,11 +47,15 @@ public class VerifySMS extends AppCompatActivity{
     private TextView tv_time;                                   //剩余时间
     private String time_remain;
     private Button btn_next;                                    // 下一步 按键
-
+    private SMSModule smsModule;
+    private String country, phone_no;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        smsModule = SMSModule.getInstance(this);
+        smsModule.setMhandler(handler);
+        smsModule.registerHandler();
 
         initLayoutResource();
     }
@@ -69,7 +77,9 @@ public class VerifySMS extends AppCompatActivity{
 
         //拿到手机号
         Intent intent = getIntent();
-        tv_phone.setText(intent.getStringExtra("phone_no"));
+        country = intent.getStringExtra("country");
+        phone_no = intent.getStringExtra("phone_no");
+        tv_phone.setText("+"+country+phone_no);
 
         handler.sendEmptyMessageDelayed(TIME_TASK, 1000);                                                 //延迟一秒发送  用于验证码倒计时技术
 
@@ -99,17 +109,33 @@ public class VerifySMS extends AppCompatActivity{
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            String str_tv_time = null;
-            if(msg.what == TIME_TASK){
-                time--;
-                if(time > 0){
-                    str_tv_time = time+time_remain;
-                    handler.sendEmptyMessageDelayed(TIME_TASK, 1000);
-                }else{
-                    str_tv_time = "重发验证码";
-                    tv_time.setTextColor(Color.RED);
-                }
-                tv_time.setText(str_tv_time);
+
+            switch (msg.what){
+                case TIME_TASK:
+                    String str_tv_time = null;
+                    time--;
+                    if(time > 0){
+                        str_tv_time = time+time_remain;
+                        handler.sendEmptyMessageDelayed(TIME_TASK, 1000);
+                    }else{
+                        str_tv_time = "重发验证码";
+                        tv_time.setTextColor(Color.RED);
+                    }
+                    tv_time.setText(str_tv_time);
+                    break;
+
+                case AppUtil.SMS_SUBMIT_VERIFICATION_CODE:                  //短信验证成功，将关闭注册之前的界面，并开启个人中心界面
+                    Intent intent = new Intent();
+                    intent.putExtra(AppUtil.CLOSED_ACTIVTY, true);
+                    setResult(AppUtil.FLAG_ACTIVITY, intent);
+                    finish();
+                    break;
+
+                case AppUtil.SMS_ERROR:
+                    String error = (String)msg.obj;
+                    JLog.default_print(error);
+                    verify_error_animation(error);
+                    break;
             }
         }
     };
@@ -117,30 +143,32 @@ public class VerifySMS extends AppCompatActivity{
     /**
      * 验证错误动画,以及设置响应的提示信息
      */
-    private void verify_error_animation(){
+    private void verify_error_animation(String msg){
         AnimatorSet set = new AnimatorSet();
 
         ObjectAnimator objectAnimator1 = ObjectAnimator.ofFloat(ed_verify,"translationX", 0F, -10F,20F,-20F,10F).setDuration(300);
         set.play(objectAnimator1);
         set.start();
-        tv_verofy_show.setText("验证码错误");
+        tv_verofy_show.setText(msg);
         tv_verofy_show.setTextColor(Color.RED);
     }
 
-
+    /**
+     * 按键监听  用于验证码校验
+     * @param v
+     */
     public void onVerifyClick(View v){
 
         //verify_error_animation();
-        Intent intent = new Intent();
-        intent.putExtra(AppUtil.CLOSED_ACTIVTY, false);
-        setResult(AppUtil.FLAG_ACTIVITY, intent);
-        finish();
+        /*;*/
+        SMSSDK.submitVerificationCode(country, phone_no, ed_verify.getText().toString().trim());
     }
 
 
+    @Override
+    protected void onStop() {
+        super.onStop();
 
-
-
-
-
+        smsModule.unregisterSMSHandler();
+    }
 }

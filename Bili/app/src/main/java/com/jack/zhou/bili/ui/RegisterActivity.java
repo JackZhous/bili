@@ -10,6 +10,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.ActionBar;
@@ -37,10 +39,13 @@ import android.widget.TextView;
 
 import com.jack.zhou.bili.R;
 import com.jack.zhou.bili.bean.Country;
+import com.jack.zhou.bili.inter.SMSModule;
 import com.jack.zhou.bili.util.AppUtil;
 import com.jack.zhou.bili.util.JLog;
 import com.jack.zhou.bili.util.XMLUtil;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
@@ -60,14 +65,16 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private TextView phone_zhui;    //电话号码前缀
     private TextView country;       //国家
     private TextView tv_phone_show; //提示语句
-    private String appkey = "14ad7047d60ee";
-    private String appsecrect = "4f8a62e8e4d3595b27a1ddc31ea3be47";
+
 
     private ListView listCountry;
     private int selectedListId = 0;
     private MyListAdapter lisAdapter;
     private AlertDialog dialog;
     private ArrayList<Country> countryList;
+
+
+    private SMSModule smsModule;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,44 +83,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         XMLUtil.getInstance(this).init();               //初始化数据模块
         countryList = XMLUtil.getInstance(this).getCountryData();                   //显示数据
-
-        initSMSSDK();
+        smsModule = SMSModule.getInstance(this);
+        smsModule.setMhandler(mHandler);
+        smsModule.registerHandler();
 
         initLayoutResouce();
-    }
 
-    /**
-     * 初始化短信sdk
-     */
-    private void initSMSSDK(){
-        SMSSDK.initSDK(this, appkey, appsecrect);
-
-
-        SMSSDK.registerEventHandler(handler);
-
-        SMSSDK.getSupportedCountries();
     }
 
 
-    private  EventHandler handler = new EventHandler(){
-        @Override
-        public void afterEvent(int event, int result, Object data) {
-            if(SMSSDK.RESULT_COMPLETE == result){
-                JLog.default_print("短信回调完成");
-                if(event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE){
-                    JLog.default_print("submit message code ");
-                    JLog.default_print("data " + data);
-                }else if(event == SMSSDK.EVENT_GET_VERIFICATION_CODE){
-                    JLog.default_print("获取短信验证码成功");
-                }else if(event == SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES){
-                    JLog.default_print("获取短信支持的国家列表");
-                }
-            }else{
-                JLog.default_print("短信sdk程序异常");
-                ((Throwable)data).printStackTrace();
-            }
-        }
-    };
 
     /**
      * 初始化布局资源
@@ -218,7 +196,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 JLog.default_print("item " + position + "was click");
                 //第一次和第二次选择的item不一样，要修改listview的数据里面的icon状态
-                if(position != selectedListId){
+                if (position != selectedListId) {
                     countryList.get(position).setisSelectId(true);
                     countryList.get(selectedListId).setisSelectId(false);               //交换icon颜色
                     //显示的文字国家名和区号
@@ -304,7 +282,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         super.onDestroy();
 
-        SMSSDK.unregisterEventHandler(handler);
+        smsModule.unregisterSMSHandler();
     }
 
 
@@ -319,18 +297,17 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-
+    /**
+     * 按键监听  用于发送验证码
+     */
     public void getPhoneVerify(){
         String phone_no = ed_phone.getText().toString().trim();
         JLog.default_print("phone -- " + phone_no);
         if(TextUtils.isEmpty(phone_no) || phone_no.length() != 11){
-            error_phone_animation();
+            error_phone_animation(null);
             return;
         }
-        /*phone_no = phone_zhui.getText() + phone_no;
-        Intent intent = new Intent(RegisterActivity.this, VerifySMS.class);
-        intent.putExtra("phone_no", phone_no);
-        startActivityForResult(intent, AppUtil.FLAG_ACTIVITY);*/
+
 
         SMSSDK.getVerificationCode(countryList.get(selectedListId).getCountry_phone(), phone_no);
     }
@@ -338,14 +315,18 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     /**
      * 错误电话提示，一个横向动画
      */
-    private void error_phone_animation(){
+    private void error_phone_animation(String errormsg){
         AnimatorSet set = new AnimatorSet();
 
         ObjectAnimator objectAnimator1 = ObjectAnimator.ofFloat(ed_phone,"translationX", 0F, -10F,20F,-20F,10F).setDuration(300);
         set.play(objectAnimator1);
         set.start();
+        if(null != errormsg){
+            tv_phone_show.setText(errormsg);
+        }else{
+            tv_phone_show.setText("请输入正确的手机号");
 
-        tv_phone_show.setText("请输入正确的手机号");
+        }
         tv_phone_show.setTextColor(Color.RED);
     }
 
@@ -366,7 +347,27 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-
+    /**
+     * 用于接收短信模块发回来的信息
+     */
+    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case AppUtil.SMS_GET_VERIFICATION_CODE:             //获取短信验证码成功
+                    String phone_no = ed_phone.getText().toString().trim();
+                    Intent intent = new Intent(RegisterActivity.this, VerifySMS.class);
+                    intent.putExtra("country", countryList.get(selectedListId).getCountry_phone());
+                    intent.putExtra("phone_no",phone_no);
+                    startActivityForResult(intent, AppUtil.FLAG_ACTIVITY);
+                    break;
+                case AppUtil.SMS_ERROR:                             //错误了
+                    String str = (String)msg.obj;
+                    error_phone_animation(str);
+                    break;
+            }
+        }
+    };
 
 
 }
