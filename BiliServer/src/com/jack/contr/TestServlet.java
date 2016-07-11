@@ -13,9 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
-import com.jack.data.MysqlUtil;
-import com.jack.zhou.bili.util.JNIClass;
-
 /**
  * Servlet implementation class TestServlet
  */
@@ -73,8 +70,8 @@ public class TestServlet extends HttpServlet {
 		System.out.println("primary data is " + tt);
 		byte[] b = tt.getBytes();
 		System.out.println("primary byte data is " + b);
-		String str = JNIClass.decoding(b);
-		System.out.println("string is "+ str);
+		//String str = JNIClass.decoding(b);
+		//System.out.println("string is "+ str);
 	//	MysqlUtil.getInstance().init();
 	}
 

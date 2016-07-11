@@ -2,6 +2,7 @@ package com.jack.zhou.bili.network;
 
 
 import android.app.Activity;
+import android.content.Context;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
@@ -29,16 +30,16 @@ import java.util.Map;
 public class IOManager {
     private static IOManager instance = null;
 
-    private Activity activity;
+    private Context activity;
     private RequestQueue queue;                 //网络请求
 
     public  static final String url = "http://192.168.0.110:8080/BiliServer/servlet/testservlet";
-    private IOManager(Activity activity){
+    private IOManager(Context activity){
         this.activity = activity;
         queue = Volley.newRequestQueue(activity.getApplicationContext());
     }
 
-    public static synchronized IOManager getInstance(Activity activity){
+    public static synchronized IOManager getInstance(Context activity){
         if(null == instance){
             instance = new IOManager(activity);
         }

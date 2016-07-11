@@ -1,5 +1,6 @@
 package com.jack.zhou.bili.ui;
 
+import android.app.Service;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import com.jack.zhou.bili.R;
 import com.jack.zhou.bili.exception.CrashHandler;
+import com.jack.zhou.bili.network.HeartBreakService;
 import com.jack.zhou.bili.util.AppUtil;
 import com.jack.zhou.bili.util.FileUtil;
 import com.jack.zhou.bili.util.JLog;
@@ -30,6 +32,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
         AppUtil.integrationNotifcationBar(this);
         setContentView(R.layout.activity_main);
@@ -54,7 +57,9 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
+        JLog.default_print("MainActivity onCreate");
+        Intent intent = new Intent(MainActivity.this, HeartBreakService.class);
+        startService(intent);
     }
 
     /**
@@ -65,7 +70,6 @@ public class MainActivity extends AppCompatActivity
 
         switch(v.getId()){
             case R.id.user_icon:
-                Toast.makeText(MainActivity.this,"你点击了usericon", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
                 break;

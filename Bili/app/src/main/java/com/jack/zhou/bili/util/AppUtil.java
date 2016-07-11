@@ -28,6 +28,8 @@ public class AppUtil {
 
     public static final int FLAG_ACTIVITY = 0x04;              //activity启动之间的标识
     public static final String CLOSED_ACTIVTY = "close_activity";
+    public static final String HEART_ACTION = "bili.heart.success";
+    public static final String HEART_ERROR = "bili.hear.error";
 
     //短信模块标志量
     public static final int SMS_SUBMIT_VERIFICATION_CODE = 0x05;
@@ -36,8 +38,9 @@ public class AppUtil {
     public static final int SMS_ERROR = 0x08;
 
     //company ip -- 10.8.230.117   home ip -- 192.168.0.110
-    private static final String BASE_URL = "http://192.168.189.129:8080/BiliServer/";
+    private static final String BASE_URL = "http://10.8.230.117:8080/BiliServer/";
 
     public static final String LOGIN_VERIFY = BASE_URL + "login/";
+    public static final String HEART_BREAK = BASE_URL + "heart";
 
 }
