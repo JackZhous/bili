@@ -113,6 +113,7 @@
                     android:textSize="17sp"
                     android:hint="@string/nickname_info"
                     android:gravity="left"
+                    android:id="@+id/ed_nickname"
                     android:background="@null"/>
             </LinearLayout>
 

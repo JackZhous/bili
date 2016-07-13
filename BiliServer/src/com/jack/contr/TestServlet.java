@@ -46,9 +46,9 @@ public class TestServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		System.out.println("postpost");
 		System.out.println("++++++++++++++++===");
-		System.out.println(request.getParameter("JSON"));
-		System.out.println(request.getParameter("username") + request.toString());
-		System.out.println(request.getParameter("login") + "  this is login");
+		System.out.println(request.getParameter("passwd"));
+		System.out.println(request.getParameter("nickname") + request.toString());
+		System.out.println(request.getParameter("phone") + "  this is login");
 		System.out.println("---------------------");
 		
 		response.setCharacterEncoding("UTF-8");
@@ -66,13 +66,6 @@ public class TestServlet extends HttpServlet {
 		out.close();
 		
 		
-		String tt = request.getParameter("login");
-		System.out.println("primary data is " + tt);
-		byte[] b = tt.getBytes();
-		System.out.println("primary byte data is " + b);
-		//String str = JNIClass.decoding(b);
-		//System.out.println("string is "+ str);
-	//	MysqlUtil.getInstance().init();
 	}
 
 }
