@@ -15,6 +15,7 @@ import com.jack.zhou.bili.util.JLog;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -75,6 +76,10 @@ public class Task extends StringRequest{
         catch (org.json.JSONException je) {
             return Response.error(new ParseError(je));
         }
+    }
+
+    public void setmData(HashMap<String, String > data){
+        this.mData = data;
     }
 
 }

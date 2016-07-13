@@ -57,9 +57,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        JLog.default_print("MainActivity onCreate");
-        Intent intent = new Intent(MainActivity.this, HeartBreakService.class);
-        startService(intent);
+
     }
 
     /**

@@ -54,7 +54,7 @@ public class SplashActivity extends Activity {
      */
     private  void startMainActivity(){
         //RegisterActivity.class
-        Intent intent = new Intent(this,MainActivity.class);
+        Intent intent = new Intent(this,SetPasswdActivity.class);
         startActivity(intent);
         finish();
     }

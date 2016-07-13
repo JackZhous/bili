@@ -36,11 +36,15 @@ public class AppUtil {
     public static final int SMS_GET_VERIFICATION_CODE = 0x06;
     public static final int SMS_GET_SUPPORTED_COUNTRIES = 0x07;
     public static final int SMS_ERROR = 0x08;
+    public static final int HANDLER_HEART_MSG = 0x09;                                   //心跳消息
 
     //company ip -- 10.8.230.117   home ip -- 192.168.0.110
-    private static final String BASE_URL = "http://10.8.230.117:8080/BiliServer/";
+    private static final String BASE_URL = "http://10.8.230.214:8080/BiliServer/";
 
     public static final String LOGIN_VERIFY = BASE_URL + "login/";
     public static final String HEART_BREAK = BASE_URL + "heart";
+
+
+
 
 }

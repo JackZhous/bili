@@ -29,4 +29,12 @@
     <string name="ed_verify">请输入验证码</string>
     <string name="tv_remain_sec">秒后重发</string>
     <string name="btn_next">下一步</string>
+    <string name="tv_passwd_info">设置密码后，你就可以使用手机号登陆bilibili</string>
+    <string name="tv_password">密码</string>
+    <string name="tv_password_info">6-16个字符以内，区分大小写</string>
+    <string name="tv_password_1">确认密码</string>
+    <string name="tv_password_info1">请再次输入</string>
+    <string name="nickname">昵称</string>
+    <string name="nickname_info">3-30个字符以内</string>
+    <string name="done">完成</string>
 </resources>
