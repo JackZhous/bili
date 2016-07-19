@@ -12,3 +12,6 @@
 	showself varchar(100),
 	extra varchar(200)
 	);
+	
+	
+	insert into bili_user (account, nickname, password, register_time, phone) value("123", "jackzhous111", "123123", "1980-1-2", "18588431884");

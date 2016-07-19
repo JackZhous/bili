@@ -128,6 +128,11 @@ public class VerifySMS extends AppCompatActivity{
                     Intent intent = new Intent();
                     intent.putExtra(AppUtil.CLOSED_ACTIVTY, true);
                     setResult(AppUtil.FLAG_ACTIVITY, intent);
+
+                    Intent intent1 = new Intent(VerifySMS.this, SetPasswdActivity.class);
+                    intent1.putExtra("country", country);
+                    intent1.putExtra("phone", phone_no);
+                    startActivity(intent1);
                     finish();
                     break;
 
@@ -159,8 +164,6 @@ public class VerifySMS extends AppCompatActivity{
      */
     public void onVerifyClick(View v){
 
-        //verify_error_animation();
-        /*;*/
         SMSSDK.submitVerificationCode(country, phone_no, ed_verify.getText().toString().trim());
     }
 

@@ -12,4 +12,15 @@ public class JNIClass {
     public native static byte[] encoding(String str);              //加密
 
     public native static String decoding(byte[] str);              //解密
+    
+    /**
+     * 获取用户的token,token算法为 MD5(用户电话号码 + "时间戳")
+     * @param uid
+     * @return
+     */
+    public static String getUserToken(String uid){
+    	
+    	return null;
+    }
+    
 }

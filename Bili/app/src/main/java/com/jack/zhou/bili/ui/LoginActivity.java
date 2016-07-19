@@ -109,7 +109,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         drawable_passwd_default.setBounds(0, 0, drawable_passwd_default.getIntrinsicWidth() - 35, drawable_passwd_default.getIntrinsicHeight() - 35);
         drawable_username_default.setBounds(0, 0, drawable_username_default.getIntrinsicWidth() - 35, drawable_username_default.getIntrinsicHeight() - 35);
         drawable_passwd_tint.setBounds(0, 0, drawable_passwd_tint.getIntrinsicWidth() - 35, drawable_passwd_tint.getIntrinsicHeight() - 35);
-        drawable_username_tint.setBounds(0, 0, drawable_username_tint.getIntrinsicWidth() - 35, drawable_username_tint.getIntrinsicHeight() - 35);
+        drawable_username_tint.setBounds(0, 0, drawable_username_tint.getIntrinsicWidth() - 35, drawable_username_tint.getIntrinsicHeight() - 35);          //setBounds 指定一个矩形区域  在此区域内作画
         username.setCompoundDrawables(drawable_username_default, null, null, null);
         passwd.setCompoundDrawables(drawable_passwd_default, null, null, null);
         username.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -176,7 +176,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void registerUser(){
         Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-        this.startActivity(intent);
+        startActivityForResult(intent, AppUtil.FLAG_ACTIVITY);
     }
 
 
@@ -213,5 +213,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onError(int code, String msg) {
 
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode){
+            case AppUtil.FLAG_ACTIVITY:    //  Activity之间传递的信息量
+                if(null == data){
+                    return;
+                }
+                boolean closed = data.getBooleanExtra(AppUtil.CLOSED_ACTIVTY, false);           //注册成功就关闭之前的注册页面
+
+                if(closed){
+                    this.finish();
+                }
+        }
     }
 }

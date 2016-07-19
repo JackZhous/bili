@@ -37,4 +37,13 @@
     <string name="nickname">昵称</string>
     <string name="nickname_info">3-30个字符以内</string>
     <string name="done">完成</string>
+    <string name="tv_can">恭喜！你现在可以：</string>
+    <string name="tv_can_more">升级到正式会员，你还可以：</string>
+    <string name="tv_barrage">发送普通弹幕</string>
+    <string name="tv_collect">收藏喜爱视频</string>
+    <string name="tv_barrage_spec">发送个性弹幕</string>
+    <string name="tv_video_comment">参与视频评论</string>
+    <string name="tv_video_coin">给视频投硬币</string>
+    <string name="tv_idol">投稿成为偶像</string>
+    <string name="bn_new_world">打开新世界的大门</string>
 </resources>

@@ -11,6 +11,7 @@
 
 package com.jack.zhou.bili.ui;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +21,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jack.zhou.bili.R;
 import com.jack.zhou.bili.inter.BiliCallback;
@@ -27,8 +29,12 @@ import com.jack.zhou.bili.inter.HttpListener;
 import com.jack.zhou.bili.network.IOManager;
 import com.jack.zhou.bili.network.Task;
 import com.jack.zhou.bili.util.AppUtil;
+import com.jack.zhou.bili.util.JLog;
 import com.jack.zhou.bili.util.JNIClass;
+import com.jack.zhou.bili.util.SharedPreferenceUtil;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.util.HashMap;
@@ -109,18 +115,39 @@ public class SetPasswdActivity extends AppCompatActivity implements BiliCallback
          * 构造注册信息
          */
         HashMap<String , String> data = new HashMap<>();
-        data.put("passwd", JNIClass.getMD5Char(passwd));                 //此处需要加密md5
+        data.put("task_flag", "register_user");
+        data.put("password", JNIClass.getMD5Char(passwd));                 //此处需要加密md5
         data.put("nickname", nickname);
         data.put("phone","18588431884");
 
         HttpListener listener = new HttpListener(this);
-        Task task = new Task(AppUtil.LOGIN_VERIFY, data, listener);
+        Task task = new Task(AppUtil.REGISTER, data, listener);
         IOManager.getInstance(this).add_task_start(task);
 
     }
 
     @Override
-    public void onResponse(int code, Object msg) {
+    public void onResponse(int code, Object msg) {              //注册成功 回调json都是一个map的结构体
+        if(code == AppUtil.REQUEST_SUCCESS){
+            Toast.makeText(SetPasswdActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
+            try {
+                JSONObject json = new JSONObject(msg.toString());
+                json = json.getJSONObject("register_back");
+                String user_id = json.getString("user_id");
+                String token = json.getString("token");
+                SharedPreferenceUtil util = SharedPreferenceUtil.getInstance(this.getApplicationContext());
+                util.init();
+                util.putString("user_id", user_id);
+                util.putString("token", token);
+
+                JLog.default_print("register back : " + msg);
+                Intent intent = new Intent(SetPasswdActivity.this, RegisterSuccess.class);
+                startActivity(intent);
+                finish();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
 
     }
 

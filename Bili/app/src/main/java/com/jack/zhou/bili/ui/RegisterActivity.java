@@ -36,10 +36,15 @@ import android.widget.ImageView;
 
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jack.zhou.bili.R;
 import com.jack.zhou.bili.bean.Country;
+import com.jack.zhou.bili.inter.BiliCallback;
+import com.jack.zhou.bili.inter.HttpListener;
 import com.jack.zhou.bili.inter.SMSModule;
+import com.jack.zhou.bili.network.IOManager;
+import com.jack.zhou.bili.network.Task;
 import com.jack.zhou.bili.util.AppUtil;
 import com.jack.zhou.bili.util.JLog;
 import com.jack.zhou.bili.util.XMLUtil;
@@ -49,6 +54,7 @@ import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
@@ -58,7 +64,7 @@ import cn.smssdk.SMSSDK;
  * 用户注册界面
  * Created by "jackzhous" on 2016/7/5.
  */
-public class RegisterActivity extends AppCompatActivity implements View.OnClickListener{
+public class RegisterActivity extends AppCompatActivity implements View.OnClickListener, BiliCallback{
 
     private Button btn_verify;      //获取验证码按钮
     private EditText ed_phone;      //电话
@@ -308,8 +314,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             return;
         }
 
-
-        SMSSDK.getVerificationCode(countryList.get(selectedListId).getCountry_phone(), phone_no);
+        //先检测账号是否被注册过
+        HashMap<String, String> data = new HashMap<>();
+        data.put("task_flag", "check_phone_register");
+        data.put("phone", phone_no);
+        HttpListener listener = new HttpListener(this);
+        Task task = new Task(AppUtil.REGISTER,data, listener);
+        IOManager.getInstance(this.getApplicationContext()).add_task_start(task);
+        //
     }
 
     /**
@@ -339,16 +351,19 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 if(null == data){
                     return;
                 }
-                boolean closed = data.getBooleanExtra(AppUtil.CLOSED_ACTIVTY, false);
+                boolean closed = data.getBooleanExtra(AppUtil.CLOSED_ACTIVTY, false);           //注册成功就关闭之前的注册页面
 
                 if(closed){
+                    Intent intent = new Intent();
+                    intent.putExtra(AppUtil.CLOSED_ACTIVTY, true);
+                    setResult(AppUtil.FLAG_ACTIVITY, intent);
                     this.finish();
                 }
         }
     }
 
     /**
-     * 用于接收短信模块发回来的信息
+     * mob 短信回调
      */
     private Handler mHandler = new Handler(){
         @Override
@@ -370,4 +385,23 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     };
 
 
+    /**
+     * http服务器检查手机号是否被注册
+     * @param code
+     * @param msg
+     */
+    @Override
+    public void onResponse(int code, Object msg) {
+        if(code == AppUtil.REQUEST_SUCCESS){                                                                                                                                                        //手机号可以注册，向mob服务端请求发送短信验证
+            SMSSDK.getVerificationCode(countryList.get(selectedListId).getCountry_phone(), ed_phone.getText().toString().trim());
+        }else{
+
+            error_phone_animation((String)msg);
+        }
+    }
+
+    @Override
+    public void onError(int code, String msg) {
+
+    }
 }
