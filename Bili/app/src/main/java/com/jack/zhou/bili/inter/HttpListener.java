@@ -41,7 +41,7 @@ public final class HttpListener implements Response.ErrorListener, Response.List
         JSONObject json = null;
         try {
             json = new JSONObject((String)o);
-            msg = json.getString("message");
+            msg = (String)o;
             if(OK.equals(json.get("result"))){
                 http_status = AppUtil.REQUEST_SUCCESS;
 

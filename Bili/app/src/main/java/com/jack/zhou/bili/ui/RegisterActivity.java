@@ -395,8 +395,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         if(code == AppUtil.REQUEST_SUCCESS){                                                                                                                                                        //手机号可以注册，向mob服务端请求发送短信验证
             SMSSDK.getVerificationCode(countryList.get(selectedListId).getCountry_phone(), ed_phone.getText().toString().trim());
         }else{
+            JSONObject json = null;
+            try {
+                json = new JSONObject((String)msg);
+                error_phone_animation(json.getString("messgae"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
-            error_phone_animation((String)msg);
         }
     }
 

@@ -90,9 +90,12 @@ public class RegisterSuccess extends AppCompatActivity {
     }
 
 
-
+    /**
+     * 关闭此activity
+     * @param view
+     */
     public void onOpenNewWorld(View view){
-
+        finish();
     }
 
 

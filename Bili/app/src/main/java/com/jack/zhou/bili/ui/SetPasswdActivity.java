@@ -40,7 +40,7 @@ import org.w3c.dom.Text;
 import java.util.HashMap;
 
 /**
- * Created by "sinlov" on 2016/7/13.
+ * Created by "jackzhous" on 2016/7/13.
  */
 public class SetPasswdActivity extends AppCompatActivity implements BiliCallback{
 
@@ -81,7 +81,10 @@ public class SetPasswdActivity extends AppCompatActivity implements BiliCallback
         return super.onKeyDown(keyCode, event);
     }
 
-
+    /**
+     * 设置密码完成后的button监听
+     * @param v
+     */
     public void onDonePassword(View v){
         String passwd;
         String passwd1;
@@ -131,13 +134,15 @@ public class SetPasswdActivity extends AppCompatActivity implements BiliCallback
         if(code == AppUtil.REQUEST_SUCCESS){
             Toast.makeText(SetPasswdActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
             try {
+                /**
+                 * 登陆或注册成功会获得一个token  , 保存在SharedPreference里面，
+                 * 以后每次启动的时候就会去取出这个token拿到服务端去校验，如果校验通过就默认是登陆的
+                 * 心跳报文也是发这个token和时间戳，拿到服务端去比较，时间戳差值来确定token的时效性
+                 */
                 JSONObject json = new JSONObject(msg.toString());
-                json = json.getJSONObject("register_back");
-                String user_id = json.getString("user_id");
                 String token = json.getString("token");
                 SharedPreferenceUtil util = SharedPreferenceUtil.getInstance(this.getApplicationContext());
                 util.init();
-                util.putString("user_id", user_id);
                 util.putString("token", token);
 
                 JLog.default_print("register back : " + msg);
@@ -147,6 +152,8 @@ public class SetPasswdActivity extends AppCompatActivity implements BiliCallback
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+        }else{
+            Toast.makeText(SetPasswdActivity.this, "注册失败", Toast.LENGTH_SHORT).show();
         }
 
     }
