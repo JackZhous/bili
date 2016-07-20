@@ -321,7 +321,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         HttpListener listener = new HttpListener(this);
         Task task = new Task(AppUtil.REGISTER,data, listener);
         IOManager.getInstance(this.getApplicationContext()).add_task_start(task);
-        //
     }
 
     /**
@@ -407,7 +406,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     @Override
-    public void onError(int code, String msg) {
-
+    public void onError(int code, Object obj) {
+        JLog.default_print("sms error " + obj);
     }
 }

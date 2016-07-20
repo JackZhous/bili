@@ -17,6 +17,7 @@ import com.jack.bean.UserFactory;
 import com.jack.bean.UserInfo;
 import com.jack.data.MysqlUtil;
 import com.jack.zhou.bili.util.JNIClass;
+import com.jack.zhou.bili.util.MD5Util;
 import com.jack.zhou.bili.util.ServletUtil;
 
 /**
@@ -81,7 +82,9 @@ public class RegisterServlet extends HttpServlet {
 		try {
 			boolean success = MysqlUtil.getInstance().insertUser(user);
 			if(success){
-				String token = JNIClass.getUserToken(user.getPhone());
+				ResultSet set = MysqlUtil.getInstance().queryData("bili_user", "phone", user.getPhone());
+				set.next();
+				String token = MD5Util.getUserToken(set.getString(1));
 				map.put("token", token);							//加入token
 				result = "ok";
 				msg = "注册成功";

@@ -25,7 +25,7 @@ public final class HttpListener implements Response.ErrorListener, Response.List
     @Override
     public void onErrorResponse(VolleyError volleyError) {
         JLog.default_print("http response error");
-        listener.onError(AppUtil.REQUEST_FERROR, volleyError.getMessage());
+        listener.onError(AppUtil.REQUEST_FERROR, volleyError);
     }
 
     /**
@@ -37,11 +37,11 @@ public final class HttpListener implements Response.ErrorListener, Response.List
     public void onResponse(Object o) {
         JLog.default_print("http response success " + o);
         int http_status = AppUtil.REQUEST_FAILED;
-        String msg = "none";
+
         JSONObject json = null;
         try {
             json = new JSONObject((String)o);
-            msg = (String)o;
+
             if(OK.equals(json.get("result"))){
                 http_status = AppUtil.REQUEST_SUCCESS;
 
@@ -53,6 +53,6 @@ public final class HttpListener implements Response.ErrorListener, Response.List
         }
 
 
-        listener.onResponse(http_status,msg);
+        listener.onResponse(http_status,o);
     }
 }

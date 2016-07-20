@@ -27,8 +27,11 @@ import com.jack.zhou.bili.inter.HttpListener;
 import com.jack.zhou.bili.network.IOManager;
 import com.jack.zhou.bili.network.Task;
 import com.jack.zhou.bili.util.AppUtil;
+import com.jack.zhou.bili.util.JLog;
 import com.jack.zhou.bili.util.JNIClass;
+import com.jack.zhou.bili.util.SharedPreferenceUtil;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -50,19 +53,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private Button login;
     private Button regisrer;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         AppUtil.integrationNotifcationBar(this);
         setContentView(R.layout.activity_login);
         initView();
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        HashMap<String, String> map = new HashMap<>();
-        map.put("username","jackzhous");
-        map.put("password","wsdyi100");
-        //IOManager.getInstance(this).httpPost(map, AppUtil.LOGIN_VERIFY, this);
+
     }
 
 
@@ -194,25 +191,45 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         HashMap<String, String> map = new HashMap<String, String>();
         map.put("username", user);
-        map.put("password", password);
-        JSONObject jsonObject = new JSONObject(map);
+        map.put("password", JNIClass.getMD5Char(password));
+        map.put("task_flag", "login");
 
-        byte[] b = JNIClass.encoding(jsonObject.toString());
 
-        HashMap<String, String> login_info = new HashMap<String, String>();
-        login_info.put("login", new String(b));
-        Task task = new Task(AppUtil.LOGIN_VERIFY, login_info, new HttpListener(this));
+        Task task = new Task(AppUtil.LOGIN_VERIFY, map, new HttpListener(this));
         IOManager.getInstance(this).add_task_start(task);
     }
 
     @Override
     public void onResponse(int code, Object msg) {
+        JSONObject json = null;
+        try {
+            json = new JSONObject((String)msg);
+            if(code == AppUtil.REQUEST_SUCCESS){
+                JLog.default_print("登录成功");
 
+                String token = json.getString("token");
+                SharedPreferenceUtil util = SharedPreferenceUtil.getInstance(this.getApplicationContext());
+                util.init();
+                util.putString("token", token);
+                util.putString("icon_url", json.getString("icon_url"));
+                util.putString("nickname", json.getString("nickname"));
+                util.putString("login_flag","ok");
+                Toast.makeText(LoginActivity.this, "恭喜,登录成功", Toast.LENGTH_SHORT).show();
+                this.finish();
+            }else{
+                JLog.default_print("登录失败 ");
+                String cause = json.getString("message");
+                Toast.makeText(LoginActivity.this, "登录失败, " + cause, Toast.LENGTH_SHORT).show();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public void onError(int code, String msg) {
-
+    public void onError(int code, Object obj) {
+        JLog.default_print("登录失败 " + obj);
+        Toast.makeText(LoginActivity.this, "http错误" + obj, Toast.LENGTH_SHORT).show();
     }
 
 

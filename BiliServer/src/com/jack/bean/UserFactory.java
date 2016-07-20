@@ -14,6 +14,7 @@ public class UserFactory {
 		user.setNickname(nickname);
 		user.setPasswd(password);
 		user.setPhone(phone);
+		user.setIcon_url("image/ic_pay_bangumi_tips.png");				//默认图标icon的url
 		
 		return user;
 	}

@@ -16,7 +16,12 @@ import android.content.SharedPreferences;
 import android.text.TextUtils;
 
 /**
- * Created by "sinlov" on 2016/7/14.
+ * sharedPreference里面存放：
+ *  token icon_url nickname login_flag标志位
+ *  login_flag在登录和首次启动的时候，成功后会置为true
+ *  结束或者注销的时候会置为false
+ *  应用中间则根据该状态，决定是否继续取token icon_url等
+ * Created by "jackzhous" on 2016/7/14.
  */
 public class SharedPreferenceUtil {
 

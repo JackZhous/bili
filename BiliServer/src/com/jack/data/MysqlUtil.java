@@ -31,6 +31,7 @@ public class MysqlUtil {
 	 */
 	public static final String TASK_CHECK_PHONE = "check_phone_register";				//查询账号注册任务
 	public static final String TASK_REGISTER = "register_user";							//注册用户
+	public static final String TASK_LOGIN = "login";									//登录
 	
 	private Connection conn;
 	private Statement stmt;
@@ -94,7 +95,7 @@ public class MysqlUtil {
 	 * @throws SQLException 
 	 */
 	public boolean insertUser(UserInfo user) throws SQLException{
-		String sql = "insert into bili_user (account, password, nickname, phone, register_time) value(?, ?, ?, ?, ?)";
+		String sql = "insert into bili_user (account, password, nickname, phone, register_time, icon_url) value(?, ?, ?, ?, ?, ?)";
 		PreparedStatement pStmt = (PreparedStatement) conn.prepareStatement(sql);
 		
 		pStmt.setString(1, user.getAccount());
@@ -102,6 +103,7 @@ public class MysqlUtil {
 		pStmt.setString(3, user.getNickname());
 		pStmt.setString(4, user.getPhone());
 		pStmt.setString(5, getNowTime());
+		pStmt.setString(5, user.getIcon_url());
 		
 		int result = pStmt.executeUpdate();
 		pStmt.close();

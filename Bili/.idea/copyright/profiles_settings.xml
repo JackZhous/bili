@@ -1,7 +1,3 @@
 <component name="CopyrightManager">
-  <settings default="jackzhous">
-    <module2copyright>
-      <element module="All" copyright="jackzhous" />
-    </module2copyright>
-  </settings>
+  <settings default="jackzhous" />
 </component>

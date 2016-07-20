@@ -37,6 +37,7 @@ public class HeartBreakService extends Service implements BiliCallback{
     private HttpListener listener;
     private Task heart_task;
     private IOManager ioManager;
+    private HashMap<String, String> data = new HashMap<>();
 
 
     @Override
@@ -46,7 +47,7 @@ public class HeartBreakService extends Service implements BiliCallback{
         ioManager = IOManager.getInstance(this);
         listener = new HttpListener(this);
         heart_task = new Task(AppUtil.HEART_BREAK, sendHeart("this_is_my_token"), listener);
-        ioManager.add_task_start(heart_task);                   //第一次发送
+        ioManager.add_task_start(heart_task);                                                                        //第一次发送
 
     }
 
@@ -77,7 +78,7 @@ public class HeartBreakService extends Service implements BiliCallback{
     }
 
     @Override
-    public void onError(int code, String msg) {
+    public void onError(int code, Object msg) {
         Message handler_msg = Message.obtain();
         handler_msg.arg1 = code;
         handler_msg.what = AppUtil.HANDLER_HEART_MSG;

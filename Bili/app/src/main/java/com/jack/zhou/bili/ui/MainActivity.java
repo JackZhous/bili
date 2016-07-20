@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -23,11 +24,15 @@ import com.jack.zhou.bili.network.HeartBreakService;
 import com.jack.zhou.bili.util.AppUtil;
 import com.jack.zhou.bili.util.FileUtil;
 import com.jack.zhou.bili.util.JLog;
+import com.jack.zhou.bili.util.SharedPreferenceUtil;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private long exit_time;                                 //退出时间
+    private Toolbar toolbar;
+    private SharedPreferenceUtil util;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +41,7 @@ public class MainActivity extends AppCompatActivity
 
         AppUtil.integrationNotifcationBar(this);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -57,7 +62,8 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
+        util = SharedPreferenceUtil.getInstance(this.getApplicationContext());
+        util.init();
     }
 
     /**
@@ -153,11 +159,31 @@ public class MainActivity extends AppCompatActivity
     protected void onDestroy() {
         super.onDestroy();
         JLog.default_print("onDestroy");
+
     }
+
+
 
     @Override
     protected void onResume() {
         super.onResume();
         JLog.default_print("onResume");
+        checkLogin();
     }
+
+    /**
+     * 检查是否登录
+     */
+    private void checkLogin(){
+        if(TextUtils.isEmpty(util.getString("login_flag"))){
+            return;
+        }
+        String nickname = util.getString("nickname");
+        String icon_url = util.getString("icon_url");
+        //if(nickname.equals(toolbar.getTitle())){}
+        toolbar.setTitle(nickname);
+        JLog.default_print("nickname " + nickname + " icon_url " + icon_url);
+    }
+
+
 }

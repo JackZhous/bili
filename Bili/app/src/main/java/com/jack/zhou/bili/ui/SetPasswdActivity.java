@@ -48,6 +48,7 @@ public class SetPasswdActivity extends AppCompatActivity implements BiliCallback
     private EditText ed_passwd;                                                 //密码
     private EditText ed_passwd1;                                                //确认密码
     private EditText ed_nickname;                                                  //昵称
+    private Toolbar bar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +62,7 @@ public class SetPasswdActivity extends AppCompatActivity implements BiliCallback
     private void initLayoutView(){
         setContentView(R.layout.activity_setuserinfo);
 
-        Toolbar bar = (Toolbar)findViewById(R.id.setuserinfo_bar);
+        bar = (Toolbar)findViewById(R.id.setuserinfo_bar);
         bar.setTitle("设置密码");
 
         tv_info = (TextView)findViewById(R.id.tv_info);
@@ -144,7 +145,9 @@ public class SetPasswdActivity extends AppCompatActivity implements BiliCallback
                 SharedPreferenceUtil util = SharedPreferenceUtil.getInstance(this.getApplicationContext());
                 util.init();
                 util.putString("token", token);
-
+                util.putString("icon_url", json.getString("icon_url"));
+                util.putString("nickname", json.getString("nickname"));
+                util.putString("login_flag", "ok");
                 JLog.default_print("register back : " + msg);
                 Intent intent = new Intent(SetPasswdActivity.this, RegisterSuccess.class);
                 startActivity(intent);
@@ -159,7 +162,8 @@ public class SetPasswdActivity extends AppCompatActivity implements BiliCallback
     }
 
     @Override
-    public void onError(int code, String msg) {
-
+    public void onError(int code, Object obj) {
+        JLog.default_print("set password error" + obj);
+        finish();
     }
 }
