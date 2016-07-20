@@ -33,6 +33,7 @@ public class Task extends StringRequest{
         this.mData = mData;
         this.mCallback = listener;
         this.url = url;
+        JLog.default_print("url " + url);
     }
 
     public Task(int method, String url, Response.Listener<String> listener, Response.ErrorListener errorListener) {

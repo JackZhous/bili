@@ -16,22 +16,31 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.android.volley.toolbox.ImageLoader;
 import com.jack.zhou.bili.R;
 import com.jack.zhou.bili.exception.CrashHandler;
+import com.jack.zhou.bili.inter.BiliCallback;
+import com.jack.zhou.bili.inter.HttpListener;
 import com.jack.zhou.bili.network.HeartBreakService;
+import com.jack.zhou.bili.network.IOManager;
+import com.jack.zhou.bili.network.Task;
 import com.jack.zhou.bili.util.AppUtil;
 import com.jack.zhou.bili.util.FileUtil;
 import com.jack.zhou.bili.util.JLog;
 import com.jack.zhou.bili.util.SharedPreferenceUtil;
 
+import java.util.HashMap;
+
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener , BiliCallback{
 
     private long exit_time;                                 //退出时间
     private Toolbar toolbar;
     private SharedPreferenceUtil util;
+    private ImageView user_icon;
 
 
     @Override
@@ -40,6 +49,16 @@ public class MainActivity extends AppCompatActivity
 
 
         AppUtil.integrationNotifcationBar(this);
+        initLayoutResource();
+
+        util = SharedPreferenceUtil.getInstance(this.getApplicationContext());
+        util.init();
+    }
+
+    /**
+     * 初始化布局文件
+     */
+    private void initLayoutResource(){
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -60,10 +79,13 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View headView = navigationView.inflateHeaderView(R.layout.nav_header_main);
+        user_icon = (ImageView)headView.findViewById(R.id.user_icon);
+        JLog.default_print("user_icon is --- " + user_icon);                                    //这种方式才能将左侧的view获取到
+
         navigationView.setNavigationItemSelectedListener(this);
 
-        util = SharedPreferenceUtil.getInstance(this.getApplicationContext());
-        util.init();
+
     }
 
     /**
@@ -74,11 +96,30 @@ public class MainActivity extends AppCompatActivity
 
         switch(v.getId()){
             case R.id.user_icon:
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
+                click_icon_button();
                 break;
             default:
                 break;
+        }
+    }
+
+
+    public void click_icon_button(){
+        /**
+         * 如果token不为空 那就要把token拿去验证了
+         */
+        String token = util.getString("token");
+        if(!(TextUtils.isEmpty(token))){
+            HashMap<String , String> data = new HashMap<String, String>();
+            data.put("task_flag", "token_verify");                              //token验证
+            data.put("token", token);
+            HttpListener listener = new HttpListener(this);
+            Task task = new Task(AppUtil.VERIFY_TOKEN, data, listener);
+            IOManager.getInstance(this).add_task_start(task);
+            return;
+        }else{
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
         }
     }
 
@@ -92,8 +133,6 @@ public class MainActivity extends AppCompatActivity
                 Toast.makeText(MainActivity.this, "再按一次退出应用", Toast.LENGTH_SHORT).show();
             }else{
                 MainActivity.this.finish();
-                System.exit(0);
-                android.os.Process.killProcess(android.os.Process.myPid());
             }
             exit_time = System.currentTimeMillis();
         }
@@ -102,6 +141,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
+        user_icon = (ImageView)findViewById(R.id.user_icon);
+        JLog.default_print("ovCreate user icon " + user_icon);
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
@@ -160,6 +201,7 @@ public class MainActivity extends AppCompatActivity
         super.onDestroy();
         JLog.default_print("onDestroy");
 
+        util.putString("login_flag", "false");
     }
 
 
@@ -175,15 +217,47 @@ public class MainActivity extends AppCompatActivity
      * 检查是否登录
      */
     private void checkLogin(){
-        if(TextUtils.isEmpty(util.getString("login_flag"))){
+        String login_flag = util.getString("login_flag");
+        JLog.default_print("login_flag"+login_flag);
+        if(TextUtils.isEmpty(login_flag)){
             return;
         }
+
+        //如果两次都是同一个用户就不用在请求的  因为请求会出现图标变化
+        if(!(toolbar.getTitle().equals(util.getString("nickname")))){
+            setUser_icon();
+        }
+
+    }
+
+    private void setUser_icon(){
         String nickname = util.getString("nickname");
         String icon_url = util.getString("icon_url");
         //if(nickname.equals(toolbar.getTitle())){}
         toolbar.setTitle(nickname);
         JLog.default_print("nickname " + nickname + " icon_url " + icon_url);
+        if(null == user_icon){
+            JLog.default_print("user_icon is null");
+        }
+        ImageLoader.ImageListener listener = ImageLoader.getImageListener(user_icon, R.drawable.bili_default_avatar, R.drawable.bili_default_avatar);
+
+        IOManager.getInstance(this).startImageTask(icon_url, listener);
     }
 
 
+    @Override
+    public void onResponse(int code, Object msg) {
+        Intent intent = null;
+        if(code == AppUtil.REQUEST_SUCCESS){
+            intent = new Intent(this, BiliUserInfo.class);
+        }else{
+            intent = new Intent(this, LoginActivity.class);
+        }
+        this.startActivity(intent);
+    }
+
+    @Override
+    public void onError(int code, Object obj) {
+        JLog.default_print("http error " + obj);
+    }
 }

@@ -32,6 +32,7 @@ public class MysqlUtil {
 	public static final String TASK_CHECK_PHONE = "check_phone_register";				//查询账号注册任务
 	public static final String TASK_REGISTER = "register_user";							//注册用户
 	public static final String TASK_LOGIN = "login";									//登录
+	public static final String TASK_TOKEN_VERIFY = "token_verify";
 	
 	private Connection conn;
 	private Statement stmt;

@@ -1,8 +1,9 @@
 package com.jack.zhou.bili.network;
 
 
-import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.util.LruCache;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
@@ -12,6 +13,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.jack.zhou.bili.inter.BiliCallback;
@@ -33,7 +35,6 @@ public class IOManager {
     private Context activity;
     private RequestQueue queue;                 //网络请求
 
-    public  static final String url = "http://192.168.0.110:8080/BiliServer/servlet/testservlet";
     private IOManager(Context activity){
         this.activity = activity;
         queue = Volley.newRequestQueue(activity.getApplicationContext());
@@ -126,5 +127,47 @@ public class IOManager {
         JLog.default_print("start task");
         queue.add(task);
     }
+
+    /**
+     * volley缓存类
+     */
+    private class BitmapCache implements ImageLoader.ImageCache{
+
+        private LruCache<String, Bitmap> cache;
+
+        public BitmapCache(){
+            cache = new LruCache<String, Bitmap>(10 * 1024 * 1024){
+
+                @Override
+                protected int sizeOf(String key, Bitmap value) {
+                    return value.getRowBytes() * value.getHeight();
+                }
+            };
+        }
+
+        @Override
+        public Bitmap getBitmap(String url) {
+
+            return cache.get(url);
+        }
+
+        @Override
+        public void putBitmap(String url, Bitmap bitmap) {
+            cache.put(url,bitmap);
+        }
+    }
+
+    /**
+     * 图片下载任务
+     * @param url
+     */
+    public void startImageTask(String url, ImageLoader.ImageListener listener){
+        ImageLoader loader = new ImageLoader(queue, new BitmapCache());
+        String final_url = AppUtil.BASE_URL + url;
+
+        JLog.default_print("final url " + final_url);
+        loader.get(final_url, listener);
+    }
+
 
 }

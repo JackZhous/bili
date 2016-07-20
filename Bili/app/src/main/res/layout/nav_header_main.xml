@@ -21,7 +21,7 @@
         android:layout_width="@dimen/night_ico_width"
         android:layout_height="@dimen/night_ico_height"
         android:src="@drawable/ic_switch_night"
-        android:layout_alignBottom="@+id/user_icon"
+        android:layout_alignBottom="@id/user_icon"
         android:layout_marginBottom="10dp"
         android:layout_alignParentRight="true"
         android:layout_marginRight="20dp"/>                 <!-- align要和margin配合使用   使用了align再用margin的话，margin的基准就是以align的那个组件为准-->

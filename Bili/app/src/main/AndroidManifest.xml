@@ -47,6 +47,7 @@
         <activity android:name=".ui.VerifySMS"/>
         <activity android:name=".ui.SetPasswdActivity"/>
         <activity android:name=".ui.RegisterSuccess"/>
+        <activity android:name=".ui.BiliUserInfo"/>
 
         <!-- mob start-->
         <activity
