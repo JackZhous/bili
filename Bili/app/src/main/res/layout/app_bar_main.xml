@@ -17,8 +17,15 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />                        <!-- app:layout_scrollFlags="scroll|enterAlways" scroll属性  设置时，向上滚动将隐藏浮标  enterway表示向下拉动时将显示toobar-->
 
+        <android.support.design.widget.TabLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tab"
+            android:background="?attr/colorPrimary"
+            app:tabGravity="center"/>
     </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/content_main" />
@@ -32,3 +39,12 @@
         android:src="@android:drawable/ic_dialog_email" />
 
 </android.support.design.widget.CoordinatorLayout>
+
+<!--
+ 总结： 为了使得Toolbar有滑动效果，必须做到如下三点：
+
+CoordinatorLayout必须作为整个布局的父布局容器。
+给需要滑动的组件设置 app:layout_scrollFlags=”scroll|enterAlways” 属性。
+给你的可滑动的组件，也就是RecyclerView 或者 NestedScrollView 设置如下属性：
+ app:layout_behavior="@string/appbar_scrolling_view_behavior"
+ -->

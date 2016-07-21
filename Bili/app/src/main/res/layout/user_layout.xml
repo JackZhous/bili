@@ -30,19 +30,24 @@
 
 
             </android.support.v7.widget.Toolbar>
-
-            <TextView
-                android:layout_alignParentRight="true"
-                android:layout_alignBottom="@id/login_bar"
-                android:layout_marginBottom="20dp"
-                android:textSize="15sp"
-                android:textColor="#FCFCFC"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="个人中心正在完成中，敬请期待...."/>
         </RelativeLayout>
 
+        <TextView
+            android:layout_alignParentRight="true"
+            android:layout_alignBottom="@id/login_bar"
+            android:layout_marginBottom="20dp"
+            android:textSize="15sp"
+            android:textColor="#FCFCFC"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="个人中心正在完成中，敬请期待...."/>
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="注销"
+            android:gravity="center"
+            android:onClick="onLogout"/>
 
 
 

@@ -47,14 +47,23 @@ public class VerifyToken extends HttpServlet {
 		String result = "fail";
 		String msg = "不明确你的任务";
 		
+		String token = request.getParameter("token");
 		if(MysqlUtil.TASK_TOKEN_VERIFY.equals(flag)){
-			String token = request.getParameter("token");
+			
 			if(MD5Util.checkToken(token)){
 				result = "ok";
 				msg = "token正常";
 			}else{
 				result = "fail";
 				msg = "token不存在或者已经失效";
+			}
+		}else if(MysqlUtil.TASK_LOGOUT.equals(flag)){
+			if(MD5Util.LogoutClearToken(token)){
+				result = "ok";
+				msg = "注销成功";
+			}else{
+				result = "fail";
+				msg = "注销失效";
 			}
 		}
 		HashMap<String, String> data = new HashMap<>();

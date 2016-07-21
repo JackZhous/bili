@@ -76,6 +76,7 @@ public class MD5Util {
      */
     public static boolean checkToken(String token){
     	long time_now = System.currentTimeMillis();
+    	int index = 0;
     	for(HashMap<String, String> map : tokenList){
     		String token0 = map.get("token");
     		if(token0.equals(token)){
@@ -83,10 +84,35 @@ public class MD5Util {
     			if(time_now - time_create < avalible_time){
     				return true;
     			}
+    			tokenList.remove(index);
     			break;
     		}
+    		index++;
     	}
     	return false;
     }
+    
+    /**
+     * 注销并且把token去除掉
+     * @param token
+     * @return
+     */
+    public static boolean LogoutClearToken(String token){
+    	int index = 0;
+    	if(tokenList.isEmpty()){
+    		return true;
+    	}
+    	
+    	for(HashMap<String, String> map : tokenList){
+    		String token0 = map.get("token");
+    		if(token0.equals(token)){
+    			tokenList.remove(index);
+    			return true;
+    		}
+    	}
+    	
+    	return false;
+    }
+    	
     
 }

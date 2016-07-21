@@ -5,6 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -21,6 +25,8 @@ import android.widget.Toast;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.jack.zhou.bili.R;
+import com.jack.zhou.bili.adapter.TabFragmentAdapter;
+import com.jack.zhou.bili.bean.LiveFragment;
 import com.jack.zhou.bili.exception.CrashHandler;
 import com.jack.zhou.bili.inter.BiliCallback;
 import com.jack.zhou.bili.inter.HttpListener;
@@ -32,7 +38,9 @@ import com.jack.zhou.bili.util.FileUtil;
 import com.jack.zhou.bili.util.JLog;
 import com.jack.zhou.bili.util.SharedPreferenceUtil;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener , BiliCallback{
@@ -41,12 +49,13 @@ public class MainActivity extends AppCompatActivity
     private Toolbar toolbar;
     private SharedPreferenceUtil util;
     private ImageView user_icon;
+    private ViewPager viewPager;
+    private TabLayout tabLayout;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
         AppUtil.integrationNotifcationBar(this);
         initLayoutResource();
@@ -85,7 +94,37 @@ public class MainActivity extends AppCompatActivity
 
         navigationView.setNavigationItemSelectedListener(this);
 
+        List<String> tabList = new ArrayList<>();
+        tabList.add("直播");
+        tabList.add("推荐");
+        tabList.add("番剧");
+        tabList.add("分区");
+        tabList.add("关注");
+        tabList.add("发现");
 
+        viewPager = (ViewPager)findViewById(R.id.main_viewpager);
+        tabLayout = (TabLayout)findViewById(R.id.tab);
+        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);                                                            //设置为系统当前模式
+        tabLayout.addTab(tabLayout.newTab().setText("直播"));
+        tabLayout.addTab(tabLayout.newTab().setText("推荐"));
+        tabLayout.addTab(tabLayout.newTab().setText("番剧"));
+        tabLayout.addTab(tabLayout.newTab().setText("分区"));
+        tabLayout.addTab(tabLayout.newTab().setText("关注"));
+        tabLayout.addTab(tabLayout.newTab().setText("发现"));
+
+        List<Fragment> fragmentList = new ArrayList<>();
+        for (int i = 0; i < 6; i++) {
+            Fragment f1 = new LiveFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("content", "http://blog.csdn.net/feiduclear_up \n CSDN 废墟的树");
+            f1.setArguments(bundle);
+            fragmentList.add(f1);
+        }
+
+        TabFragmentAdapter fragmentAdapter = new TabFragmentAdapter(getSupportFragmentManager(), fragmentList, tabList);
+        viewPager.setAdapter(fragmentAdapter);//给ViewPager设置适配器
+        tabLayout.setupWithViewPager(viewPager);//将TabLayout和ViewPager关联起来。
+        tabLayout.setTabsFromPagerAdapter(fragmentAdapter);//给Tabs设置适配器
     }
 
     /**
@@ -236,8 +275,10 @@ public class MainActivity extends AppCompatActivity
         //if(nickname.equals(toolbar.getTitle())){}
         toolbar.setTitle(nickname);
         JLog.default_print("nickname " + nickname + " icon_url " + icon_url);
-        if(null == user_icon){
+        if("未登录".equals(nickname)){
             JLog.default_print("user_icon is null");
+            user_icon.setImageResource(R.drawable.bili_default_avatar);
+            return;
         }
         ImageLoader.ImageListener listener = ImageLoader.getImageListener(user_icon, R.drawable.bili_default_avatar, R.drawable.bili_default_avatar);
 
