@@ -15,35 +15,37 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
- * Created by "sinlov" on 2016/7/21.
+ * Created by "jackzhous" on 2016/7/22.
  */
-public class TabFragmentAdapter extends FragmentStatePagerAdapter {
+public class TabFragmentAdapter extends FragmentStatePagerAdapter{
 
-    private List<Fragment> mFragments;
-    private List<String> mTitles;
+    private ArrayList<Fragment> listFragment;
+    private ArrayList<String>  title;
 
-    public TabFragmentAdapter(FragmentManager fm, List<Fragment> fragments, List<String> titles) {
+    public TabFragmentAdapter(FragmentManager fm, ArrayList<Fragment> listF, ArrayList<String> title){
         super(fm);
-        mFragments = fragments;
-        mTitles = titles;
+        this.listFragment = listF;
+        this.title = title;
     }
+
+
 
     @Override
     public Fragment getItem(int position) {
-        return mFragments.get(position);
+
+        return listFragment.get(position);
     }
 
     @Override
     public int getCount() {
-        return mFragments.size();
+        return listFragment.size();
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return mTitles.get(position);
+        return title.get(position);
     }
-
 }

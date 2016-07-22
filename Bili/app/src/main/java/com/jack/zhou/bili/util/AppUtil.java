@@ -3,24 +3,20 @@ package com.jack.zhou.bili.util;
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
+import android.view.Window;
 import android.view.WindowManager;
+
+import com.jack.zhou.bili.R;
 
 /**
  * Created by "jackzous" on 2016/6/16.
  */
 public class AppUtil {
 
+
     private static int sdk_version = Build.VERSION.SDK_INT;
 
-    public static void integrationNotifcationBar(Activity activity){
-        if(sdk_version >= Build.VERSION_CODES.KITKAT){
-            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-        }
 
-        //锁定屏幕方向为竖屏
-        activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-    }
 
     public static final int REQUEST_SUCCESS = 0x01;
     public static final int REQUEST_FAILED = 0x02;
@@ -45,5 +41,31 @@ public class AppUtil {
     public static final String HEART_BREAK = BASE_URL + "heart";
     public static final String REGISTER = BASE_URL + "register";
     public static final String VERIFY_TOKEN = BASE_URL + "VerifyToken";
+
+
+    public static void integrationNotifcationBar(Activity activity){
+        if(sdk_version >= Build.VERSION_CODES.KITKAT){
+            setTranslucentStatus(true, activity);
+            SystemBarTintManager tintManager = new SystemBarTintManager(activity);
+            tintManager.setStatusBarTintEnabled(true);
+            tintManager.setStatusBarTintResource(R.color.colorPrimary);//通知栏所需颜色
+        }
+
+        //锁定屏幕方向为竖屏
+        activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    }
+
+    private static void setTranslucentStatus(boolean on, Activity activity) {
+        Window win = activity.getWindow();
+        WindowManager.LayoutParams winParams = win.getAttributes();
+        final int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
+        if (on) {
+            winParams.flags |= bits;
+        } else {
+            winParams.flags &= ~bits;
+        }
+        win.setAttributes(winParams);
+    }
+
 
 }

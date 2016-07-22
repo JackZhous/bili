@@ -43,5 +43,4 @@ dependencies {
     compile files('src/main/libs/gson-2.2.4.jar')
     compile files('src/main/libs/MobCommons-2016.0624.1326.jar')
     compile files('src/main/libs/MobTools-2016.0624.1326.jar')
-    compile 'com.android.support:palette-v7:22.2.0'
 }

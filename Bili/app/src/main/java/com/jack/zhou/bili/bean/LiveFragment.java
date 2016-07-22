@@ -11,22 +11,15 @@
 
 package com.jack.zhou.bili.bean;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.jack.zhou.bili.R;
-import com.jack.zhou.bili.adapter.RecyclerAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 直播选项卡页面
@@ -36,9 +29,6 @@ public class LiveFragment extends Fragment{
 
     private RecyclerView recyclerView;
     private View view;
-    private RecyclerAdapter adapter;
-
-    private List<ModelBean> beanList;
 
     private String des[] = {"云层里的阳光", "好美的海滩", "好美的海滩", "夕阳西下的美景", "夕阳西下的美景"
             , "夕阳西下的美景", "夕阳西下的美景", "夕阳西下的美景", "好美的海滩"};
@@ -57,29 +47,10 @@ public class LiveFragment extends Fragment{
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        recyclerView = (RecyclerView)view.findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        initData();
+
     }
 
-    private void initData() {
-        beanList = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
-            ModelBean bean = new ModelBean();
-            bean.setResId(resId[i]);
-            bean.setTitle(des[i]);
-            beanList.add(bean);
-        }
-        adapter = new RecyclerAdapter(getActivity(), beanList);
-        recyclerView.setAdapter(adapter);
-        adapter.setOnItemClickListener(new RecyclerAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position, Object object) {
-               // startActivity(new Intent(getActivity(), TwoActivity.class));
-            }
-        });
-    }
+
 
 }
