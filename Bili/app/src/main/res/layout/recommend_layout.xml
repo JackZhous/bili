@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~         Copyright (C) 2016-2017 宙斯
+  ~         All rights reserved
+  ~
+  ~        filename :Class4
+  ~        description :
+  ~
+  ~         created by jackzhous at  11/07/2016 12:12:12
+  ~         http://blog.csdn.net/jackzhouyu
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v4.view.ViewPager
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:id="@+id/photo_viewpager"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_marginBottom="8dp"
+            android:layout_marginRight="8dp"
+            android:orientation="horizontal"
+            android:id="@+id/dot">
+
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/abc_btn_switch_to_on_mtrl_00001"/>
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:src="@drawable/abc_btn_switch_to_on_mtrl_00001"/>
+        </LinearLayout>
+    </FrameLayout>
+
+
+</LinearLayout>

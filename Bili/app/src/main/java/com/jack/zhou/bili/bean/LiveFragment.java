@@ -48,7 +48,6 @@ public class LiveFragment extends Fragment{
         super.onActivityCreated(savedInstanceState);
 
 
-
     }
 
 

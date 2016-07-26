@@ -25,6 +25,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.jack.zhou.bili.R;
 import com.jack.zhou.bili.adapter.TabFragmentAdapter;
 import com.jack.zhou.bili.bean.LiveFragment;
+import com.jack.zhou.bili.bean.RecommendFragment;
 import com.jack.zhou.bili.inter.BiliCallback;
 import com.jack.zhou.bili.inter.HttpListener;
 import com.jack.zhou.bili.network.IOManager;
@@ -112,7 +113,13 @@ public class MainActivity extends AppCompatActivity
 
         ArrayList<Fragment> fragmentList = new ArrayList<>();
         for (int i = 0; i < 6; i++) {
-            Fragment f1 = new LiveFragment();
+            Fragment f1;
+            if(i == 1){
+                f1 = new RecommendFragment();
+            }else{
+                f1 = new LiveFragment();
+            }
+
             Bundle bundle = new Bundle();
             bundle.putString("content", "http://blog.csdn.net/feiduclear_up \n CSDN 废墟的树");
             f1.setArguments(bundle);
@@ -123,7 +130,7 @@ public class MainActivity extends AppCompatActivity
         viewPager.setAdapter(fragmentAdapter);                                                          //给ViewPager设置适配器
         tabLayout.setupWithViewPager(viewPager);                                                        //将TabLayout和ViewPager关联起来。
         tabLayout.setTabsFromPagerAdapter(fragmentAdapter);                                             //给Tabs设置适配器
-
+        viewPager.setCurrentItem(1);                                                                    //设置启动默认在哪个fragment
     }
 
     /**
