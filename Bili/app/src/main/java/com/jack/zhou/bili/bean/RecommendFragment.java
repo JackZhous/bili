@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.jack.zhou.bili.R;
 import com.jack.zhou.bili.util.JLog;
@@ -35,7 +36,9 @@ public class RecommendFragment extends Fragment {
     private View v;
     private ViewPager photo_viewpager;
     private ArrayList<ImageView> mView = new ArrayList<>();
+    private ArrayList<ImageView> mDot = new ArrayList<>();
     private Drawable selectedDot,unselectDot;                   //选中和没被选中的小圆点
+    private LinearLayout mDotLayout;
 
     @Nullable
     @Override
@@ -49,10 +52,11 @@ public class RecommendFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         photo_viewpager = (ViewPager)v.findViewById(R.id.photo_viewpager);
+        mDotLayout = (LinearLayout)v.findViewById(R.id.dot);
         initImageView();
         photo_viewpager.setAdapter(new Adapter());
         photo_viewpager.setOnPageChangeListener(new PageListener());
-        photo_viewpager.setCurrentItem(100);
+        photo_viewpager.setCurrentItem(mView.size() * 100);
     }
 
 
@@ -62,11 +66,28 @@ public class RecommendFragment extends Fragment {
         selectedDot = (state_user == null) ? unselectDot : state_user.newDrawable().mutate();
         DrawableCompat.setTint(selectedDot, ContextCompat.getColor(getActivity(), R.color.colorPrimaryDark));                   //着色和不着色
 
+
+
+        /**
+         * 添加小圆点和显示师徒到布局文件
+         */
+        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(30,30);
         for(int i = 0; i < 3; i++){
             ImageView image = new ImageView(getActivity());
             image.setImageResource(R.drawable.ic_answer_banner);
             image.setScaleType(ImageView.ScaleType.FIT_XY);
             mView.add(image);
+
+            ImageView dot = new ImageView(getActivity());
+            if(i == 0){
+                dot.setImageDrawable(selectedDot);
+            }else{
+                dot.setImageDrawable(unselectDot);
+            }
+
+            dot.setLayoutParams(params);
+
+            mDotLayout.addView(dot);
         }
     }
 
@@ -117,6 +138,9 @@ public class RecommendFragment extends Fragment {
     }
 
     private class PageListener implements ViewPager.OnPageChangeListener{
+
+        ImageView cachView;         //缓冲试图，存放上一视图的引用
+
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -124,7 +148,14 @@ public class RecommendFragment extends Fragment {
 
         @Override
         public void onPageSelected(int position) {
-            JLog.default_print("position = " + position);
+            position = position % mView.size();
+            if(cachView != null){
+                cachView.setImageDrawable(unselectDot);
+            }
+
+            ImageView v = (ImageView)mDotLayout.getChildAt(position);
+            v.setImageDrawable(selectedDot);
+            cachView = v;
         }
 
         @Override

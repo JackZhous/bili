@@ -32,16 +32,6 @@
             android:layout_marginRight="8dp"
             android:orientation="horizontal"
             android:id="@+id/dot">
-
-            <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/abc_btn_switch_to_on_mtrl_00001"/>
-            <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:src="@drawable/abc_btn_switch_to_on_mtrl_00001"/>
         </LinearLayout>
     </FrameLayout>
 
