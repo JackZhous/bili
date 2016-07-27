@@ -19,12 +19,15 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jack.zhou.bili.R;
 import com.jack.zhou.bili.util.JLog;
@@ -39,6 +42,8 @@ public class RecommendFragment extends Fragment {
     private ArrayList<ImageView> mDot = new ArrayList<>();
     private Drawable selectedDot,unselectDot;                   //选中和没被选中的小圆点
     private LinearLayout mDotLayout;
+    private TextView tv_recommend, tv_rank;
+    private RecyclerView recyclerView;
 
     @Nullable
     @Override
@@ -56,6 +61,7 @@ public class RecommendFragment extends Fragment {
         initImageView();
         photo_viewpager.setAdapter(new Adapter());
         photo_viewpager.setOnPageChangeListener(new PageListener());
+        photo_viewpager.setPageMargin(20);                                  //设置图片与图片之间的间隔
         photo_viewpager.setCurrentItem(mView.size() * 100);
     }
 
@@ -72,10 +78,12 @@ public class RecommendFragment extends Fragment {
          * 添加小圆点和显示师徒到布局文件
          */
         ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(30,30);
+        ViewGroup.LayoutParams params_image = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         for(int i = 0; i < 3; i++){
             ImageView image = new ImageView(getActivity());
             image.setImageResource(R.drawable.ic_answer_banner);
             image.setScaleType(ImageView.ScaleType.FIT_XY);
+            image.setLayoutParams(params_image);
             mView.add(image);
 
             ImageView dot = new ImageView(getActivity());
@@ -89,6 +97,24 @@ public class RecommendFragment extends Fragment {
 
             mDotLayout.addView(dot);
         }
+
+        tv_rank = (TextView)v.findViewById(R.id.tv_rank);
+        tv_recommend = (TextView)v.findViewById(R.id.tv_recommend);
+        Drawable tv_draw = ContextCompat.getDrawable(getActivity(),R.drawable.ic_header_hot);
+        tv_draw.setBounds(0, 0, 60, 60);
+
+        tv_recommend.setCompoundDrawables(tv_draw, null, null, null);
+        tv_draw =  ContextCompat.getDrawable(getActivity(),R.drawable.ic_bangumi_rank);
+        tv_draw.setBounds(0, 0, 60, 60);
+        tv_rank.setCompoundDrawables(tv_draw, null, null, null);
+
+        initRecyclerView();
+
+    }
+
+
+    private void initRecyclerView(){
+        recyclerView = (RecyclerView)v.findViewById(R.id.recyclerView);
     }
 
     //============viewPager相关=====================================================================
@@ -165,4 +191,6 @@ public class RecommendFragment extends Fragment {
     }
 
     //============viewPager相关=====================================================================
+
+
 }

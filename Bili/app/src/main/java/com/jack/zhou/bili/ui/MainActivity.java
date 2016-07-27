@@ -263,7 +263,7 @@ public class MainActivity extends AppCompatActivity
      */
     private void checkLogin(){
         String login_flag = util.getString("login_flag");
-        JLog.default_print("login_flag"+login_flag);
+        JLog.default_print("login_flag" + login_flag);
         if(TextUtils.isEmpty(login_flag)){
             return;
         }
@@ -306,5 +306,13 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onError(int code, Object obj) {
         JLog.default_print("http error " + obj);
+    }
+
+    /**
+     * 排行榜监听
+     * @param v
+     */
+    public void on_text_rank(View v){
+        Toast.makeText(this, "你点击了排行榜", Toast.LENGTH_SHORT).show();
     }
 }
