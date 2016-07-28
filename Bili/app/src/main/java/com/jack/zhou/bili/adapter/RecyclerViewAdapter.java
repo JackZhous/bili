@@ -9,7 +9,7 @@
  *         http://blog.csdn.net/jackzhouyu
  */
 
-package com.jack.zhou.bili.bean;
+package com.jack.zhou.bili.adapter;
 
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
@@ -52,7 +52,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(RecViewHolder holder, int position) {
-        holder.imageView.setImageDrawable(image_list.get(position));
+        holder.imageView.setImageDrawable(image_list.get(0));
         Map<String,String> map = tv_list.get(position);
         holder.tv.setText(map.get("tv_info"));
         holder.play_time.setText(map.get("play_time"));
@@ -61,7 +61,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public int getItemCount() {
-        return image_list.size();
+        return tv_list.size();
     }
 
     public class RecViewHolder extends RecyclerView.ViewHolder {
