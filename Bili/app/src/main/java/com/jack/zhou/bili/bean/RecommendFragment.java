@@ -58,6 +58,7 @@ public class RecommendFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.recommend_layout,container, false);
         JLog.default_print(TAG + " onCreateView");
+        
         return v;
     }
 
