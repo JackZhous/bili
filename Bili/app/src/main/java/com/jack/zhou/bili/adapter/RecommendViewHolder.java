@@ -1,16 +1,24 @@
 package com.jack.zhou.bili.adapter;
 
+import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jack.zhou.bili.R;
+import com.jack.zhou.bili.util.JLog;
 import com.jack.zhou.jrecyclerview.adapter.JViewHolder;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 /***********
@@ -20,12 +28,16 @@ import java.util.Map;
  * desc:
  ************/
 public class RecommendViewHolder implements JViewHolder{
+
+    private Context context;
     private LinearLayout head_Dot;
     private ViewPager    head_viewpager;
     private ImageView    body_image;
     private TextView     body_info;
     private TextView     body_time_play;
     private TextView     body_time_ding;
+    private TextView tv_recommend;
+    private TextView tv_rank;
 
     private ArrayList<ImageView> head_image_list;
     private ArrayList<Drawable>  body_image_list;
@@ -34,14 +46,32 @@ public class RecommendViewHolder implements JViewHolder{
     private Drawable unSelectDot;
     private Drawable selectDot;
 
-    public RecommendViewHolder(){
+    private static final String TV_INFO = "video_info";
+    private static final String TV_TIME_PLAY = "time_play";
+    private static final String TV_TIME_DING = "time_ding";
 
+    public RecommendViewHolder(Context context){
+        this.context = context;
+        head_image_list = new ArrayList<ImageView>();
+        body_image_list = new ArrayList<Drawable>();
+        body_info_list  = new ArrayList<Map<String, String>>();
+        initDisplayData();
     }
 
     @Override
     public void findHead(View v) {
         head_Dot = (LinearLayout)v.findViewById(R.id.dot);
         head_viewpager = (ViewPager)v.findViewById(R.id.photo_viewpager);
+
+        tv_rank = (TextView)v.findViewById(R.id.tv_rank);
+        tv_recommend = (TextView)v.findViewById(R.id.tv_recommend);
+        Drawable draw = context.getDrawable(R.drawable.ic_header_hot);
+        draw.setBounds(0, 0, 60, 60);
+        tv_recommend.setCompoundDrawables(draw, null, null, null);
+
+        draw = context.getDrawable(R.drawable.ic_bangumi_rank);
+        draw.setBounds(0, 0, 60, 60);
+        tv_rank.setCompoundDrawables(draw, null, null, null);
     }
 
     @Override
@@ -55,15 +85,162 @@ public class RecommendViewHolder implements JViewHolder{
     @Override
     public void setHead() {
 
+        if(head_Dot != null && head_Dot.getChildAt(0) != null){
+            return;
+        }
+
+        unSelectDot = context.getDrawable(R.drawable.ic_circle_white);
+        Drawable.ConstantState state_user = unSelectDot.getConstantState();
+        selectDot = (state_user == null) ? unSelectDot : state_user.newDrawable().mutate();
+        DrawableCompat.setTint(selectDot, ContextCompat.getColor(context, R.color.colorPrimary));
+
+        ImageView dot = new ImageView(context);
+        dot.setImageDrawable(selectDot);
+        LinearLayout.LayoutParams dot_params = new LinearLayout.LayoutParams(30,30);
+        dot_params.setMarginEnd(8);
+        dot.setLayoutParams(dot_params);
+
+        head_Dot.addView(dot, 0);
+
+        for(int i = 1; i < head_image_list.size(); i++){
+
+            dot = new ImageView(context);
+            dot.setImageDrawable(unSelectDot);
+            dot.setLayoutParams(dot_params);
+            head_Dot.addView(dot, i);
+        }
+
+        head_viewpager.setAdapter(new MyAdapter());
+        head_viewpager.setOnPageChangeListener(new MyPageListener());
+        head_viewpager.setCurrentItem(100 * head_image_list.size());
+        head_viewpager.setPageMargin(20);
     }
 
     @Override
     public void setBody(int position) {
-
+        body_image.setImageDrawable(body_image_list.get(position));
+        Map<String, String> map = body_info_list.get(position);
+        body_info.setText(map.get(TV_INFO));
+        body_time_play.setText(map.get(TV_TIME_PLAY));
+        body_time_ding.setText(map.get(TV_TIME_DING));
     }
 
     @Override
     public int size() {
         return body_image_list.size() + 1;
     }
+
+
+    private void initDisplayData(){
+
+
+        int[] draw = new int[]{R.drawable.ic_answer_banner, R.drawable.ic_certified_id, R.drawable.ic_group_header_bg};
+
+        //将图片其添加到集合
+        for(int i = 0; i < draw.length; i++){
+            ImageView v = new ImageView(context);
+            LinearLayout.LayoutParams image_params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+
+            v.setImageDrawable(context.getResources().getDrawable(draw[i]));
+            v.setLayoutParams(image_params);
+            v.setScaleType(ImageView.ScaleType.FIT_XY);
+            head_image_list.add(v);
+        }
+        JLog.default_print("initDisplayData head size " + head_image_list.size());
+
+        //胸部需要显示的Item图片  并添加到集合
+        draw = new int[]{R.drawable.img_tips_error_banner_tv, R.drawable.img_tips_error_load_error, R.drawable.img_tips_error_no_permission, R.drawable.img_tips_error_not_foud, R.drawable.img_tips_error_not_loin, R.drawable.img_tips_error_space_no_data, R.drawable.img_tips_error_space_no_permission, R.drawable.img_tips_live_room_locked};
+        for(int i = 0; i < draw.length; i++){
+            body_image_list.add(context.getDrawable(draw[i]));
+            HashMap<String, String> map = new HashMap<>();
+            map.put(TV_INFO, "视频简介 " + i + " ^_^");
+            map.put(TV_TIME_DING, i+"");
+            map.put(TV_TIME_PLAY, i + "");
+            body_info_list.add(map);
+        }
+    }
+
+
+    /**
+     * ViewPager监听内部类
+     */
+    private class MyPageListener implements ViewPager.OnPageChangeListener{
+        ImageView cachView;
+        int length;
+        public MyPageListener(){
+            length = head_image_list.size();
+        }
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+            if(null != cachView){
+                cachView.setImageDrawable(unSelectDot);
+            }
+            position = position % length;
+            ImageView image = (ImageView)head_Dot.getChildAt(position);
+            if(null != image){
+                image.setImageDrawable(selectDot);
+            }
+
+            cachView = image;
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+
+        }
+    }
+
+    /**
+     * viewpager适配器
+     */
+    private class MyAdapter extends PagerAdapter{
+
+        private int length;
+
+        public MyAdapter(){
+            length = head_image_list.size();
+        }
+
+        @Override
+        public int getCount() {
+            return Integer.MAX_VALUE;               //这是为了让viewpager的画面可以循环播放
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object object) {
+            return view == object;
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+
+            position = position % length;
+            if(position < 0){
+                position = position + length;
+            }
+
+            ImageView imageView = head_image_list.get(position);
+            ViewParent parent = imageView.getParent();
+            if(null != parent){
+                ((ViewGroup)parent).removeView(imageView);
+            }
+
+            container.addView(imageView);
+
+
+            return imageView;
+        }
+
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            //super.destroyItem(container, position, object);
+        }
+    }
+
 }

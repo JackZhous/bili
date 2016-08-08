@@ -22,9 +22,6 @@
 
 
     <com.jack.zhou.jrecyclerview.recycler.JRecyclerView
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         app:head="@layout/recyler_header"
         app:body="@layout/recycler_content"
         android:layout_width="match_parent"

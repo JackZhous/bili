@@ -33,8 +33,7 @@ public class LiveFragment extends Fragment{
     private String des[] = {"云层里的阳光", "好美的海滩", "好美的海滩", "夕阳西下的美景", "夕阳西下的美景"
             , "夕阳西下的美景", "夕阳西下的美景", "夕阳西下的美景", "好美的海滩"};
 
-    private int resId[] = {R.drawable.img1, R.drawable.img2, R.drawable.img2, R.drawable.img1,
-            R.drawable.img2, R.drawable.img1, R.drawable.img2, R.drawable.img1};
+
 
     @Nullable
     @Override
