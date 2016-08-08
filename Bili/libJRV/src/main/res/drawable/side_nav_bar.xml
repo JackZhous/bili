@@ -1,13 +1,4 @@
-<!--
-  ~         Copyright (C) 2016-2017 宙斯
-  ~         All rights reserved
-  ~
-  ~        filename :Class4
-  ~        description :
-  ~
-  ~         created by jackzhous at  11/07/2016 12:12:12
-  ~         http://blog.csdn.net/jackzhouyu
-  -->
+
 
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">

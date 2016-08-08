@@ -11,35 +11,21 @@
 
 package com.jack.zhou.jrecyclerview.adapter;
 
-import android.app.Activity;
-import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.jack.zhou.jrecyclerview.R;
 import com.jack.zhou.jrecyclerview.util.JLog;
-
-import java.util.ArrayList;
 
 /**
  * Created by "jackzhous" on 2016/7/29.
  */
 public class JAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    public static final int TYPE_HEADER = 0;                           //头部
     public static final int TYPE_CONTENT = 1;                          //胸部
     private static final String TAG = "JAdapter";
+    public static final int TYPE_HEADER = 0;                           //头部
 
     private int header_layout;
     private int body_layout;
@@ -64,9 +50,10 @@ public class JAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             view = LayoutInflater.from(parent.getContext()).inflate(body_layout, null);
             viewHolder.findBody(view);
         }
-
+        viewHolder.hashCode();
         return new Holder(view);
     }
+
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {

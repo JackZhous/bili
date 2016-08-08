@@ -67,62 +67,14 @@ public class RecommendFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         JLog.default_print(TAG + " onActivityCreated");
-        photo_viewpager = (ViewPager)v.findViewById(R.id.photo_viewpager);
-        mDotLayout = (LinearLayout)v.findViewById(R.id.dot);
-        initImageView();
-        photo_viewpager.setAdapter(new Adapter());
-        photo_viewpager.setOnPageChangeListener(new PageListener());
-        photo_viewpager.setPageMargin(20);                                  //设置图片与图片之间的间隔
-        if(0 == selected_poisition){
-            selected_poisition = mView.size() * 100;
-        }
-        photo_viewpager.setCurrentItem(selected_poisition);
+
     }
 
 
     private void initImageView(){
-        unselectDot = getActivity().getDrawable(R.drawable.abc_btn_switch_to_on_mtrl_00001);
-        Drawable.ConstantState state_user = unselectDot.getConstantState();
-        selectedDot = (state_user == null) ? unselectDot : state_user.newDrawable().mutate();
-        DrawableCompat.setTint(selectedDot, ContextCompat.getColor(getActivity(), R.color.colorPrimaryDark));                   //着色和不着色
 
 
 
-        /**
-         * 添加小圆点和显示师徒到布局文件
-         */
-        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(30,30);
-        ViewGroup.LayoutParams params_image = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        for(int i = 0; i < 3; i++){
-            ImageView image = new ImageView(getActivity());
-            image.setImageResource(R.drawable.ic_answer_banner);
-            image.setScaleType(ImageView.ScaleType.FIT_XY);
-            image.setLayoutParams(params_image);
-            mView.add(image);
-
-            ImageView dot = new ImageView(getActivity());
-            if(i == selected_poisition%3){
-                dot.setImageDrawable(selectedDot);
-            }else{
-                dot.setImageDrawable(unselectDot);
-            }
-
-            dot.setLayoutParams(params);
-
-            mDotLayout.addView(dot,i);
-        }
-
-        tv_rank = (TextView)v.findViewById(R.id.tv_rank);
-        tv_recommend = (TextView)v.findViewById(R.id.tv_recommend);
-        Drawable tv_draw = ContextCompat.getDrawable(getActivity(),R.drawable.ic_header_hot);
-        tv_draw.setBounds(0, 0, 60, 60);
-
-        tv_recommend.setCompoundDrawables(tv_draw, null, null, null);
-        tv_draw =  ContextCompat.getDrawable(getActivity(),R.drawable.ic_bangumi_rank);
-        tv_draw.setBounds(0, 0, 60, 60);
-        tv_rank.setCompoundDrawables(tv_draw, null, null, null);
-
-        initRecyclerView();
 
     }
 

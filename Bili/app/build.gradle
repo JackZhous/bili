@@ -29,7 +29,6 @@ repositories{
     flatDir{
         dirs 'libs'                       //自定义的库，从当前目录去找
     }
-    mavenCentral()
 }
 
 dependencies {
@@ -44,5 +43,5 @@ dependencies {
     compile files('src/main/libs/gson-2.2.4.jar')
     compile files('src/main/libs/MobCommons-2016.0624.1326.jar')
     compile files('src/main/libs/MobTools-2016.0624.1326.jar')
-    compile project(':Jrecyclerview')
+    compile project(':libJRV')
 }
