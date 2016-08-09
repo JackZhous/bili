@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //AppUtil.integrationNotifcationBar(this);
+        AppUtil.integrationNotifcationBar(this);
         initLayoutResource();
 
         util = SharedPreferenceUtil.getInstance(this.getApplicationContext());

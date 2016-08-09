@@ -231,4 +231,25 @@ public class MyHeaderViewHolder implements JViewHolder {
         }
     }
     //====================viewpager适配及监听========================================================
+
+
+    @Override
+    public void setBodyStart(int position) {
+
+    }
+
+    @Override
+    public void setBodyEnd(int position) {
+
+    }
+
+    @Override
+    public void findBodyStart(View v) {
+
+    }
+
+    @Override
+    public void findBodyEnd(View v) {
+
+    }
 }

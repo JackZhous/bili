@@ -1,38 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_marginTop="15dp"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/shape_recycler">
 
-    <ImageView
+        <ImageView
 
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:id="@+id/image_view" />
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/image_view" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tv_info"
-        android:text="this is a test file"/>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
         <TextView
-            android:layout_alignParentLeft="true"
-            android:drawableLeft="@drawable/ic_info_views_large"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/time_play"/>
-        <TextView
-            android:layout_alignParentRight="true"
-            android:drawableLeft="@drawable/ic_info_danmakus_large"
-            android:layout_width="wrap_content"
+            android:id="@+id/tv_info"
+            android:layout_marginLeft="10dp"
+            android:text="this is a test file"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/time_dian"/>
-    </RelativeLayout>
+            android:orientation="horizontal">
+            <TextView
+                android:layout_alignParentLeft="true"
+                android:drawableLeft="@drawable/ic_info_views_large"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/time_play"/>
+            <TextView
+                android:layout_alignParentRight="true"
+                android:drawableLeft="@drawable/ic_info_danmakus_large"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:id="@+id/time_dian"/>
+        </RelativeLayout>
+
 </LinearLayout>

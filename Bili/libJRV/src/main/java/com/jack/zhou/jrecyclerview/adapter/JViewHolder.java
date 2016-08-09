@@ -42,4 +42,13 @@ public interface JViewHolder {
      */
     int size();
 
+    void setBodyStart(int position);
+
+    void setBodyEnd(int position);
+
+    void findBodyStart(View v);
+
+
+    void findBodyEnd(View v);
+
 }

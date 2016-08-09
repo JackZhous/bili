@@ -26,9 +26,13 @@ public class JAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public static final int TYPE_CONTENT = 1;                          //胸部
     private static final String TAG = "JAdapter";
     public static final int TYPE_HEADER = 0;                           //头部
+    private static final int TYPE_BODY_START = 2;
+    private static final int TYPE_BODY_END = 3;
 
     private int header_layout;
     private int body_layout;
+    private int body_start;
+    private int body_end;
     private JViewHolder viewHolder;
 
 
@@ -44,13 +48,23 @@ public class JAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         JLog.print(TAG, "onCreateViewHolder -- viewType = " + viewType);
         View view = null;
         if (viewType == TYPE_HEADER) {
+            JLog.print(TAG, "onCreateViewHolder -- TYPE_HEADER");
             view = LayoutInflater.from(parent.getContext()).inflate(header_layout, null);
             viewHolder.findHead(view);
-        } else {
+        } else if(viewType == TYPE_CONTENT){
+            JLog.print(TAG, "onCreateViewHolder -- TYPE_CONTENT");
             view = LayoutInflater.from(parent.getContext()).inflate(body_layout, null);
             viewHolder.findBody(view);
+        } else if(viewType == TYPE_BODY_START){
+            JLog.print(TAG, "onCreateViewHolder -- TYPE_BODY_START");
+            view = LayoutInflater.from(parent.getContext()).inflate(body_start, null);
+            viewHolder.findBodyStart(view);
+
+        } else if(viewType == TYPE_BODY_END){
+            JLog.print(TAG, "onCreateViewHolder -- TYPE_BODY_END");
+            view = LayoutInflater.from(parent.getContext()).inflate(body_end, null);
+            viewHolder.findBodyEnd(view);
         }
-        viewHolder.hashCode();
         return new Holder(view);
     }
 
@@ -58,28 +72,39 @@ public class JAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         JLog.print(TAG, "onBindViewHolder -- position = " + position);
-        if (getItemViewType(position) == TYPE_CONTENT) {                                        //说明是胸部
-            position = position - 1;                                                            //头部占用了一个位置，所以胸部必须减掉头部的1
+        if (getItemViewType(position) == TYPE_CONTENT) {                                            //说明是胸部
+            int div = position / 6 + 1;
+            position = position - div * 2;
+            JLog.print(TAG, "position " + position);
             viewHolder.setBody(position);
-        } else {
+        } else if(getItemViewType(position) == TYPE_HEADER){
             viewHolder.setHead();
+        } else if(getItemViewType(position) == TYPE_BODY_START){
+            viewHolder.setBodyStart(position);
+        } else if(getItemViewType(position) == TYPE_BODY_END){
+            viewHolder.setBodyEnd(position);
         }
     }
 
     @Override
     public int getItemCount() {
-
         JLog.print(TAG, "getItemCount  " + viewHolder.size());
         return viewHolder.size();
     }
 
     @Override
     public int getItemViewType(int position) {
-        JLog.print(TAG, "getItemViewType  " );
-        if (position == 0) {
-            return TYPE_HEADER;
+        JLog.print(TAG, "getItemViewType  position " + position);
+        int type = TYPE_HEADER;
+        if (position != 0) {
+            position = position % 6;
+            if(position != 0 && position != 1){
+                type = TYPE_CONTENT;
+            }else {
+                type = (position == 0 ? TYPE_BODY_END : TYPE_BODY_START);
+            }
         }
-        return TYPE_CONTENT;
+        return type;
     }
 
 
@@ -89,4 +114,11 @@ public class JAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
+    public void setBody_start(int body_start) {
+        this.body_start = body_start;
+    }
+
+    public void setBody_end(int body_end) {
+        this.body_end = body_end;
+    }
 }

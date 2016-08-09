@@ -11,6 +11,7 @@
 
 package com.jack.zhou.bili.bean;
 
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -62,10 +63,13 @@ public class RecommendFragment extends Fragment {
 
 
         jRecyclerView = (JRecyclerView)v.findViewById(R.id.recyclerView);
+        jRecyclerView.setBody_end(R.layout.recycler_content_end);
+        jRecyclerView.setBody_start(R.layout.recycler_content_start);
         holder = new RecommendViewHolder(getContext());
         jRecyclerView.setViewHolder(holder);
 
         jRecyclerView.startToShow();
+        jRecyclerView.addItemDecoration(new RecyclerItemDecoration(30));
     }
 
     @Override
@@ -109,4 +113,25 @@ public class RecommendFragment extends Fragment {
         JLog.default_print(TAG + "    onDestroy");
 
     }
+
+    /**
+     * RecyclerView间隔
+     */
+    public class RecyclerItemDecoration extends RecyclerView.ItemDecoration{
+        private int space;
+
+        public RecyclerItemDecoration(int space){
+            this.space = space;
+        }
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+            if(parent.getChildPosition(view) != 0){
+                outRect.top = space;
+                outRect.left = space;
+                outRect.right = space;
+            }
+        }
+    }
+
 }

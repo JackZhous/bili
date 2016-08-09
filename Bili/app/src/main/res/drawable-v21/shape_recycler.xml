@@ -11,7 +11,7 @@
   -->
 
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/white" />
-    <stroke android:color="@color/gray" />
+    <solid android:color="@color/white" />                   <!-- 填充-->
+    <stroke android:color="@color/light_gray" />           <!-- 边框-->
     <padding android:bottom="2dp" android:top="2dp" android:right="2dp" android:left="2dp"/>
 </shape>

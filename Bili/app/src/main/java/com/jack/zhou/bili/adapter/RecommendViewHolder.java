@@ -62,16 +62,6 @@ public class RecommendViewHolder implements JViewHolder{
     public void findHead(View v) {
         head_Dot = (LinearLayout)v.findViewById(R.id.dot);
         head_viewpager = (ViewPager)v.findViewById(R.id.photo_viewpager);
-
-        tv_rank = (TextView)v.findViewById(R.id.tv_rank);
-        tv_recommend = (TextView)v.findViewById(R.id.tv_recommend);
-        Drawable draw = context.getDrawable(R.drawable.ic_header_hot);
-        draw.setBounds(0, 0, 60, 60);
-        tv_recommend.setCompoundDrawables(draw, null, null, null);
-
-        draw = context.getDrawable(R.drawable.ic_bangumi_rank);
-        draw.setBounds(0, 0, 60, 60);
-        tv_rank.setCompoundDrawables(draw, null, null, null);
     }
 
     @Override
@@ -80,6 +70,7 @@ public class RecommendViewHolder implements JViewHolder{
         body_info = (TextView)v.findViewById(R.id.tv_info);
         body_time_play = (TextView)v.findViewById(R.id.time_play);
         body_time_ding = (TextView)v.findViewById(R.id.time_dian);
+
     }
 
     @Override
@@ -96,8 +87,8 @@ public class RecommendViewHolder implements JViewHolder{
 
         ImageView dot = new ImageView(context);
         dot.setImageDrawable(selectDot);
-        LinearLayout.LayoutParams dot_params = new LinearLayout.LayoutParams(30,30);
-        dot_params.setMarginEnd(8);
+        LinearLayout.LayoutParams dot_params = new LinearLayout.LayoutParams(20,20);
+        dot_params.setMarginEnd(10);
         dot.setLayoutParams(dot_params);
 
         head_Dot.addView(dot, 0);
@@ -130,6 +121,37 @@ public class RecommendViewHolder implements JViewHolder{
         return body_image_list.size() + 1;
     }
 
+    @Override
+    public void setBodyStart(int position) {
+
+    }
+
+    @Override
+    public void setBodyEnd(int position) {
+
+    }
+
+    @Override
+    public void findBodyStart(View v) {
+        tv_rank = (TextView)v.findViewById(R.id.tv_rank);
+        tv_recommend = (TextView)v.findViewById(R.id.tv_recommend);
+        Drawable draw = context.getDrawable(R.drawable.ic_header_hot);
+        draw.setBounds(0, 0, 60, 60);
+        tv_recommend.setCompoundDrawables(draw, null, null, null);
+
+        draw = context.getDrawable(R.drawable.ic_bangumi_rank);
+        draw.setBounds(0, 0, 60, 60);
+        tv_rank.setCompoundDrawables(draw, null, null, null);
+    }
+
+    @Override
+    public void findBodyEnd(View v) {
+        TextView rechange = (TextView)v.findViewById(R.id.fresh);
+        ImageView imageView = (ImageView)v.findViewById(R.id.fresh_icon);
+        Drawable draw = context.getDrawable(R.drawable.ic_category_more_refresh);
+        DrawableCompat.setTint(draw, ContextCompat.getColor(context, R.color.colorPrimary));
+        imageView.setImageDrawable(draw);
+    }
 
     private void initDisplayData(){
 

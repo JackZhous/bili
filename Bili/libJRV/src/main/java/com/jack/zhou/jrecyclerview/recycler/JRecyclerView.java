@@ -23,6 +23,8 @@ public class JRecyclerView extends RecyclerView {
     private Context context;
     private int header_layout;                          //头部布局文件
     private int body_layout;                            //胸部布局文件
+    private int body_start;                             //胸部头布局
+    private int body_end;                               //胸部尾布局
     private LayoutManager manager;
     private GridLayoutManager default_manager;          //默认布局是表格布局
 
@@ -68,12 +70,14 @@ public class JRecyclerView extends RecyclerView {
             array.recycle();
         }
 
-        default_manager = new GridLayoutManager(context,2, LinearLayoutManager.VERTICAL, false);
+        default_manager = new GridLayoutManager(context,2);
         default_manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
                 if (0 == position) {
                     JLog.print(TAG, "spn " + default_manager.getSpanCount());
+                    return default_manager.getSpanCount();
+                } else if(1 == position){
                     return default_manager.getSpanCount();
                 }
                 return 1;
@@ -88,7 +92,8 @@ public class JRecyclerView extends RecyclerView {
     public void initAdapter(){
 
         adapter = new JAdapter(viewHolder, header_layout, body_layout);
-
+        adapter.setBody_start(body_start);
+        adapter.setBody_end(body_end);
     }
 
 
@@ -135,6 +140,20 @@ public class JRecyclerView extends RecyclerView {
         setAdapter(adapter);
     }
 
+
+    public void setBody_start(int body_start) {
+        this.body_start = body_start;
+        if(null != adapter){
+            adapter.setBody_start(body_start);
+        }
+    }
+
+    public void setBody_end(int body_end) {
+        this.body_end = body_end;
+        if(null != adapter) {
+            adapter.setBody_end(body_end);
+        }
+    }
 }
 
 
