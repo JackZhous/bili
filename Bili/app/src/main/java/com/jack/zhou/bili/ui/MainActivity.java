@@ -24,6 +24,7 @@ import com.android.volley.toolbox.ImageLoader;
 
 import com.jack.zhou.bili.R;
 import com.jack.zhou.bili.adapter.TabFragmentAdapter;
+import com.jack.zhou.bili.bean.ClassFragment;
 import com.jack.zhou.bili.bean.LiveFragment;
 import com.jack.zhou.bili.bean.RecommendFragment;
 import com.jack.zhou.bili.inter.BiliCallback;
@@ -116,6 +117,8 @@ public class MainActivity extends AppCompatActivity
             Fragment f1;
             if(i == 1){
                 f1 = new RecommendFragment();
+            }else if(i == 3){
+                f1 = new ClassFragment();
             }else{
                 f1 = new LiveFragment();
             }
