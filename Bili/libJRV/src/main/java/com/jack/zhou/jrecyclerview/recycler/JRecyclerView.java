@@ -12,6 +12,8 @@ import com.jack.zhou.jrecyclerview.adapter.JAdapter;
 import com.jack.zhou.jrecyclerview.adapter.JViewHolder;
 import com.jack.zhou.jrecyclerview.util.JLog;
 
+import java.util.ArrayList;
+
 /**
  * Created by "jackzhous" on 2016/7/29.
  */
@@ -23,8 +25,8 @@ public class JRecyclerView extends RecyclerView {
     private Context context;
     private int header_layout;                          //头部布局文件
     private int body_layout;                            //胸部布局文件
-    private int body_start;                             //胸部头布局
-    private int body_end;                               //胸部尾布局
+    private int[] body_start;                             //胸部头布局
+    private int[] body_end;                               //胸部尾布局
     private LayoutManager manager;
     private GridLayoutManager default_manager;          //默认布局是表格布局
 
@@ -77,10 +79,13 @@ public class JRecyclerView extends RecyclerView {
                 if (0 == position) {
                     JLog.print(TAG, "spn " + default_manager.getSpanCount());
                     return default_manager.getSpanCount();
-                } else if(1 == position){
-                    return default_manager.getSpanCount();
+                } else{
+                    position = position % 6;
+                    if(position == 0 || position == 1){
+                        return default_manager.getSpanCount();
+                    }
+                    return 1;
                 }
-                return 1;
             }
         });
 
@@ -141,14 +146,14 @@ public class JRecyclerView extends RecyclerView {
     }
 
 
-    public void setBody_start(int body_start) {
+    public void setBody_start(int[] body_start) {
         this.body_start = body_start;
         if(null != adapter){
             adapter.setBody_start(body_start);
         }
     }
 
-    public void setBody_end(int body_end) {
+    public void setBody_end(int[] body_end) {
         this.body_end = body_end;
         if(null != adapter) {
             adapter.setBody_end(body_end);

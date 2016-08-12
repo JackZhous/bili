@@ -60,11 +60,13 @@ public class RecommendFragment extends Fragment {
 
     private void initLayout(View v){
 
+        int[] layout_content_start_list = new int[]{R.layout.recycler_content_start, R.layout.recycler_content_start1};                                      //胸部起始布局集合
+        int[] layout_content_end_list = new int[]{R.layout.recycler_content_end, R.layout.recycler_content_end1};                                        //胸部结束布局集合
 
 
         jRecyclerView = (JRecyclerView)v.findViewById(R.id.recyclerView);
-        jRecyclerView.setBody_end(R.layout.recycler_content_end);
-        jRecyclerView.setBody_start(R.layout.recycler_content_start);
+        jRecyclerView.setBody_end(layout_content_end_list);
+        jRecyclerView.setBody_start(layout_content_start_list);
         holder = new RecommendViewHolder(getContext());
         jRecyclerView.setViewHolder(holder);
 

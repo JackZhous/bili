@@ -46,9 +46,9 @@ public interface JViewHolder {
 
     void setBodyEnd(int position);
 
-    void findBodyStart(View v);
+    void findBodyStart(View v, int position);
 
 
-    void findBodyEnd(View v);
+    void findBodyEnd(View v, int position);
 
 }

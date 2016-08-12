@@ -244,12 +244,12 @@ public class MyHeaderViewHolder implements JViewHolder {
     }
 
     @Override
-    public void findBodyStart(View v) {
+    public void findBodyStart(View v, int i) {
 
     }
 
     @Override
-    public void findBodyEnd(View v) {
+    public void findBodyEnd(View v , int i) {
 
     }
 }

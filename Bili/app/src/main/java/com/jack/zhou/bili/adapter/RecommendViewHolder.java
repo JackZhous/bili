@@ -6,6 +6,9 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -118,7 +121,9 @@ public class RecommendViewHolder implements JViewHolder{
 
     @Override
     public int size() {
-        return body_image_list.size() + 1;
+        //return body_image_list.size() + 1;
+
+        return 13;
     }
 
     @Override
@@ -132,25 +137,42 @@ public class RecommendViewHolder implements JViewHolder{
     }
 
     @Override
-    public void findBodyStart(View v) {
-        tv_rank = (TextView)v.findViewById(R.id.tv_rank);
-        tv_recommend = (TextView)v.findViewById(R.id.tv_recommend);
-        Drawable draw = context.getDrawable(R.drawable.ic_header_hot);
-        draw.setBounds(0, 0, 60, 60);
-        tv_recommend.setCompoundDrawables(draw, null, null, null);
+    public void findBodyStart(View v, int position) {
+        if(position == 0){                                                                          //第0个推荐布局
+            tv_rank = (TextView)v.findViewById(R.id.tv_rank);
+            tv_recommend = (TextView)v.findViewById(R.id.tv_recommend);
+            Drawable draw = context.getDrawable(R.drawable.ic_header_hot);
+            draw.setBounds(0, 0, 60, 60);
+            tv_recommend.setCompoundDrawables(draw, null, null, null);
 
-        draw = context.getDrawable(R.drawable.ic_bangumi_rank);
-        draw.setBounds(0, 0, 60, 60);
-        tv_rank.setCompoundDrawables(draw, null, null, null);
+            draw = context.getDrawable(R.drawable.ic_bangumi_rank);
+            draw.setBounds(0, 0, 60, 60);
+            tv_rank.setCompoundDrawables(draw, null, null, null);
+        }else if(position == 1){                                                                    //第1个直播开头布局
+            TextView live = (TextView)v.findViewById(R.id.tv_live);
+            live.setText("  正在直播");
+            Drawable draw = context.getDrawable(R.drawable.ic_head_live);
+            draw.setBounds(0, 0, 60, 60);
+            live.setCompoundDrawables(draw, null, null, null);
+
+            TextView tv_live_info = (TextView)v.findViewById(R.id.tv_live_info);
+            SpannableStringBuilder style = new SpannableStringBuilder("当前1800个直播 >");
+            style.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.colorPrimary)), 2, 6, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+            tv_live_info.setText(style);
+        }
+
     }
 
     @Override
-    public void findBodyEnd(View v) {
-        TextView rechange = (TextView)v.findViewById(R.id.fresh);
-        ImageView imageView = (ImageView)v.findViewById(R.id.fresh_icon);
-        Drawable draw = context.getDrawable(R.drawable.ic_category_more_refresh);
-        DrawableCompat.setTint(draw, ContextCompat.getColor(context, R.color.colorPrimary));
-        imageView.setImageDrawable(draw);
+    public void findBodyEnd(View v, int position) {
+        if(position == 0){
+            TextView rechange = (TextView)v.findViewById(R.id.fresh);
+            ImageView imageView = (ImageView)v.findViewById(R.id.fresh_icon);
+            Drawable draw = context.getDrawable(R.drawable.ic_category_more_refresh);
+            DrawableCompat.setTint(draw, ContextCompat.getColor(context, R.color.colorPrimary));
+            imageView.setImageDrawable(draw);
+        }
+
     }
 
     private void initDisplayData(){
