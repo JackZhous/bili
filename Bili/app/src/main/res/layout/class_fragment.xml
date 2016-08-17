@@ -4,10 +4,12 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/recycler"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/recycler"
+            android:layout_marginTop="20dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 </LinearLayout>

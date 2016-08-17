@@ -41,6 +41,7 @@ public class AppUtil {
     public static final String HEART_BREAK = BASE_URL + "heart";
     public static final String REGISTER = BASE_URL + "register";
     public static final String VERIFY_TOKEN = BASE_URL + "VerifyToken";
+    public static final String GET_IMAGE = BASE_URL + "refreshImage";
 
 
     public static void integrationNotifcationBar(Activity activity){

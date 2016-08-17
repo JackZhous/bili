@@ -33,6 +33,7 @@ public class MysqlUtil {
 	public static final String TASK_REGISTER = "register_user";							//注册用户
 	public static final String TASK_LOGIN = "login";									//登录
 	public static final String TASK_TOKEN_VERIFY = "token_verify";
+	public static final String TASK_GET_IMAGE = "refreshImage";
 	public static final String TASK_LOGOUT = "logout";
 	
 	private Connection conn;

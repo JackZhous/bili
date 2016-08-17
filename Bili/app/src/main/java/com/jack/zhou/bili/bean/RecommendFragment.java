@@ -31,6 +31,11 @@ import android.widget.TextView;
 
 import com.jack.zhou.bili.R;
 import com.jack.zhou.bili.adapter.RecommendViewHolder;
+import com.jack.zhou.bili.inter.BiliCallback;
+import com.jack.zhou.bili.inter.HttpListener;
+import com.jack.zhou.bili.network.IOManager;
+import com.jack.zhou.bili.network.Task;
+import com.jack.zhou.bili.util.AppUtil;
 import com.jack.zhou.bili.util.JLog;
 import com.jack.zhou.jrecyclerview.adapter.JViewHolder;
 import com.jack.zhou.jrecyclerview.recycler.JRecyclerView;
@@ -40,7 +45,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class RecommendFragment extends Fragment {
+public class RecommendFragment extends Fragment implements BiliCallback{
 
     private static final String TAG = "RecommendFragment";
     private JRecyclerView jRecyclerView;
@@ -54,6 +59,7 @@ public class RecommendFragment extends Fragment {
         View v = inflater.inflate(R.layout.recommend_layout,container, false);
         JLog.default_print(TAG + " onCreateView");
         initLayout(v);
+        initNetworkImage();
         return v;
     }
 
@@ -136,4 +142,22 @@ public class RecommendFragment extends Fragment {
         }
     }
 
+    private void initNetworkImage(){
+        HashMap<String, String> map = new HashMap<>();
+        map.put("task_flag", "refreshImage");
+        map.put("module","recommend");
+
+        Task task = new Task(AppUtil.GET_IMAGE, map, new HttpListener(this));
+        IOManager.getInstance(getContext()).add_task_start(task);
+    }
+
+    @Override
+    public void onResponse(int code, Object msg) {
+
+    }
+
+    @Override
+    public void onError(int code, Object obj) {
+
+    }
 }

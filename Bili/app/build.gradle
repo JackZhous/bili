@@ -26,6 +26,7 @@ android {
 }
 
 repositories{
+    mavenCentral()
     flatDir{
         dirs 'libs'                       //自定义的库，从当前目录去找
     }
@@ -44,4 +45,6 @@ dependencies {
     compile files('src/main/libs/MobCommons-2016.0624.1326.jar')
     compile files('src/main/libs/MobTools-2016.0624.1326.jar')
     compile project(':libJRV')
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.android.support:support-v4:23.1.0'
 }
