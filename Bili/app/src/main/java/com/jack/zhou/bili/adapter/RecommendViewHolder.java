@@ -18,6 +18,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.jack.zhou.bili.R;
+import com.jack.zhou.bili.inter.BiliCallback;
+import com.jack.zhou.bili.inter.HttpListener;
+import com.jack.zhou.bili.network.IOManager;
+import com.jack.zhou.bili.network.Task;
+import com.jack.zhou.bili.util.AppUtil;
 import com.jack.zhou.bili.util.JLog;
 import com.jack.zhou.jrecyclerview.adapter.JViewHolder;
 
@@ -31,7 +36,7 @@ import java.util.Map;
  * create date: 2016/8/8 14:28
  * desc:
  ************/
-public class RecommendViewHolder implements JViewHolder{
+public class RecommendViewHolder implements JViewHolder, BiliCallback{
 
     private Context context;
     private LinearLayout head_Dot;
@@ -56,9 +61,11 @@ public class RecommendViewHolder implements JViewHolder{
 
     public RecommendViewHolder(Context context){
         this.context = context;
-        head_image_list = new ArrayList<ImageView>();
-        body_image_list = new ArrayList<String>();
-        body_info_list  = new ArrayList<Map<String, String>>();
+        head_image_list = new ArrayList<>();
+        body_image_list = new ArrayList<>();
+        body_info_list  = new ArrayList<>();
+
+        initNetworkImage();
         initDisplayData();
     }
 
@@ -113,6 +120,7 @@ public class RecommendViewHolder implements JViewHolder{
 
     @Override
     public void setBody(int position) {
+
         String url = body_image_list.get(position);
         Glide.with(context).load(url).centerCrop().placeholder(R.drawable.bili_default_image_tv).crossFade().into(body_image);
         Map<String, String> map = body_info_list.get(position);
@@ -125,7 +133,7 @@ public class RecommendViewHolder implements JViewHolder{
     public int size() {
         //return body_image_list.size() + 1;
 
-        return 13;
+        return body_image_list.size() + 1;
     }
 
     @Override
@@ -288,4 +296,24 @@ public class RecommendViewHolder implements JViewHolder{
         }
     }
 
+
+    private void initNetworkImage(){
+        HashMap<String, String> map = new HashMap<>();
+        map.put("task_flag", "refreshImage");
+        map.put("module","recommend_module");
+
+        Task task = new Task(AppUtil.GET_IMAGE, map, new HttpListener(this));
+        IOManager.getInstance(context).add_task_start(task);
+    }
+
+
+    @Override
+    public void onResponse(int code, Object msg) {
+
+    }
+
+    @Override
+    public void onError(int code, Object obj) {
+
+    }
 }

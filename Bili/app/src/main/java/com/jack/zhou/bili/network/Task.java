@@ -33,6 +33,8 @@ public class Task extends StringRequest{
         this.mData = mData;
         this.mCallback = listener;
         this.url = url;
+        JSONObject json = new JSONObject(mData);
+        JLog.default_print("net send params: " + json.toString());
         JLog.default_print("url " + url);
     }
 
@@ -51,7 +53,6 @@ public class Task extends StringRequest{
 
     @Override
     protected Map<String, String> getParams() throws AuthFailureError {
-
 
         return mData;
     }

@@ -45,7 +45,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class RecommendFragment extends Fragment implements BiliCallback{
+public class RecommendFragment extends Fragment{
 
     private static final String TAG = "RecommendFragment";
     private JRecyclerView jRecyclerView;
@@ -59,7 +59,6 @@ public class RecommendFragment extends Fragment implements BiliCallback{
         View v = inflater.inflate(R.layout.recommend_layout,container, false);
         JLog.default_print(TAG + " onCreateView");
         initLayout(v);
-        initNetworkImage();
         return v;
     }
 
@@ -142,22 +141,4 @@ public class RecommendFragment extends Fragment implements BiliCallback{
         }
     }
 
-    private void initNetworkImage(){
-        HashMap<String, String> map = new HashMap<>();
-        map.put("task_flag", "refreshImage");
-        map.put("module","recommend");
-
-        Task task = new Task(AppUtil.GET_IMAGE, map, new HttpListener(this));
-        IOManager.getInstance(getContext()).add_task_start(task);
-    }
-
-    @Override
-    public void onResponse(int code, Object msg) {
-
-    }
-
-    @Override
-    public void onError(int code, Object obj) {
-
-    }
 }

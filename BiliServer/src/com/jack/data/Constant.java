@@ -8,6 +8,6 @@ public class Constant {
 	
 	public static void initData(){
 		ArrayList<String> recommend = new ArrayList<>();
-		recommend.add(e);
+		//recommend.add(e);
 	}
 }
