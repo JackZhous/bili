@@ -159,6 +159,16 @@ public class JRecyclerView extends RecyclerView {
             adapter.setBody_end(body_end);
         }
     }
+
+
+    @Override
+    public JAdapter getAdapter() {
+        return adapter;
+    }
+
+    public JViewHolder getViewHolder() {
+        return viewHolder;
+    }
 }
 
 

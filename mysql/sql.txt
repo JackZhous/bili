@@ -32,7 +32,7 @@ create table image_url(
 	);
 
 
-insert into image_url(image_url, first_module, sencond_module, video_info, play_times, up_times) value ("image/img_tips_error_banner_tv.png", "recommend_module", "hot_modlue", "王宝强", "100", "50");
+insert into image_url(image_url, first_module, sencond_module, video_info, play_times, up_times) value ("image/img_tips_live_room_locked.png", "recommend_module", "live_play", "day day up", "5123", "150");
 
 
 # 解释：

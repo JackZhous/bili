@@ -8,6 +8,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
+import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.jack.zhou.bili.R;
+import com.jack.zhou.bili.bean.ImageUrlBean;
 import com.jack.zhou.bili.inter.BiliCallback;
 import com.jack.zhou.bili.inter.HttpListener;
 import com.jack.zhou.bili.network.IOManager;
@@ -25,6 +27,9 @@ import com.jack.zhou.bili.network.Task;
 import com.jack.zhou.bili.util.AppUtil;
 import com.jack.zhou.bili.util.JLog;
 import com.jack.zhou.jrecyclerview.adapter.JViewHolder;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,7 +41,7 @@ import java.util.Map;
  * create date: 2016/8/8 14:28
  * desc:
  ************/
-public class RecommendViewHolder implements JViewHolder, BiliCallback{
+public class RecommendViewHolder implements JViewHolder{
 
     private Context context;
     private LinearLayout head_Dot;
@@ -55,9 +60,9 @@ public class RecommendViewHolder implements JViewHolder, BiliCallback{
     private Drawable unSelectDot;
     private Drawable selectDot;
 
-    private static final String TV_INFO = "video_info";
-    private static final String TV_TIME_PLAY = "time_play";
-    private static final String TV_TIME_DING = "time_ding";
+    public static final String TV_INFO = "video_info";
+    public static final String TV_TIME_PLAY = "time_play";
+    public static final String TV_TIME_DING = "time_ding";
 
     public RecommendViewHolder(Context context){
         this.context = context;
@@ -65,7 +70,6 @@ public class RecommendViewHolder implements JViewHolder, BiliCallback{
         body_image_list = new ArrayList<>();
         body_info_list  = new ArrayList<>();
 
-        initNetworkImage();
         initDisplayData();
     }
 
@@ -122,7 +126,7 @@ public class RecommendViewHolder implements JViewHolder, BiliCallback{
     public void setBody(int position) {
 
         String url = body_image_list.get(position);
-        Glide.with(context).load(url).centerCrop().placeholder(R.drawable.bili_default_image_tv).crossFade().into(body_image);
+        Glide.with(context).load(AppUtil.BASE_URL +url).centerCrop().placeholder(R.drawable.bili_default_image_tv).crossFade().into(body_image);
         Map<String, String> map = body_info_list.get(position);
         body_info.setText(map.get(TV_INFO));
         body_time_play.setText(map.get(TV_TIME_PLAY));
@@ -131,9 +135,16 @@ public class RecommendViewHolder implements JViewHolder, BiliCallback{
 
     @Override
     public int size() {
-        //return body_image_list.size() + 1;
-
-        return body_image_list.size() + 1;
+        int size = body_image_list.size();
+        if(body_image_list.size() != 0){
+            if(size % 4 == 0){
+                size = size + 1 + size / 2;
+            }else{
+                size = size + (size / 4 + 1) * 2;
+            }
+        }
+        JLog.default_print("size " + size);
+        return size;
     }
 
     @Override
@@ -296,24 +307,11 @@ public class RecommendViewHolder implements JViewHolder, BiliCallback{
         }
     }
 
-
-    private void initNetworkImage(){
-        HashMap<String, String> map = new HashMap<>();
-        map.put("task_flag", "refreshImage");
-        map.put("module","recommend_module");
-
-        Task task = new Task(AppUtil.GET_IMAGE, map, new HttpListener(this));
-        IOManager.getInstance(context).add_task_start(task);
+    public void setBody_image_list(ArrayList<String> body_image_list) {
+        this.body_image_list = body_image_list;
     }
 
-
-    @Override
-    public void onResponse(int code, Object msg) {
-
-    }
-
-    @Override
-    public void onError(int code, Object obj) {
-
+    public void setBody_info_list(ArrayList<Map<String, String>> body_info_list) {
+        this.body_info_list = body_info_list;
     }
 }
