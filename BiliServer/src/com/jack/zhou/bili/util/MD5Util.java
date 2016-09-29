@@ -8,7 +8,7 @@ import java.util.HashMap;
 public class MD5Util {
 	
 	private static char hexDigits[] = {'a', '1', '2', '3', '4', '5', 'b', 'e', '8', '9', '0', '6', 'c', 'd', '7', 'f'};
-	private static final int avalible_time = 10 * 24 * 60 * 60 * 1000;					//token的最长时间
+	private static final int avalible_time = 10 * 24 * 60 * 60 * 1000;											//token的最长时间
 	
 	/**
      * token列表    装载了每一个用户的token/phone/时间戳

@@ -1,4 +1,5 @@
- create table bili_user(
+#1. bili_user用户信息表
+create table bili_user(
 	uid int not null primary key auto_increment,
 	account varchar(20) not null,
 	password varchar(150) not null,
@@ -15,3 +16,24 @@
 	
 	
 	insert into bili_user (account, nickname, password, register_time, phone) value("123", "jackzhous111", "123123", "1980-1-2", "18588431884");
+
+
+#2. 图片链接表
+create table image_url(
+	id int not null primary key auto_increment,
+	image_url varchar(250) not null,
+	first_module varchar(50) not null,			#属于哪个大modlue下，如推荐/直播等
+	sencond_module varchar(50) not null,			#属于哪个小module下，如广告栏，推荐等
+	video_url varchar(250),					#视频地址
+	video_info varchar(70),					#视频地址
+	play_times varchar(10),					#播放次数
+	up_times varchar(10),					#顶赞次数
+	extra varchar(10)					#额外字段
+	);
+
+
+insert into image_url(image_url, first_module, sencond_module, video_info, play_times, up_times) value ("image/img_tips_live_room_locked.png", "recommend_module", "live_play", "day day up", "5123", "150");
+
+
+# 解释：
+1. varchar和char的区别，前可变数据类型，后者不可变，varchar(12)和char(12)存储“abc”，则前占用3个+1个字节，后者占用12个字节；同时，由于char是固定字节，在处理上速度要快于前者

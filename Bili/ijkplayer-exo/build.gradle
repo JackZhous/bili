@@ -30,7 +30,7 @@ dependencies {
 
 ext {
     optionalPlugins = null;
-    // optionalPlugins = ['tools/gradle-mvn-push.gradle', 'tools/gradle-bintray-upload.gradle'];
+    // optionalPlugins = ['tools/gradle-mvn-push.gradle', 'tools/gray-upload.gradle'];
 }
 
 ext.optionalPlugins.each{ value ->

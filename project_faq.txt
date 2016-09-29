@@ -9,3 +9,31 @@
 		
 		
 http://www.jianshu.com/p/a4eea7ea4664    //ijkplayer讲解
+
+2. Glide图片加载框架
+原理性学习：
+	1. Glide默认的Bitmap格式RGB_565格式，占用空间更小；你也可以更改成RGB_888格式，如下：
+	public class GlideConfiguration implements GlideModule {
+	 
+	    @Override
+	    public void applyOptions(Context context, GlideBuilder builder) {
+		// Apply options to the builder here.
+		builder.setDecodeFormat(DecodeFormat.PREFER_ARGB_8888);
+	    }
+	 
+	    @Override
+	    public void registerComponents(Context context, Glide glide) {
+		// register ModelLoaders here.
+	    }
+	}
+	同时，你还需要在AndroidManifest.xml里面配置meta-data参数
+	<meta-data android:name="com.inthecheesefactory.lab.glidepicasso.GlideConfiguration"
+            android:value="GlideModule"/>
+
+	2. Glide会默认保存和ImageView尺寸大小一样的图片,所以你同一张图片使用多个不同大小的ImageView，Glide也会保存多张，而Picasso则会保存全尺寸的图片，所有Glide图片缓冲大小也比Picasso小
+	当然，你也可以改变Glide这种行为，让它保存一张全尺寸的图片，下次使用时候直接将全尺寸图片缓冲取出，重新调整大小，在缓存使用
+	Glide.with(this)
+	     .load("http://nuuneoi.com/uploads/source/playstore/cover.jpg")
+	     .diskCacheStrategy(DiskCacheStrategy.ALL)
+	     .into(ivImgGlide);
+

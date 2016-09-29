@@ -119,6 +119,8 @@ public class JAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private int getType(int position){
         int type = TYPE_HEADER;
+
+
         if (position != 0) {
             position = position % 6;
             if(position != 0 && position != 1){
@@ -126,6 +128,7 @@ public class JAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             }else {
                 type = (position == 0 ? TYPE_BODY_END : TYPE_BODY_START);
             }
+
         }
 
         return type;

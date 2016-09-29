@@ -21,6 +21,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,16 +32,24 @@ import android.widget.TextView;
 
 import com.jack.zhou.bili.R;
 import com.jack.zhou.bili.adapter.RecommendViewHolder;
+import com.jack.zhou.bili.inter.BiliCallback;
+import com.jack.zhou.bili.inter.HttpListener;
+import com.jack.zhou.bili.network.IOManager;
+import com.jack.zhou.bili.network.Task;
+import com.jack.zhou.bili.util.AppUtil;
 import com.jack.zhou.bili.util.JLog;
 import com.jack.zhou.jrecyclerview.adapter.JViewHolder;
 import com.jack.zhou.jrecyclerview.recycler.JRecyclerView;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class RecommendFragment extends Fragment {
+public class RecommendFragment extends Fragment implements BiliCallback{
 
     private static final String TAG = "RecommendFragment";
     private JRecyclerView jRecyclerView;
@@ -72,6 +81,8 @@ public class RecommendFragment extends Fragment {
 
         jRecyclerView.startToShow();
         jRecyclerView.addItemDecoration(new RecyclerItemDecoration(30));
+
+        initNetworkImage();
     }
 
     @Override
@@ -93,7 +104,7 @@ public class RecommendFragment extends Fragment {
     public void onPause() {
         super.onPause();
 
-        JLog.default_print(TAG+ "   onPause");
+        JLog.default_print(TAG + "   onPause");
     }
 
     @Override
@@ -134,6 +145,67 @@ public class RecommendFragment extends Fragment {
                 outRect.right = space;
             }
         }
+    }
+
+
+
+    private void initNetworkImage(){
+        HashMap<String, String> map = new HashMap<>();
+        map.put("task_flag", "refreshImage");
+        map.put("module", "recommend_module");
+
+        Task task = new Task(AppUtil.GET_IMAGE, map, new HttpListener(this));
+        IOManager.getInstance(getContext()).add_task_start(task);
+    }
+
+
+    /**
+     * 网络回调接口
+     * @param code  成功或失败
+     * @param msg   返回数据 形如：{"result":"ok","count":10,"data":
+     *              ["{\"sencond_module\":\"hot_modlue\",\"play_times\":\"18902\",
+     *              \"image_url\":\"image\/img_tips_error_banner_tv.png\",
+     *              \"video_info\":\"video info1\",\"up_times\":\"100\",
+     *              \"first_moudle\":\"recommend_module\"}"
+     *              count表示有多少个数组  data里面是具体的数据
+     */
+    @Override
+    public void onResponse(int code, Object msg) {
+
+
+        if(code != AppUtil.REQUEST_SUCCESS || TextUtils.isEmpty(msg.toString())){
+            return;
+        }
+        ArrayList<String>  body_image_list = new ArrayList<>();
+        ArrayList<Map<String, String>> body_info_list = new ArrayList<>();
+        try{
+            JSONObject jsonObject = new JSONObject(String.valueOf(msg));
+            JSONArray jsonArray = jsonObject.optJSONArray("data");
+            int count = jsonObject.optInt("count");
+            for(int i = 0; i < count; i++){
+                JSONObject object = new JSONObject(jsonArray.optString(i));
+                ImageUrlBean bean = ImageUrlBean.toBean(object);
+                body_image_list.add(bean.getImage_url());
+                HashMap<String,String> map = new HashMap<>();
+                map.put(RecommendViewHolder.TV_INFO, bean.getVideo_info());
+                map.put(RecommendViewHolder.TV_TIME_PLAY, bean.getPlay_times());
+                map.put(RecommendViewHolder.TV_TIME_DING, bean.getUp_times());
+                body_info_list.add(map);
+                JLog.default_print("imageurlbean == " + bean.toString());
+            }
+
+            ((RecommendViewHolder)jRecyclerView.getViewHolder()).setBody_image_list(body_image_list);
+            ((RecommendViewHolder)jRecyclerView.getViewHolder()).setBody_info_list(body_info_list);
+            jRecyclerView.getAdapter().notifyDataSetChanged();
+        }catch (Exception e){
+            JLog.default_print("has a Exception");
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onError(int code, Object obj) {
+
     }
 
 }

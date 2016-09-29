@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,22 +46,20 @@ public class ClassRecyclerAdapter extends RecyclerView.Adapter<ClassRecyclerAdap
 
         Drawable drawable = context.getDrawable(R.drawable.ic_head_live);
         image_list.add(drawable);
-        image_list.add(drawable);
-        drawable = context.getDrawable(R.drawable.bili_default_image_tv);
-        DrawableCompat.setTint(drawable, ContextCompat.getColor(context, R.color.colorPrimary));
-        image_list.add(drawable);
+        Drawable drawable1 = context.getDrawable(R.drawable.ic_menu_top_game_center);
+        DrawableCompat.setTint(drawable1, ContextCompat.getColor(context, R.color.yellow));
         image_list.add(drawable);
         image_list.add(drawable);
-        image_list.add(drawable);
-        image_list.add(drawable);
-        image_list.add(drawable);
+        image_list.add(drawable1);
+        image_list.add(drawable1);
+        image_list.add(drawable1);
         image_list.add(drawable);
         image_list.add(drawable);
         image_list.add(drawable);
+        image_list.add(drawable1);
+        image_list.add(drawable1);
+        image_list.add(drawable1);
         image_list.add(drawable);
-        image_list.add(drawable);
-        drawable = context.getDrawable(R.drawable.ic_menu_top_game_center);
-        DrawableCompat.setTint(drawable, ContextCompat.getColor(context, R.color.colorPrimary));
         image_list.add(drawable);
 
 

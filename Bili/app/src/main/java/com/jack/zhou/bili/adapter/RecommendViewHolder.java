@@ -8,6 +8,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
+import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +17,19 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.jack.zhou.bili.R;
+import com.jack.zhou.bili.bean.ImageUrlBean;
+import com.jack.zhou.bili.inter.BiliCallback;
+import com.jack.zhou.bili.inter.HttpListener;
+import com.jack.zhou.bili.network.IOManager;
+import com.jack.zhou.bili.network.Task;
+import com.jack.zhou.bili.util.AppUtil;
 import com.jack.zhou.bili.util.JLog;
 import com.jack.zhou.jrecyclerview.adapter.JViewHolder;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,21 +54,22 @@ public class RecommendViewHolder implements JViewHolder{
     private TextView tv_rank;
 
     private ArrayList<ImageView> head_image_list;
-    private ArrayList<Drawable>  body_image_list;
+    private ArrayList<String>  body_image_list;
     private ArrayList<Map<String, String>> body_info_list;
 
     private Drawable unSelectDot;
     private Drawable selectDot;
 
-    private static final String TV_INFO = "video_info";
-    private static final String TV_TIME_PLAY = "time_play";
-    private static final String TV_TIME_DING = "time_ding";
+    public static final String TV_INFO = "video_info";
+    public static final String TV_TIME_PLAY = "time_play";
+    public static final String TV_TIME_DING = "time_ding";
 
     public RecommendViewHolder(Context context){
         this.context = context;
-        head_image_list = new ArrayList<ImageView>();
-        body_image_list = new ArrayList<Drawable>();
-        body_info_list  = new ArrayList<Map<String, String>>();
+        head_image_list = new ArrayList<>();
+        body_image_list = new ArrayList<>();
+        body_info_list  = new ArrayList<>();
+
         initDisplayData();
     }
 
@@ -112,7 +124,9 @@ public class RecommendViewHolder implements JViewHolder{
 
     @Override
     public void setBody(int position) {
-        body_image.setImageDrawable(body_image_list.get(position));
+
+        String url = body_image_list.get(position);
+        Glide.with(context).load(AppUtil.BASE_URL +url).centerCrop().placeholder(R.drawable.bili_default_image_tv).crossFade().into(body_image);
         Map<String, String> map = body_info_list.get(position);
         body_info.setText(map.get(TV_INFO));
         body_time_play.setText(map.get(TV_TIME_PLAY));
@@ -121,9 +135,16 @@ public class RecommendViewHolder implements JViewHolder{
 
     @Override
     public int size() {
-        //return body_image_list.size() + 1;
-
-        return 13;
+        int size = body_image_list.size();
+        if(body_image_list.size() != 0){
+            if(size % 4 == 0){
+                size = size + 1 + size / 2;
+            }else{
+                size = size + (size / 4 + 1) * 2;
+            }
+        }
+        JLog.default_print("size " + size);
+        return size;
     }
 
     @Override
@@ -177,7 +198,6 @@ public class RecommendViewHolder implements JViewHolder{
 
     private void initDisplayData(){
 
-
         int[] draw = new int[]{R.drawable.ic_answer_banner, R.drawable.ic_certified_id, R.drawable.ic_group_header_bg};
 
         //将图片其添加到集合
@@ -193,7 +213,7 @@ public class RecommendViewHolder implements JViewHolder{
         JLog.default_print("initDisplayData head size " + head_image_list.size());
 
         //胸部需要显示的Item图片  并添加到集合
-        draw = new int[]{R.drawable.img_tips_error_banner_tv, R.drawable.img_tips_error_load_error, R.drawable.img_tips_error_no_permission, R.drawable.img_tips_error_not_foud, R.drawable.img_tips_error_not_loin, R.drawable.img_tips_error_space_no_data, R.drawable.img_tips_error_space_no_permission, R.drawable.img_tips_live_room_locked};
+        /*draw = new int[]{R.drawable.img_tips_error_banner_tv, R.drawable.img_tips_error_load_error, R.drawable.img_tips_error_no_permission, R.drawable.img_tips_error_not_foud, R.drawable.img_tips_error_not_loin, R.drawable.img_tips_error_space_no_data, R.drawable.img_tips_error_space_no_permission, R.drawable.img_tips_live_room_locked};
         for(int i = 0; i < draw.length; i++){
             body_image_list.add(context.getDrawable(draw[i]));
             HashMap<String, String> map = new HashMap<>();
@@ -201,7 +221,7 @@ public class RecommendViewHolder implements JViewHolder{
             map.put(TV_TIME_DING, i+"");
             map.put(TV_TIME_PLAY, i + "");
             body_info_list.add(map);
-        }
+        }*/
     }
 
 
@@ -287,4 +307,11 @@ public class RecommendViewHolder implements JViewHolder{
         }
     }
 
+    public void setBody_image_list(ArrayList<String> body_image_list) {
+        this.body_image_list = body_image_list;
+    }
+
+    public void setBody_info_list(ArrayList<Map<String, String>> body_info_list) {
+        this.body_info_list = body_info_list;
+    }
 }

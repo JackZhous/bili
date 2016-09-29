@@ -1,6 +1,7 @@
 package com.jack.zhou.bili.bean;
 
 
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -33,6 +34,29 @@ public class ClassFragment extends Fragment {
 
         recyclerView.setAdapter(new ClassRecyclerAdapter(getActivity()));
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+
+        recyclerView.addItemDecoration(new RecyclerItemDecoration(30));
         return v;
+    }
+
+
+    /**
+     * RecyclerView间隔
+     */
+    public class RecyclerItemDecoration extends RecyclerView.ItemDecoration{
+        private int space;
+
+        public RecyclerItemDecoration(int space){
+            this.space = space;
+        }
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+            if(parent.getChildPosition(view) != 0){
+                outRect.left = space;
+                outRect.right = space;
+                outRect.bottom = space+80;
+            }
+        }
     }
 }
