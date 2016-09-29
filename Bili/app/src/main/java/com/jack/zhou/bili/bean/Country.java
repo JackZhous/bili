@@ -57,6 +57,7 @@ public class Country {
         DrawableCompat.setTint(unselectedIcon, ContextCompat.getColor(context, R.color.gray));
         selectedIcon = ContextCompat.getDrawable(context, R.drawable.abc_btn_radio_to_on_mtrl_015);
         DrawableCompat.setTint(selectedIcon, ContextCompat.getColor(context, R.color.colorPrimary));
+
     }
 
 }

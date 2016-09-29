@@ -6,3 +6,6 @@
 		第一种： 把view设置为局部变量，每次使用的都不是同一个view
 		第二种： 就是使用完dialog后，都移除掉这个view，解绑定；
 		第三种： 就是把你的AlertDialog设置全局变量，每次更新你view里面的内容就行了
+		
+		
+http://www.jianshu.com/p/a4eea7ea4664    //ijkplayer讲解
