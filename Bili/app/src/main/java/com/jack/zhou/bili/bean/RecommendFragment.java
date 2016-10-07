@@ -12,23 +12,14 @@
 package com.jack.zhou.bili.bean;
 
 import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.jack.zhou.bili.R;
 import com.jack.zhou.bili.adapter.RecommendViewHolder;
@@ -150,6 +141,7 @@ public class RecommendFragment extends Fragment implements BiliCallback{
 
 
     private void initNetworkImage(){
+
         HashMap<String, String> map = new HashMap<>();
         map.put("task_flag", "refreshImage");
         map.put("module", "recommend_module");
