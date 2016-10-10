@@ -11,7 +11,9 @@
 
 package com.jack.zhou.bili.bean;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -24,6 +26,7 @@ import android.widget.Toast;
 
 import com.jack.zhou.bili.R;
 import com.jack.zhou.bili.network.NetworkHelper;
+import com.jack.zhou.bili.stream.PushStream;
 
 /**
  * 直播选项卡页面
@@ -31,11 +34,8 @@ import com.jack.zhou.bili.network.NetworkHelper;
  */
 public class LiveFragment extends Fragment implements View.OnClickListener{
 
-    private RecyclerView recyclerView;
     private Context context;
 
-    private String des[] = {"云层里的阳光", "好美的海滩", "好美的海滩", "夕阳西下的美景", "夕阳西下的美景"
-            , "夕阳西下的美景", "夕阳西下的美景", "夕阳西下的美景", "好美的海滩"};
 
 
 
@@ -50,13 +50,15 @@ public class LiveFragment extends Fragment implements View.OnClickListener{
     }
 
 
-    public View initLayoutResouce(LayoutInflater inflater, ViewGroup container, boolean isConnnected){
+    private View initLayoutResouce(LayoutInflater inflater, ViewGroup container, boolean isConnected){
         TextView tv_live, tv_watch_live;
-        int resourceId = isConnnected ? R.layout.live_fragment : R.layout.activity_network_error;
+        int resourceId = isConnected ? R.layout.live_fragment : R.layout.live_fragment;
+//        int resourceId = isConnected ? R.layout.live_fragment : R.layout.activity_network_error;
+
         View view = inflater.inflate(resourceId, container, false);
-        if(isConnnected){
+       /* if(!isConnected){
             return view;
-        }
+        }*/
 
         tv_live = (TextView)view.findViewById(R.id.tv_live_on);
         tv_watch_live = (TextView)view.findViewById(R.id.tv_watch_live);
@@ -74,6 +76,28 @@ public class LiveFragment extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.tv_live_on:               //直播
+                showDialog("确定要进行直播吗？");
+                break;
 
+            case R.id.tv_watch_live:            //观看直播
+
+                break;
+        }
     }
+
+    public void showDialog(String message){
+        new AlertDialog.Builder(context).setTitle("提示")
+                                        .setMessage(message)
+                                        .setNegativeButton("确定", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                PushStream.getInstance().startPushStream(context);
+                                            }
+                                        })
+                                        .setPositiveButton("取消", null).show();
+    }
+
+
 }

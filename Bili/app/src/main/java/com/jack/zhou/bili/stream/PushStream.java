@@ -30,7 +30,17 @@ import org.anyrtc.core.AnyRTMP;
 public class PushStream {
 
 
-    public PushStream(){
+    private static PushStream instance;
+
+    public synchronized static PushStream getInstance(){
+        if(instance == null){
+            instance = new PushStream();
+        }
+
+        return instance;
+    }
+
+    public PushStream() {
         AnyRTMP.Inst();   //开启子线程的handler
     }
 
