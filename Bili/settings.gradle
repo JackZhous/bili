@@ -1,1 +1,1 @@
-include ':app', ':libJRV', ':ijkplayer-java', ':ijkplayer-exo', ':ijkplayer-example'
+include ':app', ':libJRV', ':ijkplayer-java', ':ijkplayer-exo', ':ijkplayer-example', ':any_rtmp'
