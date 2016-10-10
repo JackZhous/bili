@@ -23,6 +23,7 @@ import com.jack.zhou.bili.bean.ImageUrlBean;
 import com.jack.zhou.bili.inter.BiliCallback;
 import com.jack.zhou.bili.inter.HttpListener;
 import com.jack.zhou.bili.network.IOManager;
+import com.jack.zhou.bili.network.NetworkHelper;
 import com.jack.zhou.bili.network.Task;
 import com.jack.zhou.bili.util.AppUtil;
 import com.jack.zhou.bili.util.JLog;
@@ -126,7 +127,7 @@ public class RecommendViewHolder implements JViewHolder{
     public void setBody(int position) {
 
         String url = body_image_list.get(position);
-        Glide.with(context).load(AppUtil.BASE_URL +url).centerCrop().placeholder(R.drawable.bili_default_image_tv).crossFade().into(body_image);
+        Glide.with(context).load(NetworkHelper.HTTP_BASE_URL +url).centerCrop().placeholder(R.drawable.bili_default_image_tv).crossFade().into(body_image);
         Map<String, String> map = body_info_list.get(position);
         body_info.setText(map.get(TV_INFO));
         body_time_play.setText(map.get(TV_TIME_PLAY));

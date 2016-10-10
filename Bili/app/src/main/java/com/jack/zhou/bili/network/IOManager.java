@@ -163,7 +163,7 @@ public class IOManager {
      */
     public void startImageTask(String url, ImageLoader.ImageListener listener){
         ImageLoader loader = new ImageLoader(queue, new BitmapCache());
-        String final_url = AppUtil.BASE_URL + url;
+        String final_url = NetworkHelper.HTTP_BASE_URL + url;
 
         JLog.default_print("final url " + final_url);
         loader.get(final_url, listener);

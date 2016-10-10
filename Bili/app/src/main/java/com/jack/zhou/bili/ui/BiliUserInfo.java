@@ -21,6 +21,7 @@ import com.jack.zhou.bili.R;
 import com.jack.zhou.bili.inter.BiliCallback;
 import com.jack.zhou.bili.inter.HttpListener;
 import com.jack.zhou.bili.network.IOManager;
+import com.jack.zhou.bili.network.NetworkHelper;
 import com.jack.zhou.bili.network.Task;
 import com.jack.zhou.bili.util.AppUtil;
 import com.jack.zhou.bili.util.JLog;
@@ -50,7 +51,7 @@ public class BiliUserInfo extends AppCompatActivity implements BiliCallback{
         data.put("task_flag", "logout");
         data.put("token", util.getString("token"));
         HttpListener listener = new HttpListener(this);
-        Task task = new Task(AppUtil.VERIFY_TOKEN, data, listener);
+        Task task = new Task(NetworkHelper.VERIFY_TOKEN, data, listener);
         IOManager.getInstance(this).add_task_start(task);
     }
 

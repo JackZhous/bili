@@ -1,6 +1,7 @@
 package com.jack.zhou.bili.bean;
 
 
+import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.jack.zhou.bili.R;
 import com.jack.zhou.bili.adapter.ClassRecyclerAdapter;
+import com.jack.zhou.bili.network.NetworkHelper;
 
 /**
  * author: jackzhous
@@ -24,18 +26,31 @@ import com.jack.zhou.bili.adapter.ClassRecyclerAdapter;
 public class ClassFragment extends Fragment {
 
     private RecyclerView recyclerView;
+    private Context context;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        context = getActivity();
+        boolean netConnect = NetworkHelper.isConnectNetwork(context);
 
-        View v = inflater.inflate(R.layout.class_fragment, container, false);
+        View v = initLayoutResource(netConnect, inflater, container);
+
+        return v;
+    }
+
+    private View initLayoutResource(boolean isConnected, LayoutInflater inflater, ViewGroup container){
+
+        int resourceId = isConnected ? R.layout.class_fragment : R.layout.activity_network_error;
+        View v = inflater.inflate(resourceId, container, false);
+
         recyclerView = (RecyclerView)v.findViewById(R.id.recycler);
 
         recyclerView.setAdapter(new ClassRecyclerAdapter(getActivity()));
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
         recyclerView.addItemDecoration(new RecyclerItemDecoration(30));
+
         return v;
     }
 

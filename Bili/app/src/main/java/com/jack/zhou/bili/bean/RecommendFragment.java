@@ -26,6 +26,7 @@ import com.jack.zhou.bili.adapter.RecommendViewHolder;
 import com.jack.zhou.bili.inter.BiliCallback;
 import com.jack.zhou.bili.inter.HttpListener;
 import com.jack.zhou.bili.network.IOManager;
+import com.jack.zhou.bili.network.NetworkHelper;
 import com.jack.zhou.bili.network.Task;
 import com.jack.zhou.bili.util.AppUtil;
 import com.jack.zhou.bili.util.JLog;
@@ -146,7 +147,7 @@ public class RecommendFragment extends Fragment implements BiliCallback{
         map.put("task_flag", "refreshImage");
         map.put("module", "recommend_module");
 
-        Task task = new Task(AppUtil.GET_IMAGE, map, new HttpListener(this));
+        Task task = new Task(NetworkHelper.GET_IMAGE, map, new HttpListener(this));
         IOManager.getInstance(getContext()).add_task_start(task);
     }
 

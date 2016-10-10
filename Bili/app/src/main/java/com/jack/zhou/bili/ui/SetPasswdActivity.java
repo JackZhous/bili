@@ -27,6 +27,7 @@ import com.jack.zhou.bili.R;
 import com.jack.zhou.bili.inter.BiliCallback;
 import com.jack.zhou.bili.inter.HttpListener;
 import com.jack.zhou.bili.network.IOManager;
+import com.jack.zhou.bili.network.NetworkHelper;
 import com.jack.zhou.bili.network.Task;
 import com.jack.zhou.bili.util.AppUtil;
 import com.jack.zhou.bili.util.JLog;
@@ -125,7 +126,7 @@ public class SetPasswdActivity extends AppCompatActivity implements BiliCallback
         data.put("phone","18588431884");
 
         HttpListener listener = new HttpListener(this);
-        Task task = new Task(AppUtil.REGISTER, data, listener);
+        Task task = new Task(NetworkHelper.REGISTER, data, listener);
         IOManager.getInstance(this).add_task_start(task);
 
     }

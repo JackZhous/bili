@@ -44,6 +44,7 @@ import com.jack.zhou.bili.inter.BiliCallback;
 import com.jack.zhou.bili.inter.HttpListener;
 import com.jack.zhou.bili.inter.SMSModule;
 import com.jack.zhou.bili.network.IOManager;
+import com.jack.zhou.bili.network.NetworkHelper;
 import com.jack.zhou.bili.network.Task;
 import com.jack.zhou.bili.util.AppUtil;
 import com.jack.zhou.bili.util.JLog;
@@ -319,7 +320,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         data.put("task_flag", "check_phone_register");
         data.put("phone", phone_no);
         HttpListener listener = new HttpListener(this);
-        Task task = new Task(AppUtil.REGISTER,data, listener);
+        Task task = new Task(NetworkHelper.REGISTER,data, listener);
         IOManager.getInstance(this.getApplicationContext()).add_task_start(task);
     }
 

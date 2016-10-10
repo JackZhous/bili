@@ -47,7 +47,10 @@
     <string name="tv_idol">投稿成为偶像</string>
     <string name="bn_new_world">打开新世界的大门</string>
     <string name="tv_new">换一波推荐</string>
-    <string name="tv_live">  正在直播</string>
+    <string name="tv_living">  正在直播</string>
     <string name="btn_more">查看更多</string>
     <string name="tv_fresh">8条新动态，点击刷新！</string>
+    <string name="tv_network_error">网络出错了，加载失败……</string>
+    <string name="tv_live">我要直播</string>
+    <string name="tv_watch_live">我要观看直播</string>
 </resources>

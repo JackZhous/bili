@@ -25,6 +25,7 @@ import com.jack.zhou.bili.R;
 import com.jack.zhou.bili.inter.BiliCallback;
 import com.jack.zhou.bili.inter.HttpListener;
 import com.jack.zhou.bili.network.IOManager;
+import com.jack.zhou.bili.network.NetworkHelper;
 import com.jack.zhou.bili.network.Task;
 import com.jack.zhou.bili.util.AppUtil;
 import com.jack.zhou.bili.util.JLog;
@@ -195,7 +196,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         map.put("task_flag", "login");
 
 
-        Task task = new Task(AppUtil.LOGIN_VERIFY, map, new HttpListener(this));
+        Task task = new Task(NetworkHelper.LOGIN_VERIFY, map, new HttpListener(this));
         IOManager.getInstance(this).add_task_start(task);
     }
 

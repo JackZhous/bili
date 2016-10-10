@@ -30,6 +30,7 @@ import com.jack.zhou.bili.bean.RecommendFragment;
 import com.jack.zhou.bili.inter.BiliCallback;
 import com.jack.zhou.bili.inter.HttpListener;
 import com.jack.zhou.bili.network.IOManager;
+import com.jack.zhou.bili.network.NetworkHelper;
 import com.jack.zhou.bili.network.Task;
 import com.jack.zhou.bili.util.AppUtil;
 import com.jack.zhou.bili.util.JLog;
@@ -162,7 +163,7 @@ public class MainActivity extends AppCompatActivity
             data.put("task_flag", "token_verify");                              //token验证
             data.put("token", token);
             HttpListener listener = new HttpListener(this);
-            Task task = new Task(AppUtil.VERIFY_TOKEN, data, listener);
+            Task task = new Task(NetworkHelper.VERIFY_TOKEN, data, listener);
             IOManager.getInstance(this).add_task_start(task);
             return;
         }else{

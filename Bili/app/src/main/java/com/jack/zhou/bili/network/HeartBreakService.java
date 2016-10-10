@@ -13,6 +13,7 @@ package com.jack.zhou.bili.network;
 
 import android.app.Service;
 import android.content.Intent;
+import android.net.NetworkInfo;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
@@ -46,7 +47,7 @@ public class HeartBreakService extends Service implements BiliCallback{
         JLog.default_print("service onCreate");
         ioManager = IOManager.getInstance(this);
         listener = new HttpListener(this);
-        heart_task = new Task(AppUtil.HEART_BREAK, sendHeart("this_is_my_token"), listener);
+        heart_task = new Task(NetworkHelper.HEART_BREAK, sendHeart("this_is_my_token"), listener);
         ioManager.add_task_start(heart_task);                                                                        //第一次发送
 
     }
