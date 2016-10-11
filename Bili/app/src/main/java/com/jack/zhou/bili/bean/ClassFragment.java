@@ -41,7 +41,7 @@ public class ClassFragment extends Fragment {
 
     private View initLayoutResource(boolean isConnected, LayoutInflater inflater, ViewGroup container){
 
-        int resourceId = isConnected ? R.layout.class_fragment : R.layout.activity_network_error;
+        int resourceId = isConnected ? R.layout.class_fragment : R.layout.class_fragment;
         View v = inflater.inflate(resourceId, container, false);
 
         recyclerView = (RecyclerView)v.findViewById(R.id.recycler);

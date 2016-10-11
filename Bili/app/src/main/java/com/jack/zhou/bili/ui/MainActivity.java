@@ -1,13 +1,16 @@
 package com.jack.zhou.bili.ui;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,6 +21,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.toolbox.ImageLoader;
@@ -41,7 +46,7 @@ import java.util.HashMap;
 
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener , BiliCallback{
+        implements NavigationView.OnNavigationItemSelectedListener , BiliCallback, View.OnClickListener{
 
     private long exit_time;                                 //退出时间
     private Toolbar toolbar;
@@ -49,7 +54,7 @@ public class MainActivity extends AppCompatActivity
     private ImageView user_icon;
     private ViewPager viewPager;
     private TabLayout tabLayout;
-
+    private DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +65,8 @@ public class MainActivity extends AppCompatActivity
 
         util = SharedPreferenceUtil.getInstance(this.getApplicationContext());
         util.init();
+
+        checkLogin();
     }
 
     /**
@@ -68,24 +75,19 @@ public class MainActivity extends AppCompatActivity
     private void initLayoutResource(){
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+
         setSupportActionBar(toolbar);
-        toolbar.setTitle("未登录");
+        LinearLayout textView_user_info = (LinearLayout)findViewById(R.id.tv_user_info_main);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        textView_user_info.setOnClickListener(this);
 
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+        toolbar.setNavigationIcon(null);
+
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         View headView = navigationView.inflateHeaderView(R.layout.nav_header_main);
@@ -94,6 +96,20 @@ public class MainActivity extends AppCompatActivity
 
         navigationView.setNavigationItemSelectedListener(this);
 
+        ImageView toolbar_game_center = (ImageView)findViewById(R.id.iv_game_center_toolbar);
+        ImageView toolbar_download = (ImageView)findViewById(R.id.iv_download_toolbar);
+        ImageView toolbar_search = (ImageView)findViewById(R.id.iv_search_toolbar);
+        toolbar_download.setOnClickListener(this);
+        toolbar_game_center.setOnClickListener(this);
+        toolbar_search.setOnClickListener(this);
+
+        addFragmentToActivity();
+
+    }
+
+
+
+    private void addFragmentToActivity(){
         ArrayList<String> tabList = new ArrayList<>();
         tabList.add("直播");
         tabList.add("推荐");
@@ -135,6 +151,7 @@ public class MainActivity extends AppCompatActivity
         tabLayout.setupWithViewPager(viewPager);                                                        //将TabLayout和ViewPager关联起来。
         tabLayout.setTabsFromPagerAdapter(fragmentAdapter);                                             //给Tabs设置适配器
         viewPager.setCurrentItem(1);                                                                    //设置启动默认在哪个fragment
+
     }
 
     /**
@@ -174,7 +191,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -204,9 +220,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+       /* if (id == R.id.title_download) {
             return true;
-        }
+        }*/
 
         return super.onOptionsItemSelected(item);
     }
@@ -259,7 +275,6 @@ public class MainActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         JLog.default_print("onResume");
-        checkLogin();
     }
 
     /**
@@ -268,11 +283,13 @@ public class MainActivity extends AppCompatActivity
     private void checkLogin(){
         String login_flag = util.getString("login_flag");
         JLog.default_print("login_flag" + login_flag);
-        if(TextUtils.isEmpty(login_flag)){
+        //已经登录就不需要再次登录了
+        if(login_flag != null && AppUtil.TRUE.equals(login_flag)){
             return;
         }
 
         //如果两次都是同一个用户就不用在请求的  因为请求会出现图标变化
+        JLog.default_print("toolbar title" + toolbar.getTitle());
         if(!(toolbar.getTitle().equals(util.getString("nickname")))){
             setUser_icon();
         }
@@ -318,5 +335,26 @@ public class MainActivity extends AppCompatActivity
      */
     public void on_text_rank(View v){
         Toast.makeText(this, "你点击了排行榜", Toast.LENGTH_SHORT).show();
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.tv_user_info_main:
+                drawer.openDrawer(GravityCompat.START);
+                break;
+
+            case R.id.iv_download_toolbar:
+                JLog.default_print("你点击了toolbar的download");
+                break;
+
+            case R.id.iv_search_toolbar:
+                JLog.default_print("你点击了toolbar的search");
+                break;
+            case R.id.iv_game_center_toolbar:
+                JLog.default_print("你点击了toolbar的gamecenter");
+                break;
+        }
     }
 }

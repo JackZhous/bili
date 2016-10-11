@@ -8,6 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>                          <!-- 悬浮窗颜色-->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>                                      <!--由于Activity里面默认存在actionbar  使用新的toolbar则需要将actionbat去除掉，此两句就是讲actionbar消失掉 -->
+
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -15,11 +16,13 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
-    <style name="myAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:src">@drawable/forget_passwd</item>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" >
+        <item name="contentInsetStart">0dp</item>
     </style>
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/> >
+
+
+    <style name="myAppTheme" parent="Theme.AppCompat.Light.NoActionBar"/>
+
 </resources>

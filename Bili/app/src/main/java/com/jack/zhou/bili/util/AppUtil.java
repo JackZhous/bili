@@ -16,7 +16,7 @@ public class AppUtil {
 
     private static int sdk_version = Build.VERSION.SDK_INT;
 
-
+    public static final String TRUE = "true";
 
     public static final int REQUEST_SUCCESS = 0x01;
     public static final int REQUEST_FAILED = 0x02;
@@ -44,7 +44,7 @@ public class AppUtil {
             tintManager.setStatusBarTintEnabled(true);
             tintManager.setStatusBarTintResource(R.color.colorPrimary);//通知栏所需颜色
         }
-
+        activity.setTitle("");                              //让toolbar不显示app名
         //锁定屏幕方向为竖屏
         activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }

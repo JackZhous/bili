@@ -1,9 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <!--<item
+        android:id="@+id/title_game_center"
+        android:icon="@drawable/ic_menu_top_game_center"
+        android:orderInCategory="5"
+        app:showAsAction="ifRoom" />
+
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
+        android:id="@+id/title_download"
+        android:icon="@drawable/ic_title_download"
+        android:orderInCategory="5"
+        app:showAsAction="ifRoom"/>
+
+    <item
+
+        android:id="@+id/title_search"
+        android:icon="@drawable/ic_toolbar_menu_search"
+        android:orderInCategory="5"
+        app:showAsAction="ifRoom">
+    </item>-->
 </menu>
