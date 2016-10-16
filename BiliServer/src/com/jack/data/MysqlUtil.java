@@ -183,6 +183,7 @@ public class MysqlUtil {
 			bean.setVideo_info(result.getString("video_info"));
 			bean.setPlay_times(result.getString("play_times"));
 			bean.setUp_times(result.getString("up_times"));
+			bean.setVideo_url(result.getString("video_url"));
 			
 			aList.add(bean);
 		}

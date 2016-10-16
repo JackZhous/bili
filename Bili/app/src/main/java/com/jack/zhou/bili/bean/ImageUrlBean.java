@@ -1,5 +1,10 @@
 package com.jack.zhou.bili.bean;
 
+import android.os.ParcelUuid;
+
+import com.jack.zhou.bili.util.JLog;
+import com.mob.tools.gui.PullToRequestBaseAdapter;
+
 import org.json.JSONObject;
 
 /**
@@ -18,18 +23,26 @@ public class ImageUrlBean {
     private String up_times;					//顶赞次数
     private String extra;							//额外参数
 
+    public final static String IMAGE_URL = "image_url";
+    public final static String FIRST_MODULE = "first_moudle";
+    public final static String SECOND_MODULE = "sencond_module";
+    public final static String VIDEO_INFO = "video_info";
+    public final static String VIDEO_URL = "video_url";
+    public final static String PLAY_TIME = "play_times";
+    public final static String UP_TIME = "up_times";
+    public final static String EXTRA = "extra";
 
     public static ImageUrlBean toBean(JSONObject jsonObject){
         ImageUrlBean bean = new ImageUrlBean();
 
-        bean.image_url = jsonObject.optString("image_url");
-        bean.first_moudle = jsonObject.optString("first_moudle");
-        bean.sencond_module = jsonObject.optString("sencond_module");
-        bean.video_info = jsonObject.optString("video_info");
-        bean.video_url = jsonObject.optString("video_url");
-        bean.play_times = jsonObject.optString("play_times");
-        bean.up_times = jsonObject.optString("up_times");
-        bean.extra = jsonObject.optString("extra");
+        bean.image_url = jsonObject.optString(IMAGE_URL);
+        bean.first_moudle = jsonObject.optString(FIRST_MODULE);
+        bean.sencond_module = jsonObject.optString(SECOND_MODULE);
+        bean.video_info = jsonObject.optString(VIDEO_INFO);
+        bean.video_url = jsonObject.optString(VIDEO_URL);
+        bean.play_times = jsonObject.optString(PLAY_TIME);
+        bean.up_times = jsonObject.optString(UP_TIME);
+        bean.extra = jsonObject.optString(EXTRA);
 
         return bean;
     }

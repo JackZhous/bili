@@ -86,7 +86,6 @@ public class RecommendViewHolder implements JViewHolder{
         body_info = (TextView)v.findViewById(R.id.tv_info);
         body_time_play = (TextView)v.findViewById(R.id.time_play);
         body_time_ding = (TextView)v.findViewById(R.id.time_dian);
-
     }
 
     @Override
@@ -128,10 +127,18 @@ public class RecommendViewHolder implements JViewHolder{
 
         String url = body_image_list.get(position);
         Glide.with(context).load(NetworkHelper.HTTP_BASE_URL +url).centerCrop().placeholder(R.drawable.bili_default_image_tv).crossFade().into(body_image);
-        Map<String, String> map = body_info_list.get(position);
+        final Map<String, String> map = body_info_list.get(position);
         body_info.setText(map.get(TV_INFO));
         body_time_play.setText(map.get(TV_TIME_PLAY));
         body_time_ding.setText(map.get(TV_TIME_DING));
+        body_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String url = NetworkHelper.HTTP_BASE_URL + map.get(ImageUrlBean.VIDEO_URL);
+                String name = map.get(ImageUrlBean.VIDEO_INFO);
+                //VideoActivity.intentTo(context, url, name);
+            }
+        });
     }
 
     @Override

@@ -27,6 +27,7 @@ public class AppUtil {
     public static final String HEART_ACTION = "bili.heart.success";
     public static final String HEART_ERROR = "bili.hear.error";
 
+
     //短信模块标志量
     public static final int SMS_SUBMIT_VERIFICATION_CODE = 0x05;
     public static final int SMS_GET_VERIFICATION_CODE = 0x06;

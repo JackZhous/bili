@@ -183,8 +183,9 @@ public class RecommendFragment extends Fragment implements BiliCallback{
                 map.put(RecommendViewHolder.TV_INFO, bean.getVideo_info());
                 map.put(RecommendViewHolder.TV_TIME_PLAY, bean.getPlay_times());
                 map.put(RecommendViewHolder.TV_TIME_DING, bean.getUp_times());
+                map.put(ImageUrlBean.VIDEO_URL, bean.getVideo_url());
+                map.put(ImageUrlBean.VIDEO_INFO, bean.getVideo_info());
                 body_info_list.add(map);
-                JLog.default_print("imageurlbean == " + bean.toString());
             }
 
             ((RecommendViewHolder)jRecyclerView.getViewHolder()).setBody_image_list(body_image_list);
