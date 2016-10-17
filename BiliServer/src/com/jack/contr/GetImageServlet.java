@@ -16,6 +16,7 @@ import org.omg.PortableInterceptor.SUCCESSFUL;
 
 import com.jack.bean.ImageUrlBean;
 import com.jack.data.MysqlUtil;
+import com.jack.zhou.bili.util.Constant;
 import com.jack.zhou.bili.util.MD5Util;
 import com.jack.zhou.bili.util.ServletUtil;
 import com.mysql.jdbc.MySQLConnection;
@@ -74,7 +75,7 @@ public class GetImageServlet extends HttpServlet {
 		String msg = "不明确你的任务";
 		
 		ArrayList<ImageUrlBean> list = null;
-		if(MysqlUtil.TASK_GET_IMAGE.equals(flag)){				//获取图像
+		if(Constant.TASK_GET_IMAGE.equals(flag)){				//获取图像
 			String key = request.getParameter("module");
 			try {
 				list = MysqlUtil.getInstance().query_image_url(key);

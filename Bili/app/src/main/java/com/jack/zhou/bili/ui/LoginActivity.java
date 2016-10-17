@@ -211,10 +211,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 String token = json.getString("token");
                 SharedPreferenceUtil util = SharedPreferenceUtil.getInstance(this.getApplicationContext());
                 util.init();
-                util.putString("token", token);
-                util.putString("icon_url", json.getString("icon_url"));
-                util.putString("nickname", json.getString("nickname"));
-                util.putString("login_flag","ok");
+                util.putString(SharedPreferenceUtil.TOKEN, token);
+                util.putString(SharedPreferenceUtil.ICON_URL, json.getString("icon_url"));
+                util.putString(SharedPreferenceUtil.NICK_NAME, json.getString("nickname"));
+                util.putString(SharedPreferenceUtil.LOGIN_FLAG,"ok");
                 Toast.makeText(LoginActivity.this, "恭喜,登录成功", Toast.LENGTH_SHORT).show();
                 this.finish();
             }else{

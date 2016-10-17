@@ -14,6 +14,7 @@ import com.jack.zhou.bili.R;
 public class AppUtil {
 
 
+
     private static int sdk_version = Build.VERSION.SDK_INT;
 
     public static final String TRUE = "true";

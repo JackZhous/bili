@@ -138,7 +138,7 @@ public class RecommendViewHolder implements JViewHolder{
             public void onClick(View view) {
                 String url = NetworkHelper.HTTP_BASE_URL + map.get(ImageUrlBean.VIDEO_URL);
                 String name = map.get(ImageUrlBean.VIDEO_INFO);
-
+                JLog.default_print("video url is: " + url);
                 VideoActivity.intentTo(context, url, name);
             }
         });

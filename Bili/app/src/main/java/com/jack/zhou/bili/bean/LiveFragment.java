@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,8 +26,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jack.zhou.bili.R;
+import com.jack.zhou.bili.inter.BiliCallback;
+import com.jack.zhou.bili.inter.HttpListener;
+import com.jack.zhou.bili.network.IOManager;
 import com.jack.zhou.bili.network.NetworkHelper;
+import com.jack.zhou.bili.network.Task;
 import com.jack.zhou.bili.stream.PushStream;
+import com.jack.zhou.bili.util.JNIClass;
+import com.jack.zhou.bili.util.SharedPreferenceUtil;
+
+import java.util.HashMap;
 
 /**
  * 直播选项卡页面
@@ -78,7 +87,11 @@ public class LiveFragment extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.tv_live_on:               //直播
-                showDialog("确定要进行直播吗？");
+                if(getLiveVideoUrl()){
+                    showDialog("确定要进行直播吗？");
+                }else{
+                    Toast.makeText(context, "请先登陆", Toast.LENGTH_SHORT).show();
+                }
                 break;
 
             case R.id.tv_watch_live:            //观看直播
@@ -86,6 +99,43 @@ public class LiveFragment extends Fragment implements View.OnClickListener{
                 break;
         }
     }
+
+    /**
+     * 获取直播推流地址
+     * @return
+     */
+    private boolean getLiveVideoUrl(){
+        SharedPreferenceUtil util = SharedPreferenceUtil.getInstance(context);
+        String login_flag = util.getString(SharedPreferenceUtil.LOGIN_FLAG);
+        if(login_flag != null && login_flag.equals("ok")){
+            String token = util.getString(SharedPreferenceUtil.TOKEN);
+
+            HashMap<String, String> map = new HashMap<String, String>();
+            map.put(SharedPreferenceUtil.TOKEN, token);
+            map.put("task_flag", NetworkHelper.GET_VIDEO_PUSH_ADDRESS);
+            HttpListener listener = new HttpListener(liveVideoUrlListener);
+            Task task = new Task(NetworkHelper.GET_PUSH_VIDEO_URL, map, listener);
+
+            IOManager.getInstance(context).add_task_start(task);
+            return true;
+        }
+
+        return false;
+
+    }
+
+    private BiliCallback liveVideoUrlListener = new BiliCallback() {
+        @Override
+        public void onResponse(int code, Object msg) {
+
+        }
+
+        @Override
+        public void onError(int code, Object obj) {
+
+        }
+    };
+
 
     public void showDialog(String message){
         new AlertDialog.Builder(context).setTitle("提示")

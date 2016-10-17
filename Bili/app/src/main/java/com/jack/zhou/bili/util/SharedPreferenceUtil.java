@@ -25,6 +25,12 @@ import android.text.TextUtils;
  */
 public class SharedPreferenceUtil {
 
+    public static final String TOKEN = "token";
+    public static final String ICON_URL = "icon_url";
+    public static final String NICK_NAME = "nickname";
+    public static final String LOGIN_FLAG = "login_flag";
+
+
     private static SharedPreferenceUtil mInstance;
     private Context context;
 

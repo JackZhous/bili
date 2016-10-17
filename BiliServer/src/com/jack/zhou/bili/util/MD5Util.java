@@ -9,11 +9,15 @@ public class MD5Util {
 	
 	private static char hexDigits[] = {'a', '1', '2', '3', '4', '5', 'b', 'e', '8', '9', '0', '6', 'c', 'd', '7', 'f'};
 	private static final int avalible_time = 10 * 24 * 60 * 60 * 1000;											//token的最长时间
+	private static final String UID = "uid";
+	private static final String TOKEN = "token";
+	private static final String TIME = "time";
+	
 	
 	/**
      * token列表    装载了每一个用户的token/phone/时间戳
      * token和时间戳  用于维持客户端的登陆状态
-     * phone相当于用户的唯一标志，区分每一个用户
+     * uid相当于用户的唯一标志，区分每一个用户
      */
     private static ArrayList<HashMap<String, String>> tokenList = new ArrayList<>();								//
     
@@ -22,12 +26,12 @@ public class MD5Util {
      * @param uid
      * @return
      */
-    public static String getUserToken(String phone){
+    public static String getUserToken(String uid){
     	HashMap<String, String> map = new HashMap<>();
     	
     	long time_stamp = System.currentTimeMillis();
     	
-    	String str = phone + "jackzhous" + time_stamp;
+    	String str = uid + "jackzhous" + time_stamp;
     	byte[] b = str.getBytes();
         try {
             MessageDigest digest = MessageDigest.getInstance("MD5");
@@ -45,9 +49,9 @@ public class MD5Util {
             }
             
             String token = new String(final_words);
-            map.put("time", ""+time_stamp);
-        	map.put("uid", phone);
-        	map.put("token", token);
+            map.put(TIME, ""+time_stamp);
+        	map.put(UID, uid);
+        	map.put(TOKEN, token);
         	tokenList.add(map);
         	showTokenList();
             return  token;
@@ -62,9 +66,9 @@ public class MD5Util {
     	int i = 0;
     	for(HashMap<String, String> map : tokenList){
     		System.out.println("======== 用户 " + i + "=========");
-    		System.out.println("uid "  + map.get("phone"));
-    		System.out.println("token  "  + map.get("token"));
-    		System.out.println("time "  + map.get("time"));
+    		System.out.println("uid "  + map.get(UID));
+    		System.out.println("token  "  + map.get(TOKEN));
+    		System.out.println("time "  + map.get(TIME));
     		System.out.println("-------------------------------------------------------------------------------------");
     	}
     }
@@ -78,9 +82,9 @@ public class MD5Util {
     	long time_now = System.currentTimeMillis();
     	int index = 0;
     	for(HashMap<String, String> map : tokenList){
-    		String token0 = map.get("token");
+    		String token0 = map.get(TOKEN);
     		if(token0.equals(token)){
-    			long time_create = Long.parseLong(map.get("time"));
+    			long time_create = Long.parseLong(map.get(TIME));
     			if(time_now - time_create < avalible_time){
     				return true;
     			}
@@ -91,6 +95,26 @@ public class MD5Util {
     	}
     	return false;
     }
+    
+    /**
+     * 获取token对于那个的uid
+     * @param token
+     * @return
+     */
+    public static String getUid(String token){
+    	String uid = null;
+    	for(HashMap<String, String> map : tokenList){
+    		String token0 = map.get(TOKEN);
+    		if(token0.equals(token)){
+    			uid = map.get(UID); 
+    			break;
+    		}
+    	}
+    	return uid;
+    }
+    
+    
+    
     
     /**
      * 注销并且把token去除掉

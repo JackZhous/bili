@@ -30,15 +30,7 @@ public class MysqlUtil {
 	private static String driver = "com.mysql.jdbc.Driver";
 	private static String url = "jdbc:mysql://127.0.0.1:3306/bilidata?user=root&password=wsdyi100&useSSL=false";
 	
-	/**
-	 * 数据库任务类型
-	 */
-	public static final String TASK_CHECK_PHONE = "check_phone_register";				//查询账号注册任务
-	public static final String TASK_REGISTER = "register_user";							//注册用户
-	public static final String TASK_LOGIN = "login";									//登录
-	public static final String TASK_TOKEN_VERIFY = "token_verify";
-	public static final String TASK_GET_IMAGE = "refreshImage";
-	public static final String TASK_LOGOUT = "logout";
+	
 	
 	private Connection conn;
 	private Statement stmt;

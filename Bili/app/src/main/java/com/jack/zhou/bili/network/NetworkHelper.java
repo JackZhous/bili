@@ -32,12 +32,14 @@ public class NetworkHelper {
     public static final String REGISTER = HTTP_BASE_URL + "register";
     public static final String VERIFY_TOKEN = HTTP_BASE_URL + "VerifyToken";
     public static final String GET_IMAGE = HTTP_BASE_URL + "refreshImage";
-
+    public static final String GET_PUSH_VIDEO_URL = HTTP_BASE_URL + "GetVideoPushAddress";
 
     public static final String RTMP_BASE_URL = "rtmp://192.168.0.105:1395/bili/";
 
     public static final String PUSH_ADDRESS = RTMP_BASE_URL + "push";
 
+
+    public static final String GET_VIDEO_PUSH_ADDRESS = "push_address";
     /**
      * 检查网络是否连接
      * @param context

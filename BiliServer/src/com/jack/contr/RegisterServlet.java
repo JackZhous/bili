@@ -16,6 +16,7 @@ import javax.swing.plaf.TextUI;
 import com.jack.bean.UserFactory;
 import com.jack.bean.UserInfo;
 import com.jack.data.MysqlUtil;
+import com.jack.zhou.bili.util.Constant;
 import com.jack.zhou.bili.util.JNIClass;
 import com.jack.zhou.bili.util.MD5Util;
 import com.jack.zhou.bili.util.ServletUtil;
@@ -61,9 +62,9 @@ public class RegisterServlet extends HttpServlet {
 		}
 		
 		
-		if(MysqlUtil.TASK_CHECK_PHONE.equals(flag)){						//查询手机号是否被注册过
+		if(Constant.TASK_CHECK_PHONE.equals(flag)){						//查询手机号是否被注册过
 			check_phone_isexists(data,request);
-		}else if(MysqlUtil.TASK_REGISTER.equals(flag)){						//注册账号
+		}else if(Constant.TASK_REGISTER.equals(flag)){						//注册账号
 			register_user(data, request);
 		}
 		

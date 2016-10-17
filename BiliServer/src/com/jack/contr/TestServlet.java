@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONObject;
 
 import com.jack.data.MysqlUtil;
+import com.jack.zhou.bili.util.Constant;
 import com.jack.zhou.bili.util.MD5Util;
 import com.jack.zhou.bili.util.ServletUtil;
 
@@ -55,7 +56,7 @@ public class TestServlet extends HttpServlet {
 		String flag = request.getParameter("task_flag");
 		HashMap<String, String> data = new HashMap<>();
 		System.out.println("请求任务类型  ===>>  " + flag);
-		if(MysqlUtil.TASK_LOGIN.equals(flag)){
+		if(Constant.TASK_LOGIN.equals(flag)){
 			String account = request.getParameter("username");
 			String password = request.getParameter("password");
 			System.out.println("password == " + password);
