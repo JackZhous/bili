@@ -54,4 +54,5 @@
     <string name="tv_network_error">网络出错了，加载失败……</string>
     <string name="tv_live">我要直播</string>
     <string name="tv_watch_live">我要观看直播</string>
+    <string name="tv_search_hint">搜索视频、番剧、up主或av号</string>
 </resources>

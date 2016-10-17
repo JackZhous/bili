@@ -37,6 +37,7 @@ import com.jack.zhou.bili.inter.HttpListener;
 import com.jack.zhou.bili.network.IOManager;
 import com.jack.zhou.bili.network.NetworkHelper;
 import com.jack.zhou.bili.network.Task;
+import com.jack.zhou.bili.ui.fragment.SearchFragment;
 import com.jack.zhou.bili.util.AppUtil;
 import com.jack.zhou.bili.util.JLog;
 import com.jack.zhou.bili.util.SharedPreferenceUtil;
@@ -130,21 +131,24 @@ public class MainActivity extends AppCompatActivity
         tabLayout.addTab(tabLayout.newTab().setText("发现"));
 
         ArrayList<Fragment> fragmentList = new ArrayList<>();
-        for (int i = 0; i < 6; i++) {
-            Fragment f1;
-            if(i == 1){
-                f1 = new RecommendFragment();
-            }else if(i == 3){
-                f1 = new ClassFragment();
-            }else{
-                f1 = new LiveFragment();
-            }
+        Fragment fragment = new LiveFragment();
+        fragmentList.add(fragment);
 
-            Bundle bundle = new Bundle();
-            bundle.putString("content", "http://blog.csdn.net/feiduclear_up \n CSDN 废墟的树");
-            f1.setArguments(bundle);
-            fragmentList.add(f1);
-        }
+        fragment = new RecommendFragment();
+        fragmentList.add(fragment);
+
+        fragment = new LiveFragment();
+        fragmentList.add(fragment);
+
+        fragment = new ClassFragment();
+        fragmentList.add(fragment);
+
+        fragment = new LiveFragment();
+        fragmentList.add(fragment);
+
+        fragment = new SearchFragment();
+        fragmentList.add(fragment);
+
 
         TabFragmentAdapter fragmentAdapter = new TabFragmentAdapter(getSupportFragmentManager(), fragmentList, tabList);
         viewPager.setAdapter(fragmentAdapter);                                                          //给ViewPager设置适配器

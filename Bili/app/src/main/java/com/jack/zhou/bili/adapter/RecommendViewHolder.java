@@ -36,6 +36,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import tv.danmaku.ijk.media.example.activities.VideoActivity;
+
 /***********
  * author: jackzhous
  * file: RecommendViewHolder.java
@@ -136,7 +138,8 @@ public class RecommendViewHolder implements JViewHolder{
             public void onClick(View view) {
                 String url = NetworkHelper.HTTP_BASE_URL + map.get(ImageUrlBean.VIDEO_URL);
                 String name = map.get(ImageUrlBean.VIDEO_INFO);
-                //VideoActivity.intentTo(context, url, name);
+
+                VideoActivity.intentTo(context, url, name);
             }
         });
     }

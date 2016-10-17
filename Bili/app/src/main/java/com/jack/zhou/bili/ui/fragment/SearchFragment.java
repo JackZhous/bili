@@ -33,13 +33,7 @@ public class SearchFragment extends Fragment{
 
 
     private void init_layout_resource(View view){
-        Button btn = (Button)view.findViewById(R.id.test);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-            }
-        });
     }
 
 
