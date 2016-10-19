@@ -32,10 +32,17 @@ import com.jack.zhou.bili.network.IOManager;
 import com.jack.zhou.bili.network.NetworkHelper;
 import com.jack.zhou.bili.network.Task;
 import com.jack.zhou.bili.stream.PushStream;
+import com.jack.zhou.bili.util.AppUtil;
+import com.jack.zhou.bili.util.JLog;
 import com.jack.zhou.bili.util.JNIClass;
 import com.jack.zhou.bili.util.SharedPreferenceUtil;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
+
+import tv.danmaku.ijk.media.example.activities.VideoActivity;
 
 /**
  * 直播选项卡页面
@@ -127,7 +134,17 @@ public class LiveFragment extends Fragment implements View.OnClickListener{
     private BiliCallback liveVideoUrlListener = new BiliCallback() {
         @Override
         public void onResponse(int code, Object msg) {
-
+            String url = "";
+            if(code == AppUtil.REQUEST_SUCCESS){
+                try {
+                    JSONObject json = new JSONObject(String.valueOf(msg));
+                    url = NetworkHelper.RTMP_BASE_URL + json.optString("url");
+                    String name = json.optString("nickname");
+                    VideoActivity.intentTo(context, url, name);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
         }
 
         @Override

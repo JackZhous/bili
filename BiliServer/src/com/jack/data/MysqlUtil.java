@@ -182,4 +182,32 @@ public class MysqlUtil {
 		
 		return aList;
 	}
+	/**
+	 * @param table 表名
+	 * @param select_key 查找的关键值字段名称
+	 * @param select_value 查找关键值字段值
+	 * @param result_key 被查找字段名称
+	 * @return 被查找字段的值
+	 * 例子： select result_key from table where slect_key=select_value
+	 * @throws SQLException 
+	 */
+	public String query_you_want(String table, String select_key, int select_value, String result_key) throws SQLException{
+		String sql = "select * from bili_user where uid=?";
+		PreparedStatement pStmt = (PreparedStatement)conn.prepareStatement(sql);
+		//pStmt.setString(1, result_key);
+//		pStmt.setString(1, table);
+//		pStmt.setString(2, select_key);
+		pStmt.setInt(1, select_value);
+		
+		String result_vlue = null;
+		ResultSet result = pStmt.executeQuery();
+		while(result.next()){
+			result_vlue = result.getString(1) ;
+		}
+		System.out.println("result value " + result_vlue);
+		return result_vlue;
+	}
+	
+	
+	
 }
