@@ -38,18 +38,21 @@ public class GetVideoPushAddress extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		System.out.println("getPushAddress Get");
+		
 	}
 
 	/**
 	 * 获取用户的推流直播地址： 
 	 * 1. 检查用户传上来的token是否失效
 	 * 2. 失效提示她重新登陆
-	 * 3. 没有失效就返回推流地址和用户昵称
+	 * 3. 没有失效就返回用户昵称和uid，实质推流地址 == 用户昵称 + uid保证地址的唯一性
+	 * 4. 由于直播一般时间都比较长，需要将它直播状态写入到用户表的is_video_show字段里面去， 1表示在直播，0表示没有直播
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		System.out.println("getvideo push post");
 		String flag = request.getParameter("task_flag");
 		String result = "fail";
 		String msg = "不明确你的任务";
@@ -74,8 +77,7 @@ public class GetVideoPushAddress extends HttpServlet {
 					}
 					data.put("nickname", name);
 					data.put(Constant.RESULT, Constant.SUCCESS);
-					String url = Constant.PUSH_DIR+uid;
-					data.put(Constant.URL, url);
+					data.put(Constant.UID, uid);
 				}
 			}else{
 				msg = "token失效，请重新登陆";

@@ -41,6 +41,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.concurrent.TimeoutException;
 
 import tv.danmaku.ijk.media.example.activities.VideoActivity;
 
@@ -131,6 +132,21 @@ public class LiveFragment extends Fragment implements View.OnClickListener{
 
     }
 
+
+
+
+    private String uid;
+    private String nickname;
+
+
+    public String getUid() {
+        return uid;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
     private BiliCallback liveVideoUrlListener = new BiliCallback() {
         @Override
         public void onResponse(int code, Object msg) {
@@ -138,9 +154,8 @@ public class LiveFragment extends Fragment implements View.OnClickListener{
             if(code == AppUtil.REQUEST_SUCCESS){
                 try {
                     JSONObject json = new JSONObject(String.valueOf(msg));
-                    url = NetworkHelper.RTMP_BASE_URL + json.optString("url");
-                    String name = json.optString("nickname");
-                    VideoActivity.intentTo(context, url, name);
+                    nickname = json.optString("nickname");
+                    uid = json.optString("uid");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -160,7 +175,12 @@ public class LiveFragment extends Fragment implements View.OnClickListener{
                                         .setNegativeButton("确定", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialogInterface, int i) {
-                                                PushStream.getInstance().startPushStream(context);
+                                                try {
+                                                    Thread.sleep(1500);
+                                                } catch (Exception e) {
+
+                                                }
+                                                PushStream.getInstance().startPushStream(context, nickname, uid);
                                             }
                                         })
                                         .setPositiveButton("取消", null).show();

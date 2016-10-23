@@ -48,10 +48,11 @@ public class PushStream {
     /**
      * 开始推流
      */
-    public void startPushStream(Context context){
+    public void startPushStream(Context context, String nickname, String uid){
         Intent it = new Intent(context, HosterActivity.class);
         Bundle bd = new Bundle();
-        bd.putString("rtmp_url", NetworkHelper.PUSH_ADDRESS);
+        bd.putString("uid", uid);
+        bd.putString("rtmp_url", NetworkHelper.RTMP_BASE_URL + nickname + uid);
         it.putExtras(bd);
         context.startActivity(it);
     }

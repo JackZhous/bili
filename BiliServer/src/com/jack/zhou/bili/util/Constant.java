@@ -4,8 +4,7 @@ public class Constant {
 	public static final String TASK_FLAG = "task_flag";
 	
 	public static final String FLAG_PUSH_ADDRESS = "push_address";
-	public static final String PUSH_DIR = "jackL";														//直播流地址： 直播服务器nginx地址  + PUSH_DIR + 用户uid
-	
+	public static final String UID = "uid";
 	/**
 	 * 数据库任务类型
 	 */
@@ -15,6 +14,7 @@ public class Constant {
 	public static final String TASK_TOKEN_VERIFY = "token_verify";
 	public static final String TASK_GET_IMAGE = "refreshImage";
 	public static final String TASK_LOGOUT = "logout";
+	public static final String TASK_SUBMIT_VIDEO_SHOW = "submit_video_show";
 	
 	
 	
@@ -24,4 +24,7 @@ public class Constant {
 	public static final String SUCCESS = "ok";
 	public static final String FAILED = "fail";
 	public static final String URL = "url";
+	
+	public static final String TRUE = "true";
+	public static final String FALASE = "false";
 }

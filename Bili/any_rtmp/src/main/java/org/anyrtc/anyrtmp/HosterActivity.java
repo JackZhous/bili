@@ -24,11 +24,20 @@ import android.text.SpannableString;
 import android.view.View;
 import android.widget.TextView;
 
+import com.jack.zhou.bili.inter.BiliCallback;
+import com.jack.zhou.bili.inter.HttpListener;
+import com.jack.zhou.bili.network.IOManager;
+import com.jack.zhou.bili.network.NetworkHelper;
+import com.jack.zhou.bili.network.Task;
+import com.jack.zhou.bili.util.JLog;
+
 import org.anyrtc.core.AnyRTMP;
 import org.anyrtc.core.RTMPHosterHelper;
 import org.anyrtc.core.RTMPHosterKit;
 import org.webrtc.SurfaceViewRenderer;
 import org.webrtc.VideoRenderer;
+
+import java.util.HashMap;
 
 /**
  * Created by Eric on 2016/9/16.
@@ -54,11 +63,37 @@ public class HosterActivity extends Activity implements RTMPHosterHelper {
 
         {
             String rtmpUrl = getIntent().getExtras().getString("rtmp_url");
+            JLog.default_print("rtmp url " + rtmpUrl);
             mHoster = new RTMPHosterKit(this, this);
             mHoster.SetVideoCapturer(mRenderer.GetRenderPointer(), true);
             mHoster.StartRtmpStream(rtmpUrl);
         }
+
+
+        //通知服务端有直播开启了
+        HttpListener listener = new HttpListener(httpVideoListener);
+        String url = NetworkHelper.SUBMIT_VIDEO_SHOW;
+        HashMap<String, String> map = new HashMap<>();
+        map.put("task_flag", "submit_video_show");
+        map.put("uid", getIntent().getExtras().getString("uid"));
+        map.put("is_video_show", "true");
+
+        Task task = new Task(url, map, listener);
+        IOManager.getInstance(this).add_task_start(task);
     }
+
+
+    private BiliCallback httpVideoListener = new BiliCallback(){
+        @Override
+        public void onResponse(int code, Object msg) {
+
+        }
+
+        @Override
+        public void onError(int code, Object obj) {
+
+        }
+    };
 
     @Override
     protected void onDestroy() {
@@ -69,6 +104,16 @@ public class HosterActivity extends Activity implements RTMPHosterHelper {
             mHoster.Clear();
             mHoster = null;
         }
+
+        HttpListener listener = new HttpListener(httpVideoListener);
+        String url = NetworkHelper.SUBMIT_VIDEO_SHOW;
+        HashMap<String, String> map = new HashMap<>();
+        map.put("task_flag", "submit_video_show");
+        map.put("uid", getIntent().getExtras().getString("uid"));
+        map.put("is_video_show", "false");
+
+        Task task = new Task(url, map, listener);
+        IOManager.getInstance(this).add_task_start(task);
     }
 
     /**
@@ -90,6 +135,8 @@ public class HosterActivity extends Activity implements RTMPHosterHelper {
             }
         }
     }
+
+
 
 
     /**

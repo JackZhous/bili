@@ -182,6 +182,36 @@ public class MysqlUtil {
 		
 		return aList;
 	}
+	
+	/**
+	 * 查询在直播的用户
+	 * @return 直播用户地址
+	 */
+	public ArrayList<HashMap<String,String>> query_live_video_url(){
+		String sql = "select * from bili_user where is_video_show='true'";
+		ArrayList<HashMap<String, String> > data = new ArrayList<>();
+		
+		try {
+			PreparedStatement pStmt = (PreparedStatement) conn.prepareStatement(sql);
+			ResultSet result = pStmt.executeQuery();
+			while(result.next()){
+				HashMap<String, String> map = new HashMap<>();
+				String nickname = result.getString("nickname");
+				String url = result.getString("video_url");
+				map.put("nickname", nickname);
+				map.put("video_url", url);
+				data.add(map);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return data;
+		
+	}
+	
+	
 	/**
 	 * @param table 表名
 	 * @param select_key 查找的关键值字段名称
@@ -202,12 +232,32 @@ public class MysqlUtil {
 		String result_vlue = null;
 		ResultSet result = pStmt.executeQuery();
 		while(result.next()){
-			result_vlue = result.getString(1) ;
+			result_vlue = result.getString("nickname") ;
 		}
 		System.out.println("result value " + result_vlue);
 		return result_vlue;
 	}
 	
+	/**
+	 * 更新表里面的内容
+	 * @param table
+	 * @param set_key
+	 * @param set_value
+	 * @param select_key
+	 * @param select_value
+	 * @throws SQLException 
+	 */
+	public void update_biliuser_table_is_video_show( String set_value,int select_value) throws SQLException{
+		String sql = "update bili_user set is_video_show=? where uid=?";
+		PreparedStatement pStmt = (PreparedStatement)conn.prepareStatement(sql);
+		pStmt.setString(1, set_value);
+		pStmt.setInt(2, select_value);
+		
+		pStmt.executeUpdate();
+		
+	}
 	
+	
+	 
 	
 }

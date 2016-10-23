@@ -2,7 +2,6 @@ package com.jack.zhou.bili.inter;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.jack.zhou.bili.util.AppUtil;
 import com.jack.zhou.bili.util.JLog;
 
 import org.json.JSONException;
@@ -13,6 +12,10 @@ import org.json.JSONObject;
  * Created by "jackzhous" on 2016/6/30.
  */
 public final class HttpListener implements Response.ErrorListener, Response.Listener {
+
+    public static final int REQUEST_SUCCESS = 0x01;
+    public static final int REQUEST_FAILED = 0x02;
+    public static final int REQUEST_FERROR = 0x03;
 
     private  BiliCallback listener;                     //将网络返回的数据回调给app
     private static final String OK = "ok";
@@ -25,7 +28,7 @@ public final class HttpListener implements Response.ErrorListener, Response.List
     @Override
     public void onErrorResponse(VolleyError volleyError) {
         JLog.default_print("http response error");
-        listener.onError(AppUtil.REQUEST_FERROR, volleyError);
+        listener.onError(REQUEST_FERROR, volleyError);
     }
 
     /**
@@ -36,17 +39,17 @@ public final class HttpListener implements Response.ErrorListener, Response.List
     @Override
     public void onResponse(Object o) {
         JLog.default_print("http response success " + o);
-        int http_status = AppUtil.REQUEST_FAILED;
+        int http_status = REQUEST_FAILED;
 
         JSONObject json = null;
         try {
             json = new JSONObject((String)o);
 
             if(OK.equals(json.get("result"))){
-                http_status = AppUtil.REQUEST_SUCCESS;
+                http_status = REQUEST_SUCCESS;
 
             }else{
-                http_status = AppUtil.REQUEST_FAILED;
+                http_status = REQUEST_FAILED;
             }
         } catch (JSONException e) {
             e.printStackTrace();

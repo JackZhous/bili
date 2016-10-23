@@ -9,7 +9,6 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.jack.zhou.bili.inter.BiliCallback;
 import com.jack.zhou.bili.inter.HttpListener;
-import com.jack.zhou.bili.util.AppUtil;
 import com.jack.zhou.bili.util.JLog;
 
 import org.json.JSONObject;

@@ -17,7 +17,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.jack.zhou.bili.inter.BiliCallback;
-import com.jack.zhou.bili.util.AppUtil;
+import com.jack.zhou.bili.inter.HttpListener;
 import com.jack.zhou.bili.util.JLog;
 
 import org.json.JSONObject;
@@ -59,12 +59,12 @@ public class IOManager {
         StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
-                listener.onResponse(AppUtil.REQUEST_SUCCESS, s);
+                listener.onResponse(HttpListener.REQUEST_SUCCESS, s);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                listener.onResponse(AppUtil.REQUEST_FAILED, volleyError.getMessage());
+                listener.onResponse(HttpListener.REQUEST_FAILED, volleyError.getMessage());
                 JLog.default_print("error " + volleyError);
                 volleyError.printStackTrace();
             }
