@@ -12,6 +12,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.jack.bean.ImageUrlBean;
+import com.jack.bean.LiveShowUserBean;
 
 public class ServletUtil {
 	private static ServletUtil instance;
@@ -63,4 +64,29 @@ public class ServletUtil {
 		out.close();
 	}
 	
+	
+	public void responseToClient1(ArrayList<LiveShowUserBean> data, HttpServletResponse response) throws IOException {
+		
+		response.setCharacterEncoding("UTF-8");
+		PrintWriter out = response.getWriter();
+		
+		JSONArray jArray = new JSONArray();
+		int count = 0;
+		for(LiveShowUserBean bean : data){
+			System.out.println("bean " + bean.toString());
+			jArray.put(bean.toString());
+			count++;
+		}
+		
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put(Constant.RESPONSE, Constant.TASK_GET_ALL_LIVE_SHOW);
+		jsonObject.put("result", "ok");
+		jsonObject.put("count", count);
+		jsonObject.put("data", jArray);
+		
+		System.out.println("sjon " + jsonObject.toString());
+		out.write(jsonObject.toString());
+		out.flush();
+		out.close();
+	}
 }

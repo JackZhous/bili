@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.jack.bean.ImageUrlBean;
+import com.jack.bean.LiveShowUserBean;
 import com.jack.data.MysqlUtil;
 import com.jack.zhou.bili.util.Constant;
 import com.jack.zhou.bili.util.ServletUtil;
@@ -38,11 +39,7 @@ public class GetAllLiveVideoShow extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		System.out.println("GetAllLiveVideoShow doGet");
-		ArrayList<HashMap<String,String>> data = MysqlUtil.getInstance().query_live_video_url();
 		
-		for(HashMap<String,String> map: data){
-			System.out.println("url " + map.get("video_url") + "  nickname " + map.get("nickname"));
-		}
 	}
 
 	/**
@@ -54,24 +51,13 @@ public class GetAllLiveVideoShow extends HttpServlet {
 		String result = "fail";
 		String msg = "不明确你的任务";
 		
-		ArrayList<ImageUrlBean> list = null;
-		if(Constant.TASK_GET_IMAGE.equals(flag)){				//获取图像
-			String key = request.getParameter("module");
-			try {
-				list = MysqlUtil.getInstance().query_image_url(key);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		if(Constant.TASK_GET_ALL_LIVE_SHOW.equals(flag)){				//获取图像
+			ArrayList<LiveShowUserBean> list1 = null;
+			list1 = MysqlUtil.getInstance().query_live_video_url();
+			
 		
-		try {
-			ServletUtil.getInstance().responseToClient(list, response);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	
+			ServletUtil.getInstance().responseToClient1(list1, response);
+		}	
 	}
 
 }

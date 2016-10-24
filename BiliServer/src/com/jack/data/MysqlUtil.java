@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.jack.bean.ImageUrlBean;
+import com.jack.bean.LiveShowUserBean;
 import com.jack.bean.UserInfo;
 import com.mysql.jdbc.PreparedStatement;
 
@@ -187,20 +188,20 @@ public class MysqlUtil {
 	 * 查询在直播的用户
 	 * @return 直播用户地址
 	 */
-	public ArrayList<HashMap<String,String>> query_live_video_url(){
+	public ArrayList<LiveShowUserBean> query_live_video_url(){
 		String sql = "select * from bili_user where is_video_show='true'";
-		ArrayList<HashMap<String, String> > data = new ArrayList<>();
+		ArrayList<LiveShowUserBean> data = new ArrayList<>();
 		
 		try {
 			PreparedStatement pStmt = (PreparedStatement) conn.prepareStatement(sql);
 			ResultSet result = pStmt.executeQuery();
 			while(result.next()){
-				HashMap<String, String> map = new HashMap<>();
+				LiveShowUserBean bean = new LiveShowUserBean();
 				String nickname = result.getString("nickname");
 				String url = result.getString("video_url");
-				map.put("nickname", nickname);
-				map.put("video_url", url);
-				data.add(map);
+				bean.setLive_show_url(url);
+				bean.setNickname(nickname);
+				data.add(bean);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

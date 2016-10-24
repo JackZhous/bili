@@ -15,6 +15,10 @@ public class Constant {
 	public static final String TASK_GET_IMAGE = "refreshImage";
 	public static final String TASK_LOGOUT = "logout";
 	public static final String TASK_SUBMIT_VIDEO_SHOW = "submit_video_show";
+	public static final String TASK_GET_ALL_LIVE_SHOW = "all_live_show";
+	
+	
+	public static final String RESPONSE = "response_flag";
 	
 	
 	

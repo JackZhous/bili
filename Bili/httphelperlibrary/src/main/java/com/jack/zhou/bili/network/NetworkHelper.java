@@ -41,7 +41,8 @@ public class NetworkHelper {
     public static final String PUSH_ADDRESS = RTMP_BASE_URL + "push";
 
 
-    public static final String GET_VIDEO_PUSH_ADDRESS = "push_address";
+    public static final String TASK_GET_VIDEO_PUSH_ADDRESS = "push_address";
+    public static final String TASK_GET_LIVE_SHOW = "all_live_show";
     /**
      * 检查网络是否连接
      * @param context

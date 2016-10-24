@@ -75,6 +75,7 @@ public class GetVideoPushAddress extends HttpServlet {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+					data.put(Constant.RESPONSE, Constant.FLAG_PUSH_ADDRESS);
 					data.put("nickname", name);
 					data.put(Constant.RESULT, Constant.SUCCESS);
 					data.put(Constant.UID, uid);

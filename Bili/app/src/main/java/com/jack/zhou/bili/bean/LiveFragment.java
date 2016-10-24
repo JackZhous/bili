@@ -11,21 +11,22 @@
 
 package com.jack.zhou.bili.bean;
 
+import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jack.zhou.bili.R;
+import com.jack.zhou.bili.adapter.ListViewAdapter;
 import com.jack.zhou.bili.inter.BiliCallback;
 import com.jack.zhou.bili.inter.HttpListener;
 import com.jack.zhou.bili.network.IOManager;
@@ -34,16 +35,13 @@ import com.jack.zhou.bili.network.Task;
 import com.jack.zhou.bili.stream.PushStream;
 import com.jack.zhou.bili.util.AppUtil;
 import com.jack.zhou.bili.util.JLog;
-import com.jack.zhou.bili.util.JNIClass;
 import com.jack.zhou.bili.util.SharedPreferenceUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.TimeoutException;
-
-import tv.danmaku.ijk.media.example.activities.VideoActivity;
 
 /**
  * 直播选项卡页面
@@ -51,7 +49,7 @@ import tv.danmaku.ijk.media.example.activities.VideoActivity;
  */
 public class LiveFragment extends Fragment implements View.OnClickListener{
 
-    private Context context;
+    private Activity context;
 
 
 
@@ -103,7 +101,7 @@ public class LiveFragment extends Fragment implements View.OnClickListener{
                 break;
 
             case R.id.tv_watch_live:            //观看直播
-
+                getAllLiveShow();
                 break;
         }
     }
@@ -120,7 +118,7 @@ public class LiveFragment extends Fragment implements View.OnClickListener{
 
             HashMap<String, String> map = new HashMap<String, String>();
             map.put(SharedPreferenceUtil.TOKEN, token);
-            map.put("task_flag", NetworkHelper.GET_VIDEO_PUSH_ADDRESS);
+            map.put("task_flag", NetworkHelper.TASK_GET_VIDEO_PUSH_ADDRESS);
             HttpListener listener = new HttpListener(liveVideoUrlListener);
             Task task = new Task(NetworkHelper.GET_PUSH_VIDEO_URL, map, listener);
 
@@ -132,6 +130,15 @@ public class LiveFragment extends Fragment implements View.OnClickListener{
 
     }
 
+
+    private void getAllLiveShow(){
+        HashMap<String, String> map = new HashMap<String, String>();
+        map.put("task_flag", NetworkHelper.TASK_GET_LIVE_SHOW);
+        HttpListener listener = new HttpListener(liveVideoUrlListener);
+        Task task = new Task(NetworkHelper.GET_ALL_VIDEO_SHOW, map, listener);
+
+        IOManager.getInstance(context).add_task_start(task);
+    }
 
 
 
@@ -154,8 +161,13 @@ public class LiveFragment extends Fragment implements View.OnClickListener{
             if(code == AppUtil.REQUEST_SUCCESS){
                 try {
                     JSONObject json = new JSONObject(String.valueOf(msg));
-                    nickname = json.optString("nickname");
-                    uid = json.optString("uid");
+                    String response_flag = json.optString("response_flag", "");
+                    if(NetworkHelper.TASK_GET_LIVE_SHOW.equals(response_flag)){
+
+                    }else if(NetworkHelper.TASK_GET_VIDEO_PUSH_ADDRESS.equals(response_flag)){
+                        nickname = json.optString("nickname");
+                        uid = json.optString("uid");
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -186,5 +198,27 @@ public class LiveFragment extends Fragment implements View.OnClickListener{
                                         .setPositiveButton("取消", null).show();
     }
 
+
+    /**
+     * 显示当前直播的所有用户
+     * @return
+     */
+    private ListView displayAllLiveUser(ArrayList<ParentBean> list){
+        ListView listVideoShow = new ListView(context);                                           //listview
+        ListViewAdapter adpter = new ListViewAdapter(context,list);
+        listVideoShow.setAdapter(adpter);
+        listVideoShow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                JLog.default_print("item " + position + "was click");
+                //第一次和第二次选择的item不一样，要修改listview的数据里面的icon状态
+
+            }
+        });
+
+        listVideoShow.setDividerHeight(0);
+
+        return null;
+    }
 
 }
