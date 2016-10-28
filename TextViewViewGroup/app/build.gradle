@@ -1,21 +1,11 @@
-/*
- *         Copyright (C) 2016-2017 宙斯
- *         All rights reserved
- *
- *        filename :Class4
- *        description :
- *
- *         created by jackzhous at  11/07/2016 12:12:12
- *         http://blog.csdn.net/jackzhouyu
- */
-
-apply plugin: 'com.android.library'
+apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    compileSdkVersion 19
+    buildToolsVersion '23.0.2'
 
     defaultConfig {
+        applicationId "com.jack.textviewviewgroup"
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 1
@@ -32,6 +22,6 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.1.0'
-    compile files('libs/Volley.jar')
+    compile 'com.android.support:appcompat-v7:23.3.0'
+    compile 'com.android.support:design:23.3.0'
 }
