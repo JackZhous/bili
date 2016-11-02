@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.jack.textviewviewgroup.MainActivity"
+    tools:showIn="@layout/activity_main"
+    android:background="@color/gray"
+    android:orientation="vertical">
+
+    <com.jack.textviewviewgroup.view.TextViewGroup
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:id="@+id/view_group"
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+
+
+    </com.jack.textviewviewgroup.view.TextViewGroup>
+
+    <RelativeLayout
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="  查看更多"
+            android:drawableLeft="@drawable/ic_arrow_down_gray_round"
+            android:layout_centerInParent="true"
+            android:id="@+id/more"/>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:background="@color/colorPrimary"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@+id/more"
+            android:layout_marginRight="5dp"
+            android:layout_centerVertical="true"/>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:background="@color/colorPrimary"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@+id/more"
+            android:layout_marginLeft="5dp"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
+</LinearLayout>

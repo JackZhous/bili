@@ -55,4 +55,9 @@
     <string name="tv_live">我要直播</string>
     <string name="tv_watch_live">我要观看直播</string>
     <string name="tv_search_hint">搜索视频、番剧、up主或av号</string>
+    <string name="tv_intrest_search">兴趣圈</string>
+    <string name="tv_topic_search">话题中心</string>
+    <string name="tv_activity_search">活动中心</string>
+    <string name="tv_rank_original_search">原创排行榜</string>
+    <string name="tv_rank_all_search">全区排行榜</string>
 </resources>
