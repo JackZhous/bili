@@ -25,7 +25,7 @@ import android.net.NetworkInfo;
 public class NetworkHelper {
 
     //company ip -- 10.8.230.117   home ip -- 192.168.0.110
-    public static final String HTTP_BASE_URL = "http://192.168.0.106:8080/BiliServer/";
+    public static final String HTTP_BASE_URL = "http://192.168.0.108:8080/BiliServer/";
 
     public static final String LOGIN_VERIFY = HTTP_BASE_URL + "login/";
     public static final String HEART_BREAK = HTTP_BASE_URL + "heart";
@@ -36,7 +36,7 @@ public class NetworkHelper {
     public static final String SUBMIT_VIDEO_SHOW = HTTP_BASE_URL + "SubmitVideoShow";                               //提交直播
     public static final String GET_ALL_VIDEO_SHOW = HTTP_BASE_URL + "GetAllLiveVideoShow";
 
-    public static final String RTMP_BASE_URL = "rtmp://192.168.0.106:1395/bili/";
+    public static final String RTMP_BASE_URL = "rtmp://192.168.0.108:1395/bili/";
 
     public static final String PUSH_ADDRESS = RTMP_BASE_URL + "push";
 

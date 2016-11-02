@@ -39,7 +39,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jack.zhou.bili.R;
+import com.jack.zhou.bili.adapter.ListViewAdapter;
 import com.jack.zhou.bili.bean.Country;
+import com.jack.zhou.bili.bean.ParentBean;
 import com.jack.zhou.bili.inter.BiliCallback;
 import com.jack.zhou.bili.inter.HttpListener;
 import com.jack.zhou.bili.inter.SMSModule;
@@ -224,9 +226,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         public TextView tv;
     }
 
-    /**
-     * ListView适配器
-     */
+
     private class MyListAdapter extends BaseAdapter{
 
         private LayoutInflater inflater;
@@ -253,13 +253,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             return position;
         }
 
-        /**
-         * getView  产生view后显示条目到界面上去， convertview是缓存的视图，可以重复利用
-         * @param position
-         * @param convertView
-         * @param parent
-         * @return
-         */
+
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
@@ -276,7 +270,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 JLog.default_print("pos " + position + " not null " +" -- ");
                 holder = (ViewHolder)convertView.getTag();
             }
-            Drawable icon = arrayList.get(position).getisSelectId() == true ? Country.selectedIcon : Country.unselectedIcon;
+            Drawable icon = arrayList.get(position).getisSelectId() == true ? ListViewAdapter.selectedIcon : ListViewAdapter.unselectedIcon;
             holder.image.setImageDrawable(icon);
             holder.tv.setText(arrayList.get(position).getCountry_name());
 

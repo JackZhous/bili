@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.widget.Toast;
 
+import com.jack.zhou.bili.adapter.ListViewAdapter;
 import com.jack.zhou.bili.bean.Country;
 import com.jack.zhou.bili.ui.RegisterActivity;
 
@@ -34,7 +35,7 @@ public class XMLUtil extends DefaultHandler{
     public XMLUtil(Context context){
         super();
         this.context = context;
-        Country.initSelectedIcon(context);
+        ListViewAdapter.init(context);
     }
 
 

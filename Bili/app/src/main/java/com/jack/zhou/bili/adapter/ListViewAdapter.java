@@ -12,17 +12,20 @@
 package com.jack.zhou.bili.adapter;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jack.zhou.bili.R;
-import com.jack.zhou.bili.bean.Country;
-import com.jack.zhou.bili.bean.ParentBean;
+import com.jack.zhou.bili.bean.LiveShowBean;
 import com.jack.zhou.bili.util.JLog;
 
 import java.util.ArrayList;
@@ -35,13 +38,25 @@ import java.util.ArrayList;
  **/
 public class ListViewAdapter extends BaseAdapter {
     private LayoutInflater inflater;
-    private ArrayList<ParentBean> arrayList;
+    private ArrayList<LiveShowBean> arrayList;
+    public static Drawable unselectedIcon;
+    public static  Drawable selectedIcon;
 
-    public ListViewAdapter(Activity context, ArrayList<ParentBean> list){
+    public static void init(Context context){
+        unselectedIcon = ContextCompat.getDrawable(context, R.drawable.abc_btn_radio_to_on_mtrl_000);
+        DrawableCompat.setTint(unselectedIcon, ContextCompat.getColor(context, R.color.gray));
+        selectedIcon = ContextCompat.getDrawable(context, R.drawable.abc_btn_radio_to_on_mtrl_015);
+        DrawableCompat.setTint(selectedIcon, ContextCompat.getColor(context, R.color.colorPrimary));
+    }
+
+    public ListViewAdapter(Activity context, ArrayList<LiveShowBean> list){
 
         inflater = context.getLayoutInflater();
         arrayList = list;
+
     }
+
+
 
     @Override
     public int getCount() {
@@ -81,7 +96,7 @@ public class ListViewAdapter extends BaseAdapter {
             JLog.default_print("pos " + position + " not null " +" -- ");
             holder = (ViewHolder)convertView.getTag();
         }
-        Drawable icon = arrayList.get(position).getisSelectId() == true ? Country.selectedIcon : Country.unselectedIcon;
+        Drawable icon = arrayList.get(position).getisSelectId() == true ? selectedIcon : unselectedIcon;
         holder.image.setImageDrawable(icon);
         holder.tv.setText(arrayList.get(position).getValue());
 

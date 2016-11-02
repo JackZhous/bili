@@ -26,8 +26,7 @@ import com.jack.zhou.bili.R;
  **/
 public abstract class ParentBean {
 
-    public static Drawable unselectedIcon;
-    public static  Drawable selectedIcon;
+
     private boolean isSelectId = false;
 
 
@@ -39,13 +38,6 @@ public abstract class ParentBean {
         this.isSelectId = icon_id;
     }
 
-    public static void initSelectedIcon(Context context){
-        unselectedIcon = ContextCompat.getDrawable(context, R.drawable.abc_btn_radio_to_on_mtrl_000);
-        DrawableCompat.setTint(unselectedIcon, ContextCompat.getColor(context, R.color.gray));
-        selectedIcon = ContextCompat.getDrawable(context, R.drawable.abc_btn_radio_to_on_mtrl_015);
-        DrawableCompat.setTint(selectedIcon, ContextCompat.getColor(context, R.color.colorPrimary));
-
-    }
 
     //返回你想要的东西
     public abstract String getValue();

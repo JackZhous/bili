@@ -27,7 +27,9 @@ public final class HttpListener implements Response.ErrorListener, Response.List
 
     @Override
     public void onErrorResponse(VolleyError volleyError) {
-        JLog.default_print("http response error");
+        JLog.default_print("http response error \n");
+        JLog.print_error("jackzhous", volleyError.getMessage(), volleyError);
+        volleyError.printStackTrace();
         listener.onError(REQUEST_FERROR, volleyError);
     }
 

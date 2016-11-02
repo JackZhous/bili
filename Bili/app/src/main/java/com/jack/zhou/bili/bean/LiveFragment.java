@@ -37,11 +37,14 @@ import com.jack.zhou.bili.util.AppUtil;
 import com.jack.zhou.bili.util.JLog;
 import com.jack.zhou.bili.util.SharedPreferenceUtil;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import tv.danmaku.ijk.media.example.activities.VideoActivity;
 
 /**
  * 直播选项卡页面
@@ -163,7 +166,9 @@ public class LiveFragment extends Fragment implements View.OnClickListener{
                     JSONObject json = new JSONObject(String.valueOf(msg));
                     String response_flag = json.optString("response_flag", "");
                     if(NetworkHelper.TASK_GET_LIVE_SHOW.equals(response_flag)){
-
+                        ArrayList<LiveShowBean> list = getDataFromJosn(json);
+                        ListView listview = displayAllLiveUser(list);
+                        showDialog(listview);
                     }else if(NetworkHelper.TASK_GET_VIDEO_PUSH_ADDRESS.equals(response_flag)){
                         nickname = json.optString("nickname");
                         uid = json.optString("uid");
@@ -198,27 +203,69 @@ public class LiveFragment extends Fragment implements View.OnClickListener{
                                         .setPositiveButton("取消", null).show();
     }
 
+    private AlertDialog dialog;
+    private void showDialog(ListView listView){
+        if(dialog != null){
+            dialog.show();
+            return;
+        }
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("直播间列表");
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+
+        builder.setView(listView);
+        builder.create();
+        dialog = builder.show();
+    }
+
 
     /**
      * 显示当前直播的所有用户
      * @return
      */
-    private ListView displayAllLiveUser(ArrayList<ParentBean> list){
+    private ListView displayAllLiveUser(final ArrayList<LiveShowBean> list){
         ListView listVideoShow = new ListView(context);                                           //listview
         ListViewAdapter adpter = new ListViewAdapter(context,list);
         listVideoShow.setAdapter(adpter);
         listVideoShow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                JLog.default_print("item " + position + "was click");
+                JLog.default_print("item " + position + "was click " + list.get(position).getUrl());
                 //第一次和第二次选择的item不一样，要修改listview的数据里面的icon状态
-
+                String title = list.get(position).getValue();
+                String url = NetworkHelper.RTMP_BASE_URL + list.get(position).getUrl();
+                VideoActivity.intentTo(context, url, title);
             }
         });
 
         listVideoShow.setDividerHeight(0);
 
-        return null;
+        return listVideoShow;
+    }
+
+    private ArrayList<LiveShowBean> getDataFromJosn(JSONObject jsonObject){
+        ArrayList<LiveShowBean> list = new ArrayList<>();
+        try {
+            int length = jsonObject.optInt("count", 0);                    //json数组长度
+            JSONArray array = jsonObject.optJSONArray("data");
+            for(int i = 0 ; i < length; i++){
+                JSONObject object = new JSONObject(array.optString(i));
+                LiveShowBean bean = new LiveShowBean();
+                bean.setNickname(object.optString("nickname", ""));
+                bean.setUrl(object.optString("video_show_url", ""));
+                list.add(bean);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return list;
     }
 
 }
