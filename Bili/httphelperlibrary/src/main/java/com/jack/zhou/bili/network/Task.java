@@ -23,16 +23,11 @@ import java.util.Map;
 public class Task extends StringRequest{
 
     private Map<String,String> mData;                            //传递的数据
-    private HttpListener mCallback;                  //回调接口
-    private String url;
-    private String name;
 
     public Task(String url, Map<String,String> mData, HttpListener listener){
 
         this(Method.POST, url, listener, listener);
         this.mData = mData;
-        this.mCallback = listener;
-        this.url = url;
         JSONObject json = new JSONObject(mData);
         JLog.default_print("net send params: " + json.toString());
         JLog.default_print("url " + url);
@@ -42,9 +37,6 @@ public class Task extends StringRequest{
     public Task(String task_name, String url, Map<String,String> mData, HttpListener listener){
         this(Method.POST, url, listener, listener);
         this.mData = mData;
-        this.mCallback = listener;
-        this.url = url;
-        name = task_name;
     }
 
     public Task(int method, String url, Response.Listener<String> listener, Response.ErrorListener errorListener) {

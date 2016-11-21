@@ -61,6 +61,7 @@ public class JAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             viewHolder.findBody(view);
         } else if(viewType == TYPE_BODY_START){
             JLog.print(TAG, "onCreateViewHolder -- TYPE_BODY_START");
+            position = (position >= body_start.length) ? body_start.length - 1 : position;
             view = LayoutInflater.from(parent.getContext()).inflate(body_start[position], null);
             viewHolder.findBodyStart(view, position);
 
@@ -120,7 +121,6 @@ public class JAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private int getType(int position){
         int type = TYPE_HEADER;
 
-
         if (position != 0) {
             position = position % 6;
             if(position != 0 && position != 1){
@@ -143,9 +143,11 @@ public class JAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public void setBody_start(int[] body_start) {
         this.body_start = body_start;
+        JLog.print("body_start ", "length " + body_start.length);
     }
 
     public void setBody_end(int[] body_end) {
         this.body_end = body_end;
+        JLog.print("body_end ", "length " + body_end.length);
     }
 }

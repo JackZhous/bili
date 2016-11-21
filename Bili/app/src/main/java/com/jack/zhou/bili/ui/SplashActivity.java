@@ -65,13 +65,13 @@ public class SplashActivity extends Activity {
      */
     private void initView(){
         AssetManager asset = getResources().getAssets();
-        Bitmap splash = null;
+        Bitmap splash;
 
         layout = new RelativeLayout(this);
         ImageView image1 = new ImageView(this);
         ImageView image2 = new ImageView(this);
-        RelativeLayout.LayoutParams params = null;
-        InputStream stream = null;
+        RelativeLayout.LayoutParams params;
+        InputStream stream;
 
         try {
             stream = asset.open("splash/ic_splash_copy.png");
@@ -93,6 +93,7 @@ public class SplashActivity extends Activity {
             image1.setLayoutParams(params);
             image1.setId(View.generateViewId());
             layout.addView(image1);
+            stream.close();
 
 
         } catch (IOException e) {

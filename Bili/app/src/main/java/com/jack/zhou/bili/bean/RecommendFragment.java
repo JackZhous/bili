@@ -36,6 +36,7 @@ import com.jack.zhou.jrecyclerview.recycler.JRecyclerView;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -116,7 +117,8 @@ public class RecommendFragment extends Fragment implements BiliCallback{
     public void onDestroy() {
         super.onDestroy();
         JLog.default_print(TAG + "    onDestroy");
-
+        jRecyclerView = null;
+        holder = null;
     }
 
     /**
@@ -146,9 +148,13 @@ public class RecommendFragment extends Fragment implements BiliCallback{
         HashMap<String, String> map = new HashMap<>();
         map.put("task_flag", "refreshImage");
         map.put("module", "recommend_module");
+        WeakReference<RecommendFragment> weakReference = new WeakReference<>(this);
+        RecommendFragment listener = weakReference.get();
+        if(listener != null){
+            Task task = new Task(NetworkHelper.GET_IMAGE, map, new HttpListener(listener));
+            IOManager.getInstance(getContext()).add_task_start(task);
+        }
 
-        Task task = new Task(NetworkHelper.GET_IMAGE, map, new HttpListener(this));
-        IOManager.getInstance(getContext()).add_task_start(task);
     }
 
 

@@ -320,9 +320,11 @@ public class RecommendViewHolder implements JViewHolder{
 
     public void setBody_image_list(ArrayList<String> body_image_list) {
         this.body_image_list = body_image_list;
+        JLog.default_print("body_image_list length " + body_image_list.size());
     }
 
     public void setBody_info_list(ArrayList<Map<String, String>> body_info_list) {
         this.body_info_list = body_info_list;
+        JLog.default_print("body_info_list length " + body_info_list.size());
     }
 }
