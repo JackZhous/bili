@@ -21,16 +21,15 @@ import java.util.Date;
 public class FileUtil {
 
     private static FileUtil instance;
-    private Context context;
     private boolean isWriteable = false;            //对文件系统是否有操作的权限
 
-    private FileUtil(Context context){
-        this.context = context;
+    private FileUtil(){
+
     }
 
-    public static FileUtil getInstance(Context context){
+    public static FileUtil getInstance(){
         if(null == instance){
-            instance = new FileUtil(context);
+            instance = new FileUtil();
         }
 
         return instance;

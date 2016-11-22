@@ -6,15 +6,13 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.jack.zhou.bili.R;
 import com.jack.zhou.bili.ui.view.HotSearchView;
+import com.jack.zhou.bili.util.JLog;
 
 import java.util.ArrayList;
 
@@ -82,7 +80,7 @@ public class SearchFragment extends Fragment{
         list.add("徐老师来巡山");
         int index = 0;
         for (String str : list){
-            TextView textView = new TextView(mContext);
+            final TextView textView = new TextView(mContext);
             textView.setText(str);
             textView.setTextSize(15);
 
@@ -92,7 +90,7 @@ public class SearchFragment extends Fragment{
             textView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    JLog.default_print("" + textView.getTag());
                 }
             });
 

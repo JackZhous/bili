@@ -32,12 +32,12 @@ import java.util.Map;
 public class IOManager {
     private static IOManager instance = null;
 
-    private Context activity;
+    private Context mContext;
     private RequestQueue queue;                 //网络请求
 
     private IOManager(Context activity){
-        this.activity = activity;
-        queue = Volley.newRequestQueue(activity.getApplicationContext());
+        mContext = activity.getApplicationContext();
+        queue = Volley.newRequestQueue(mContext);
     }
 
     public static synchronized IOManager getInstance(Context activity){
@@ -122,7 +122,7 @@ public class IOManager {
 
     public void add_task_start(Task task){
         if(null == queue){
-            queue = Volley.newRequestQueue(activity.getApplicationContext());
+            queue = Volley.newRequestQueue(mContext);
         }
         JLog.default_print("start task");
         queue.add(task);

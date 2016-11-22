@@ -1,13 +1,13 @@
 package com.jack.zhou.bili.exception;
 
 import android.app.Activity;
-import android.util.Log;
+import android.content.Context;
 import android.widget.Toast;
 
 import com.jack.zhou.bili.util.FileUtil;
 import com.jack.zhou.bili.util.JLog;
 
-import java.io.File;
+
 
 /**
  * 异常捕获类
@@ -17,12 +17,10 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler{
 
     private static final String TAG = "CrashHandler";
     private static CrashHandler instance;
-    private Activity mActivity;
     private Thread.UncaughtExceptionHandler mDefaultExcHandler;
 
 
-    private CrashHandler(Activity activity){
-        this.mActivity = activity;
+    private CrashHandler(){
 
         mDefaultExcHandler = Thread.getDefaultUncaughtExceptionHandler();
         Thread.setDefaultUncaughtExceptionHandler(this);
@@ -30,18 +28,16 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler{
 
     /**
      * 初始化奔溃模块
-     * @param activity
      */
-    public void init(Activity activity){
-        this.mActivity = activity;
+    public void init(){
         mDefaultExcHandler = Thread.getDefaultUncaughtExceptionHandler();
         Thread.setDefaultUncaughtExceptionHandler(this);
     }
 
 
-    public static CrashHandler getInstance(Activity activity){
+    public static synchronized CrashHandler getInstance(){
         if(null == instance){
-            instance = new CrashHandler(activity);
+            instance = new CrashHandler();
         }
 
         return instance;
@@ -56,7 +52,6 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler{
         if((!handlerException(ex)) && mDefaultExcHandler != null){
             mDefaultExcHandler.uncaughtException(thread, ex);
 
-            Toast.makeText(mActivity, "程序异常，即将自动关闭", Toast.LENGTH_SHORT).show();
             try {
                 Thread.sleep(3000);
             } catch (InterruptedException e) {
@@ -78,7 +73,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler{
             return false;
         }
         //保存文件或者上传服务器后台分析
-        FileUtil.getInstance(mActivity).saveFile("crash.txt",ex.getLocalizedMessage());
+        FileUtil.getInstance().saveFile("crash.txt",ex.getLocalizedMessage());
         return false;
     }
 }

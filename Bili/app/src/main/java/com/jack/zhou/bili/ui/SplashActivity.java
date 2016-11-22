@@ -21,6 +21,7 @@ import com.jack.zhou.bili.util.JLog;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.ref.WeakReference;
 
 /**
  * Created by "jackzhous" on 2016/6/14.
@@ -45,7 +46,7 @@ public class SplashActivity extends Activity {
         window.setAttributes(wparams);
 
         initView();
-        CrashHandler.getInstance(this);
+        CrashHandler.getInstance();
     }
 
 
@@ -107,29 +108,38 @@ public class SplashActivity extends Activity {
         animation.setRepeatCount(0);
         animation.setDuration(2000);
         animation.setFillAfter(true);
-        animation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-                JLog.default_print("onAnimationStart");
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                JLog.default_print("onAnimationEnd");
-                //Snackbar.make(layout, "动画结束", Snackbar.LENGTH_SHORT).show();
-                startMainActivity();
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-                JLog.default_print("onAnimationRepeat");
-            }
-        });
+        animation.setAnimationListener(new AnimationSplash(this));
 
         setContentView(layout);
 
         layout.setAnimation(animation);
         animation.startNow();
+    }
+
+
+    private static class AnimationSplash implements Animation.AnimationListener{
+        WeakReference<SplashActivity> weakReference;
+        public AnimationSplash(SplashActivity activity){
+            weakReference = new WeakReference<>(activity);
+        }
+
+        @Override
+        public void onAnimationStart(Animation animation) {
+
+        }
+
+        @Override
+        public void onAnimationEnd(Animation animation) {
+            SplashActivity activity = weakReference.get();
+            if(activity != null){
+                activity.startMainActivity();
+            }
+        }
+
+        @Override
+        public void onAnimationRepeat(Animation animation) {
+
+        }
     }
 
 }

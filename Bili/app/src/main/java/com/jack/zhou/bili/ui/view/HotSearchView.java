@@ -188,7 +188,6 @@ public class HotSearchView extends ViewGroup {
                 JLog.default_print("downy " + downY);
 
                 break;
-
             case MotionEvent.ACTION_MOVE:
 
                 moveY = (int)event.getY();

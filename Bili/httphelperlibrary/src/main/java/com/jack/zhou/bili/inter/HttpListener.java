@@ -7,6 +7,8 @@ import com.jack.zhou.bili.util.JLog;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.ref.WeakReference;
+
 /**
  * 回调工具类，将http返回的信息回调给app
  * Created by "jackzhous" on 2016/6/30.
@@ -17,12 +19,13 @@ public final class HttpListener implements Response.ErrorListener, Response.List
     public static final int REQUEST_FAILED = 0x02;
     public static final int REQUEST_FERROR = 0x03;
 
-    private  BiliCallback listener;                     //将网络返回的数据回调给app
+
+    private WeakReference<BiliCallback> weakReference_BCallBack;                                        //将网络返回的数据回调给app
     private static final String OK = "ok";
     private static final String FAIL = "fail";
 
     public HttpListener(BiliCallback callback){
-        listener = callback;
+        weakReference_BCallBack = new WeakReference<>(callback);
     }
 
     @Override
@@ -30,7 +33,10 @@ public final class HttpListener implements Response.ErrorListener, Response.List
         JLog.default_print("http response error \n");
         JLog.print_error("jackzhous", volleyError.getMessage(), volleyError);
         volleyError.printStackTrace();
-        listener.onError(REQUEST_FERROR, volleyError);
+        BiliCallback listener = weakReference_BCallBack.get();
+        if(listener != null){
+            listener.onError(REQUEST_FERROR, volleyError);
+        }
     }
 
     /**
@@ -43,7 +49,7 @@ public final class HttpListener implements Response.ErrorListener, Response.List
         JLog.default_print("http response success " + o);
         int http_status = REQUEST_FAILED;
 
-        JSONObject json = null;
+        JSONObject json;
         try {
             json = new JSONObject((String)o);
 
@@ -57,7 +63,10 @@ public final class HttpListener implements Response.ErrorListener, Response.List
             e.printStackTrace();
         }
 
+        BiliCallback listener = weakReference_BCallBack.get();
+        if(listener != null){
+            listener.onResponse(http_status,o);
+        }
 
-        listener.onResponse(http_status,o);
     }
 }
