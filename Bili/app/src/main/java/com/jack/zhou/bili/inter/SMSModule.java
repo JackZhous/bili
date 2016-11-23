@@ -90,6 +90,8 @@ public class SMSModule {
 
     public void unregisterSMSHandler(){
         SMSSDK.unregisterAllEventHandler();
+        handler = null;
+        mhandler = null;
     }
 
 

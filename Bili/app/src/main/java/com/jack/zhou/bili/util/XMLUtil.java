@@ -26,16 +26,15 @@ import javax.xml.parsers.SAXParserFactory;
  */
 public class XMLUtil extends DefaultHandler{
 
-    private Context context;
     private static XMLUtil instance;
-    private ArrayList<Country> array;
+    private static ArrayList<Country> array;
     private Country country;
     private String CtagName;                        //当前节点名字
 
     public XMLUtil(Context context){
         super();
-        this.context = context;
         ListViewAdapter.init(context);
+        init(context);
     }
 
 
@@ -48,7 +47,7 @@ public class XMLUtil extends DefaultHandler{
     }
 
 
-    public void init(){
+    public void init(Context context){
         AssetManager manager = context.getAssets();
         InputStream stream = null;
         try {
@@ -89,7 +88,7 @@ public class XMLUtil extends DefaultHandler{
     public void startDocument() throws SAXException {
         super.startDocument();
         JLog.default_print("startDocument");
-        array = new ArrayList<Country>();
+        array = new ArrayList<>();
     }
 
     @Override

@@ -56,6 +56,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -90,10 +91,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         AppUtil.integrationNotifcationBar(this);
 
-        XMLUtil.getInstance(this).init();               //初始化数据模块
+        XMLUtil.getInstance(getApplicationContext());               //初始化数据模块
         countryList = XMLUtil.getInstance(this).getCountryData();                   //显示数据
-        smsModule = SMSModule.getInstance(this);
-        smsModule.setMhandler(mHandler);
+        smsModule = SMSModule.getInstance(this.getApplicationContext());
+        smsModule.setMhandler(new MobinePhoneHandler(this));
         smsModule.registerHandler();
 
         initLayoutResouce();
@@ -356,27 +357,36 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    /**
-     * mob 短信回调
-     */
-    private Handler mHandler = new Handler(){
+    private static class MobinePhoneHandler extends Handler{
+        WeakReference<RegisterActivity> weakReference;
+        public MobinePhoneHandler(RegisterActivity activity){
+            weakReference = new WeakReference<>(activity);
+        }
+
         @Override
         public void handleMessage(Message msg) {
+            RegisterActivity activity = weakReference.get();
+            if(null != activity){
+                handlerMobileMessage(activity, msg);
+            }
+        }
+
+        private void handlerMobileMessage(RegisterActivity activity, Message msg){
             switch (msg.what){
                 case AppUtil.SMS_GET_VERIFICATION_CODE:             //获取短信验证码成功
-                    String phone_no = ed_phone.getText().toString().trim();
-                    Intent intent = new Intent(RegisterActivity.this, VerifySMS.class);
-                    intent.putExtra("country", countryList.get(selectedListId).getCountry_phone());
+                    String phone_no = activity.ed_phone.getText().toString().trim();
+                    Intent intent = new Intent(activity, VerifySMS.class);
+                    intent.putExtra("country", activity.countryList.get(activity.selectedListId).getCountry_phone());
                     intent.putExtra("phone_no",phone_no);
-                    startActivityForResult(intent, AppUtil.FLAG_ACTIVITY);
+                    activity.startActivityForResult(intent, AppUtil.FLAG_ACTIVITY);
                     break;
                 case AppUtil.SMS_ERROR:                             //错误了
                     String str = (String)msg.obj;
-                    error_phone_animation(str);
+                    activity.error_phone_animation(str);
                     break;
             }
         }
-    };
+    }
 
 
     /**

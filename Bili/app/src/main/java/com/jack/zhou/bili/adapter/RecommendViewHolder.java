@@ -20,20 +20,12 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.jack.zhou.bili.R;
 import com.jack.zhou.bili.bean.ImageUrlBean;
-import com.jack.zhou.bili.inter.BiliCallback;
-import com.jack.zhou.bili.inter.HttpListener;
-import com.jack.zhou.bili.network.IOManager;
 import com.jack.zhou.bili.network.NetworkHelper;
-import com.jack.zhou.bili.network.Task;
-import com.jack.zhou.bili.util.AppUtil;
 import com.jack.zhou.bili.util.JLog;
 import com.jack.zhou.jrecyclerview.adapter.JViewHolder;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 import tv.danmaku.ijk.media.example.activities.VideoActivity;
